@@ -85,7 +85,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-white" />
+                  <FormMessage  />
                 </FormItem>
               )}
             />
@@ -103,7 +103,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-white" />
+                  <FormMessage  />
                 </FormItem>
               )}
             />

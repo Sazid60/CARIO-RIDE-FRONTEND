@@ -16,13 +16,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useAppDispatch } from "@/redux/hook";
 import { authApi, useLogoutMutation } from "@/redux/features/auth/auth.api";
+import { useNavigate } from "react-router";
 
 export default function UserMenu({ data }: any) {
   const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
+  
   const handleLogout = async () => {
     await logout(undefined);
+    navigate("/login")
     dispatch(authApi.util.resetApiState());
   };
 
@@ -30,7 +34,7 @@ export default function UserMenu({ data }: any) {
     <DropdownMenu >
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarImage src={data?.data?.picture} alt="Profile image" />
+          <AvatarImage src={data?.data?.picture } alt="Profile image" />
           <AvatarFallback>N/A</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>

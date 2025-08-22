@@ -3,17 +3,19 @@ import hero from "@/assets/images/hero.webp";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 
-export default function HeroSection() {
+export default function HeroSection({ userRole }: { userRole: string }) {
+  const showButtons = userRole === "RIDER"; 
+
   return (
     <section className="relative overflow-hidden min-h-screen flex items-center justify-center py-20 md:py-32">
-      {/* Background image */}
+
       <div className="absolute inset-0 w-full h-full">
         <img
           alt="background"
           src={hero}
           className="w-full h-full object-cover"
         />
-        {/* Overlay for contrast */}
+
         <div className="absolute inset-0 bg-black/70"></div>
       </div>
 
@@ -25,7 +27,6 @@ export default function HeroSection() {
             <Logo />
           </div>
 
-          {/* Heading and Description */}
           <div>
             <h1 className="mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-snug uppercase">
               Drive Your Way to Freedom <br />
@@ -38,22 +39,23 @@ export default function HeroSection() {
             </p>
           </div>
 
-          {/* Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 w-full justify-center">
-            <Link to="/book-ride">
-              <Button className="w-full bg-primary sm:w-auto px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
-                Book a Ride
-              </Button>
-            </Link>
-            <Link to="/be-driver">
-              <Button
-                variant="outline"
-                className="w-full sm:w-auto px-6 py-3 rounded-none bg-white/10 hover:bg-transparent hover:text-primary backdrop-blur-3xl text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105 text-white"
-              >
-                Become a Driver
-              </Button>
-            </Link>
-          </div>
+          {showButtons && (
+            <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 w-full justify-center">
+              <Link to="/book-ride">
+                <Button className="w-full bg-primary sm:w-auto px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
+                  Book a Ride
+                </Button>
+              </Link>
+              <Link to="/be-driver">
+                <Button
+                  variant="outline"
+                  className="w-full sm:w-auto px-6 py-3 rounded-none bg-white/10 hover:bg-transparent hover:text-primary backdrop-blur-3xl text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105 text-white"
+                >
+                  Become a Driver
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </section>

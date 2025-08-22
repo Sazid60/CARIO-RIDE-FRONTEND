@@ -145,7 +145,7 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="you@example.com" {...field} className="rounded-none" />
+                    <Input type="email" placeholder="Your Email..." {...field} className="rounded-none" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -180,7 +180,7 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
               )}
             />
             {/* Profile Image */}
-            <FormItem>
+            <FormItem className="mt-4 space-y-4">
               <FormLabel>Profile Image</FormLabel>
               <FormControl>
                 <SingleImageUploader onChange={setImage} />

@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import UserMenu from "@/components/user-menu";
 import { ModeToggle } from "./ModeToggler";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 
 const navigationLinks = [
   { to: "/", label: "Home" },
@@ -14,6 +15,7 @@ const navigationLinks = [
 ];
 
 export default function Header() {
+  const { data } = useUserInfoQuery(undefined);
   return (
     <header className="px-4 md:px-6 bg-black/10 backdrop-blur-2xl">
       <div className="flex h-16 items-center justify-between gap-4">
@@ -40,15 +42,14 @@ export default function Header() {
                 </svg>
               </Button>
             </PopoverTrigger>
-            <PopoverContent align="start" className="w-36 p-1 md:hidden">
+            <PopoverContent align="start" className="w-36 p-1 md:hidden rounded-none">
               <div className="flex flex-col gap-2">
                 {navigationLinks.map((link) => (
                   <NavLink
                     key={link.to}
                     to={link.to}
                     className={({ isActive }) =>
-                      `py-1.5 px-2 rounded-none font-medium transition-colors ${
-                        isActive ? "text-primary" : "text-muted-foreground"
+                      `py-1.5 px-2 rounded-none font-medium transition-colors ${isActive ? "text-primary" : "text-muted-foreground"
                       } hover:text-primary`
                     }
                   >
@@ -70,8 +71,7 @@ export default function Header() {
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) =>
-                    `py-1.5 px-2 font-medium transition-colors ${
-                      isActive ? "text-primary" : "text-white hover:scale-105"
+                    `py-1.5 px-2 font-medium transition-colors ${isActive ? "text-primary" : "text-white hover:scale-105"
                     } hover:text-primary`
                   }
                 >
@@ -85,7 +85,15 @@ export default function Header() {
         {/* Right side */}
         <div className="flex items-center gap-4">
           <ModeToggle />
-          <UserMenu />
+          {data?.data?.email && (
+            <UserMenu data={data}/>
+          )}
+          {!data?.data?.email && (
+            <Button asChild className="text-sm rounded-none">
+              <Link to="/login">Login</Link>
+            </Button>
+          )}
+
         </div>
       </div>
     </header>

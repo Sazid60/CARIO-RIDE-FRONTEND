@@ -1,9 +1,8 @@
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -12,55 +11,106 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Password from "@/components/ui/Password";
-import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+import SingleImageUploader from "@/components/SingleImageUploader";
+import { useLoginMutation, useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
+import { useState, useEffect } from "react";
 
-const registerSchema = z
-  .object({
-    name: z.string().min(3, { error: "Name is too short" }).max(50),
-    email: z.email(),
-    password: z.string().min(8, { error: "Password is too short" }),
-    confirmPassword: z.string().min(8, { error: "Confirm Password is too short" }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Password do not match",
-    path: ["confirmPassword"],
-  });
 
-export function RegisterForm({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+const registerSchema = z.object({
+  name: z.string().min(3, { message: "Name is too short" }).max(50),
+  email: z.email({ message: "Invalid email" }),
+  phone: z.string().min(10, { message: "Phone number is too short" })
+    .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
+      message: "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
+    }),
+  password: z.string().min(8, { message: "Password is too short" })
+    .regex(/^(?=.*[A-Z])/, {
+      message: "Password must contain at least 1 uppercase letter.",
+    })
+    .regex(/^(?=.*[!@#$%^&*])/, {
+      message: "Password must contain at least 1 special character.",
+    })
+    .regex(/^(?=.*\d)/, {
+      message: "Password must contain at least 1 number.",
+    }),
+  location: z.object({
+    type: z.literal("Point"),
+    coordinates: z.tuple([z.number(), z.number()]),
+  }),
+});
+
+export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   const [register] = useRegisterMutation();
+  const [login] = useLoginMutation();
   const navigate = useNavigate();
+  const [image, setImage] = useState<File | null>(null);
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       email: "",
+      phone: "",
       password: "",
-      confirmPassword: "",
+      location: { type: "Point", coordinates: [0, 0] },
     },
   });
 
+  // Get geolocation
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          setLocation({ lat, lng });
+          form.setValue("location", { type: "Point", coordinates: [lng, lat] });
+        },
+        (err) => {
+          toast.error("Please enable location access");
+          console.error(err);
+        }
+      );
+    } else {
+      toast.error("Geolocation is not supported in your browser");
+    }
+  }, [form]);
+
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
-    const userInfo = {
-      name: data.name,
+    if (!image) return toast.error("Profile image is required");
+
+    const formData = new FormData();
+    formData.append(
+      "data",
+      JSON.stringify({
+        ...data,
+        location: {
+          type: data.location.type,
+          coordinates: data.location.coordinates.map(Number),
+        },
+      })
+    );
+    formData.append("file", image);
+
+    const loginData = {
       email: data.email,
-      password: data.password,
-    };
+      password: data.password
+    }
 
     try {
-       await register(userInfo).unwrap();
+      await register(formData).unwrap();
       toast.success("User created successfully");
-      navigate(`/`);
-    } catch (error) {
-      console.error(error);
+      await login(loginData).unwrap();
+      navigate("/");
+    } catch (err: any) {
+      console.error(err);
+      toast.error("Registration failed");
     }
   };
 
@@ -73,6 +123,7 @@ export function RegisterForm({
       <div className="grid gap-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+            {/* Name */}
             <FormField
               control={form.control}
               name="name"
@@ -80,13 +131,13 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input className="rounded-none" placeholder="John Doe" {...field} />
+                    <Input placeholder="Your Name" {...field} className="rounded-none" />
                   </FormControl>
-                  <FormDescription className="sr-only">This is your public display name.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            {/* Email */}
             <FormField
               control={form.control}
               name="email"
@@ -94,13 +145,27 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input className="rounded-none" placeholder="john.doe@company.com" type="email" {...field} />
+                    <Input type="email" placeholder="you@example.com" {...field} className="rounded-none" />
                   </FormControl>
-                  <FormDescription className="sr-only">This is your public display name.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            {/* Phone */}
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="+8801xxxxxxxxx" {...field} className="rounded-none" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* Password */}
             <FormField
               control={form.control}
               name="password"
@@ -108,45 +173,34 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Password className="rounded-none" {...field} />
+                    <Password {...field} className="rounded-none" />
                   </FormControl>
-                  <FormDescription className="sr-only">This is your public display name.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
-                  <FormControl>
-                    <Password className="rounded-none" {...field} />
-                  </FormControl>
-                  <FormDescription className="sr-only">This is your public display name.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/* Profile Image */}
+            <FormItem>
+              <FormLabel>Profile Image</FormLabel>
+              <FormControl>
+                <SingleImageUploader onChange={setImage} />
+              </FormControl>
+            </FormItem>
+
+            {location && (
+              <div className="text-sm text-gray-500">
+                Location Captured: {location.lat}, {location.lng}
+              </div>
+            )}
+
             <Button type="submit" className="w-full rounded-none">
               Submit
             </Button>
           </form>
         </Form>
-
-        <div className="relative text-center text-sm ">
-          <h1 className="">
-            Or continue with
-          </h1>
-        </div>
-
-        <Button type="button" variant="outline" className="w-full cursor-pointer rounded-none text-white border-white bg-transparent hover:bg-transparent hover:text-primary">
-          Login with Google
-        </Button>
       </div>
 
-      <div className="text-center text-sm">
+      <div className="text-center text-sm mt-4">
         Already have an account?{" "}
         <Link to="/login" className="underline underline-offset-4">
           Login

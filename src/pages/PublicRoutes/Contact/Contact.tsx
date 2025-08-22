@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { useForm } from "react-hook-form";
@@ -16,36 +17,45 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 import { Phone, MessageSquare, Mail } from "lucide-react";
+import { useAskQuestionMutation } from "@/redux/features/faq/faq.api";
 
 interface ContactFormValues {
   name: string;
   email: string;
-  message: string;
+  question: string;
 }
 
 export default function Contact() {
+  const [askQuestion, { isLoading }] = useAskQuestionMutation();
+
   const form = useForm<ContactFormValues>({
     mode: "onChange",
-    defaultValues: { name: "", email: "", message: "" },
+    defaultValues: { name: "", email: "", question: "" },
   });
 
   const {
     handleSubmit,
     control,
     reset,
-    formState: { isSubmitting, isValid },
+    formState: { isValid },
   } = form;
 
-  const onSubmit = (data: ContactFormValues) => {
+  const onSubmit = async (data: ContactFormValues) => {
     console.log(data)
-    toast.success("Message sent successfully!");
-    reset();
+    try {
+      await askQuestion(data).unwrap();
+      toast.success("Message sent successfully!");
+      reset();
+    } catch (error: any) {
+      console.error(error);
+      toast.error("Failed to send message!");
+    }
   };
 
   const contactCards = [
-    { id: 1, icon: <Phone className="w-6 h-6 text-primary" />, title: "Call Us", info: "+880123456789", link: "tel:+8801639768727" },
-    { id: 2, icon: <MessageSquare className="w-6 h-6 text-primary" />, title: "WhatsApp", info: "+880987654321", link: "https://wa.me/8801639768727" },
-    { id: 3, icon: <Mail className="w-6 h-6 text-primary" />, title: "Email", info: "support@cario-ride.com", link: "mailto:shahnawazsazid60@gmail.com" },
+    { id: 1, icon: <Phone className="w-6 h-6 text-primary" />, title: "Call Us", info: "+8801639768727", link: "tel:+8801639768727" },
+    { id: 2, icon: <MessageSquare className="w-6 h-6 text-primary" />, title: "WhatsApp", info: "+88016399768727", link: "https://wa.me/8801639768727" },
+    { id: 3, icon: <Mail className="w-6 h-6 text-primary" />, title: "Email", info: "shahnawazsazid60@gmail.com", link: "mailto:shahnawazsazid60@gmail.com" },
   ];
 
   return (
@@ -156,8 +166,8 @@ export default function Contact() {
 
               <FormField
                 control={control}
-                name="message"
-                rules={{ required: "Message is required" }}
+                name="question"
+                rules={{ required: "Question is required" }}
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
@@ -175,9 +185,9 @@ export default function Contact() {
               <Button
                 type="submit"
                 className="bg-primary text-white px-6 py-2 text-xs md:text-sm font-medium transition rounded-none "
-                disabled={isSubmitting || !isValid}
+                disabled={isLoading || !isValid}
               >
-                {isSubmitting ? "Sending..." : "Send Message →"}
+                {isLoading ? "Sending..." : "Send Message →"}
               </Button>
             </form>
           </Form>

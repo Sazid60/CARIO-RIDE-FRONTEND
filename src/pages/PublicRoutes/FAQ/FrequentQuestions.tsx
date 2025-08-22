@@ -23,7 +23,7 @@ const faqItems: FaqItem[] = [
   { id: "faq-6", question: "Is there a loyalty program?", answer: "Yes! Our loyalty program rewards frequent riders with discounts and special offers." },
 ]
 
-export default function FAQ() {
+export default function FrequentQuestions() {
   const [openId, setOpenId] = useState<string | null>(faqItems[0]?.id || null)
   const [searchTerm, setSearchTerm] = useState("")
 

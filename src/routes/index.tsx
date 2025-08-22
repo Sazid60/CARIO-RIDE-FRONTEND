@@ -17,7 +17,10 @@ import { ErrorPage } from "@/pages/PublicRoutes/Error/ErrorPage";
 import Contact from "@/pages/PublicRoutes/Contact/Contact";
 import About from "@/pages/PublicRoutes/About/About";
 import Features from "@/pages/PublicRoutes/Feature/Features";
-import FAQ from "@/pages/PublicRoutes/FAQ/Faq";
+import FrequentQuestions from "@/pages/PublicRoutes/FAQ/FrequentQuestions";
+
+
+
 
 
 
@@ -45,7 +48,7 @@ export const router = createBrowserRouter(
                     path: "/features",
                 },
                 {
-                    Component: FAQ,
+                    Component:FrequentQuestions ,
                     path: "/faq",
                 },
             ]

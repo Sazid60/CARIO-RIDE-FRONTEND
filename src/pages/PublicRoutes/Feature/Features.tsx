@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function Features() {
-  const [tab, setTab] = useState<"driver" | "rider">("driver");
+  const [tab, setTab] = useState<"driver" | "rider">("rider");
 
   const features = tab === "driver" ? driverFeatures : riderFeatures;
 

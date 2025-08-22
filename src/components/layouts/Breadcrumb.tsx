@@ -8,7 +8,7 @@ interface BreadcrumbProps {
 
 export default function Breadcrumb({ title, description, backgroundImage }: BreadcrumbProps) {
   return (
-    <section className="relative pt-20 md:pt-10 w-full min-h-[200px] md:min-h-[400px] flex items-center mb-10">
+    <section className="relative py-20 md:py-10 w-full min-h-[200px] md:min-h-[400px] flex items-center mb-10">
       <div className="absolute inset-0 w-full h-full">
         <img
           src={backgroundImage}

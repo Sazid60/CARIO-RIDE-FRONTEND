@@ -20,24 +20,19 @@ import { useLoginMutation, useRegisterMutation } from "@/redux/features/auth/aut
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
 
-
 const registerSchema = z.object({
   name: z.string().min(3, { message: "Name is too short" }).max(50),
   email: z.email({ message: "Invalid email" }),
-  phone: z.string().min(10, { message: "Phone number is too short" })
+  phone: z.string()
+    .min(10, { message: "Phone number is too short" })
     .regex(/^(?:\+8801\d{9}|01\d{9})$/, {
       message: "Phone number must be valid for Bangladesh. Format: +8801XXXXXXXXX or 01XXXXXXXXX",
     }),
-  password: z.string().min(8, { message: "Password is too short" })
-    .regex(/^(?=.*[A-Z])/, {
-      message: "Password must contain at least 1 uppercase letter.",
-    })
-    .regex(/^(?=.*[!@#$%^&*])/, {
-      message: "Password must contain at least 1 special character.",
-    })
-    .regex(/^(?=.*\d)/, {
-      message: "Password must contain at least 1 number.",
-    }),
+  password: z.string()
+    .min(8, { message: "Password is too short" })
+    .regex(/^(?=.*[A-Z])/, { message: "Password must contain at least 1 uppercase letter." })
+    .regex(/^(?=.*[!@#$%^&*])/, { message: "Password must contain at least 1 special character." })
+    .regex(/^(?=.*\d)/, { message: "Password must contain at least 1 number." }),
   location: z.object({
     type: z.literal("Point"),
     coordinates: z.tuple([z.number(), z.number()]),
@@ -123,62 +118,67 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
       <div className="grid gap-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            {/* Name */}
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Your Name" {...field} className="rounded-none" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Email */}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input type="email" placeholder="Your Email..." {...field} className="rounded-none" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Phone */}
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone</FormLabel>
-                  <FormControl>
-                    <Input placeholder="+8801xxxxxxxxx" {...field} className="rounded-none" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Password */}
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Password {...field} className="rounded-none" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            
+            {/* Row 1: Name & Email */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Your Name" {...field} className="rounded-none" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input type="email" placeholder="Your Email..." {...field} className="rounded-none" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Row 2: Password & Phone */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Password {...field} className="rounded-none" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Phone</FormLabel>
+                    <FormControl>
+                      <Input placeholder="+8801xxxxxxxxx" {...field} className="rounded-none" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             {/* Profile Image */}
             <FormItem className="mt-4 space-y-4">
               <FormLabel>Profile Image</FormLabel>
@@ -187,6 +187,7 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
               </FormControl>
             </FormItem>
 
+            {/* Location Display */}
             {location && (
               <div className="text-sm text-gray-500">
                 Location Captured: {location.lat}, {location.lng}

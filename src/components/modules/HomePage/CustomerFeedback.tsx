@@ -1,15 +1,8 @@
 import Marquee from "react-fast-marquee";
 import { Card, CardContent } from "@/components/ui/card";
 
-export default function CustomerFeedback() {
-  const reviews = [
-    "This ride management platform is incredibly efficient and user-friendly. Highly recommended!",
-    "Excellent service! The rides are always on time and the drivers are professional.",
-    "I love the real-time tracking feature. Makes traveling stress-free and reliable.",
-    "Seamless booking experience and exceptional support. Makes commuting so much easier.",
-    "The best ride service I've used so far. Consistently safe and fast rides.",
-  ];
-
+export default function CustomerFeedback({ feedbacks }: { feedbacks: string[] }) {
+  console.log(feedbacks)
   const truncateText = (text: string, wordLimit: number) => {
     const words = text.split(" ");
     if (words.length <= wordLimit) return text;
@@ -34,20 +27,29 @@ export default function CustomerFeedback() {
         className="pl-6"
       >
         <div className="flex gap-4 pl-6 sm:gap-6">
-          {reviews.map((review, idx) => (
-            <Card
-              key={idx}
-              className="flex-shrink-0 w-[80vw] sm:w-80 md:w-80 bg-background p-6 text-center border rounded-none shadow-md"
-            >
-              <CardContent className="p-0">
-                <p className="text-sm md:text-md leading-relaxed">
-                  <span className="text-4xl text-orange-500 align-top mr-1">“</span><br />
-                  {truncateText(review, 20)} <br />
-                  <span className="text-4xl text-orange-500 align-top ml-1">”</span>
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+          <div className="flex gap-4 pl-6 sm:gap-6">
+            {feedbacks && feedbacks.length > 0 ? (
+              feedbacks.map((feedback, idx) => (
+                <Card
+                  key={idx}
+                  className="flex-shrink-0 w-[80vw] sm:w-80 md:w-80 bg-background p-6 text-center border rounded-none shadow-md"
+                >
+                  <CardContent className="p-0">
+                    <p className="text-sm md:text-md leading-relaxed">
+                      <span className="text-4xl text-orange-500 align-top mr-1">“</span>
+                      <br />
+                      {truncateText(feedback, 20)}
+                      <br />
+                      <span className="text-4xl text-orange-500 align-top ml-1">”</span>
+                    </p>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <p>No feedbacks yet.</p>
+            )}
+          </div>
+
         </div>
       </Marquee>
     </section>

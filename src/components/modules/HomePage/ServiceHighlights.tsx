@@ -3,9 +3,8 @@ import { CheckCircle2, Award, Clock, Shield, Car } from "lucide-react";
 import CountUp from "react-countup";
 import service from "@/assets/images/service.webp";
 
-export default function ServiceHighlights() {
-  const totalRides = 1250;
-  const startYear = 2015;
+export default function ServiceHighlights({totalRides}: {totalRides:number}) {
+  const startYear = 2024;
   const currentYear = new Date().getFullYear();
   const yearsInService = currentYear - startYear;
 

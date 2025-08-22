@@ -15,11 +15,10 @@ export default function Breadcrumb({ title, description, backgroundImage }: Brea
           alt={title}
           className="w-full h-full object-cover"
         />
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/50"></div>
+
+        <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h1 className="text-2xl sm:text-3xl font-bold uppercase mb-4">
           {title}

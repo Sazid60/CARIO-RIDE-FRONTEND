@@ -6,16 +6,30 @@ import { ModeToggle } from "./ModeToggler";
 import { Link, NavLink } from "react-router";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 
-const navigationLinks = [
-  { to: "/", label: "Home" },
-  { to: "/features", label: "Features" },
-  { to: "/about", label: "About" },
-  { to: "/faq", label: "FAQ" },
-  { to: "/contact", label: "Contact" },
-];
+
 
 export default function Header() {
   const { data } = useUserInfoQuery(undefined);
+  const user = data?.data;
+
+
+  const navigationLinks = [
+    { to: "/", label: "Home" },
+    { to: "/features", label: "Features" },
+    { to: "/about", label: "About" },
+    { to: "/faq", label: "FAQ" },
+    { to: "/contact", label: "Contact" },
+  ];
+
+  if (user) {
+    navigationLinks.push({ to: "/dashboard", label: "Dashboard" });
+
+    if (user.role === "RIDER") {
+      navigationLinks.push({ to: "/book-ride", label: "Book a Ride" });
+    } else if (user.role === "DRIVER") {
+      navigationLinks.push({ to: "/start-driving", label: "Start Driving" });
+    }
+  }
   return (
     <header className="px-4 md:px-6 bg-black/10 backdrop-blur-2xl">
       <div className="flex h-16 items-center justify-between gap-4">
@@ -86,7 +100,7 @@ export default function Header() {
         <div className="flex items-center gap-4">
           <ModeToggle />
           {data?.data?.email && (
-            <UserMenu data={data}/>
+            <UserMenu data={data} />
           )}
           {!data?.data?.email && (
             <Button asChild className="text-sm rounded-none">

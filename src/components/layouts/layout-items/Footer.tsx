@@ -4,10 +4,11 @@ import { NavLink } from "react-router";
 
 const navLinks = [
   { to: "/", label: "Home" },
-  { to: "/book-ride", label: "Book a Ride" },
-  { to: "/become-driver", label: "Become a Driver" },
-  { to: "/pricing", label: "Pricing" },
-  { to: "/about-us", label: "About Us" },
+  { to: "/features", label: "Features" },
+  { to: "/about", label: "About" },
+  { to: "/faq", label: "FAQ" },
+  { to: "/contact", label: "Contact" },
+  { to: "/be-a-driver", label: "Become a Driver" },
 ];
 
 // Social/contact icons
@@ -53,7 +54,7 @@ export default function Footer() {
                 end={to === "/"}
                 className={({ isActive }) =>
                   `text-sm transition hover:text-primary ${
-                    isActive ? "text-primary font-semibold" : "text-gray-400"
+                    isActive ? "text-primary font-semibold" : ""
                   }`
                 }
               >
@@ -72,7 +73,7 @@ export default function Footer() {
                 target={label !== "Call" ? "_blank" : undefined}
                 rel={label !== "Call" ? "noopener noreferrer" : undefined}
                 aria-label={label}
-                className="text-gray-400 hover:text-primary transition"
+                className=" hover:text-primary transition"
               >
                 <Icon className="w-6 h-6" />
               </a>
@@ -81,7 +82,7 @@ export default function Footer() {
         </ul>
 
         {/* Footer Bottom */}
-        <div className="text-sm text-gray-500 border-t border-gray-700 pt-4">
+        <div className="text-sm  border-t border-gray-700 pt-4">
           &copy; {new Date().getFullYear()}{" "}
           <span className="text-orange-600">RideEasy Inc.</span>. All rights reserved.
         </div>

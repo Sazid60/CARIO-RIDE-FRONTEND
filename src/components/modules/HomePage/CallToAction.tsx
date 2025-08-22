@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
-import ride from "@/assets/images/ride.jpg"; 
+import ride from "@/assets/images/ride.webp"; 
 
 export default function CallToAction() {
   return (
     <section
-      className="relative py-16 px-6 rounded-lg my-12 text-center max-w-7xl mx-auto overflow-hidden"
+      className="relative py-12 px-6  text-center  overflow-hidden"
       style={{
         backgroundImage: `url(${ride})`,
         backgroundSize: "cover",
@@ -18,7 +18,7 @@ export default function CallToAction() {
         <h2 className="text-2xl sm:text-3xl font-bold uppercase mb-4">
           Ready for Your Next Ride?
         </h2>
-        <p className="text-sm md:text-base mb-5">
+        <p className="text-sm md:text-base mb-5 max-w-5xl mx-auto">
           Experience hassle-free rides with our cutting-edge ride management platform. Whether commuting daily, heading to work, or planning a weekend trip, we've got you covered with fast, reliable, and safe rides.
           Enjoy features like real-time tracking, professional drivers, instant booking, and 24/7 support. Never wait in uncertainty your journey starts here.
         </p>

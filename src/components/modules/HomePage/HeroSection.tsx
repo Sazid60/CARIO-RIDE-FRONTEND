@@ -1,5 +1,5 @@
 import Logo from "@/assets/icons/Logo";
-import hero from "@/assets/images/hero.jpg";
+import hero from "@/assets/images/hero.webp";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 

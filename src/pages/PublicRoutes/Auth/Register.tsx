@@ -1,4 +1,4 @@
-import register from "@/assets/images/register.jpg";
+import register from "@/assets/images/login.webp";
 import { Link } from "react-router";
 import Logo from "@/assets/icons/Logo";
 import { RegisterForm } from '@/components/modules/Auth/RegisterForm';

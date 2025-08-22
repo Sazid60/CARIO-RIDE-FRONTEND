@@ -1,10 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, Award, Clock, Shield, Car } from "lucide-react";
 import CountUp from "react-countup";
-import service from "@/assets/images/service.jpg";
+import service from "@/assets/images/service.webp";
 
 export default function ServiceHighlights() {
-  // Fake data
   const totalRides = 1250;
   const startYear = 2015;
   const currentYear = new Date().getFullYear();
@@ -51,10 +50,7 @@ export default function ServiceHighlights() {
           })}
         </div>
 
-        {/* Stats and Info Card Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8">
-          {/* Stats Cards */}
-          {/* Stats Cards */}
           <div className="flex gap-0 lg:col-span-1 overflow-x-auto mb-10">
             {stats.map((stat, idx) => {
               const Icon = stat.icon;
@@ -79,17 +75,15 @@ export default function ServiceHighlights() {
             })}
           </div>
 
-
-          {/* Info Card */}
           <div className="lg:col-span-2">
-            <Card className="relative overflow-hidden rounded-none min-h-[420px] sm:min-h-[480px] lg:min-h-[520px] bg-background border p-2">
+            <Card className="relative overflow-hidden rounded-none min-h-[420px] sm:min-h-[480px] lg:min-h-[520px] bg-background border pt-10 px-2 md:px-4">
               <img
                 src={service}
                 alt="Ride management"
                 className="absolute inset-0 w-full h-full object-cover opacity-20 z-0"
               />
               <div className="absolute inset-0 w-full h-full z-10" />
-              <CardContent className="relative z-20 h-full flex items-center justify-center p-2 sm:p-10">
+              <CardContent className="relative z-20 h-full flex items-center justify-center p-0">
                 <div className="text-center">
                   <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 uppercase">
                     Simplify Your Rides

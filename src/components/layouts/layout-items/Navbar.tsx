@@ -7,9 +7,10 @@ import { NavLink } from "react-router";
 
 const navigationLinks = [
   { to: "/", label: "Home" },
-  { to: "ad", label: "Features" },
-  { to: "/admin", label: "Pricing" },
-  { to: "/mn", label: "About" },
+  { to: "/features", label: "Features" },
+  { to: "/about", label: "About" },
+  { to: "/faq", label: "FAQ" },
+  { to: "/contact", label: "Contact" },
 ];
 
 export default function Header() {

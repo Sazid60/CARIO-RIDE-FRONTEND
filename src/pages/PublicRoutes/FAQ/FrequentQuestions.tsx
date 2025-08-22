@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
 
 import { useState } from "react"
 import Breadcrumb from "@/components/layouts/Breadcrumb"
@@ -18,8 +17,7 @@ export default function FrequentQuestions() {
     { searchTerm }
   )
 
-  console.log(data)
-  const faqs = (data?.data?.data || []).filter((item: any) => item.answer && item.answer.trim() !== "").slice(0, 4)
+  const faqs = (data?.data?.data || []).filter((item: any) => item.answer && item.answer.trim() !== "").slice(0, 3)
 
 
   const toggleAccordion = (id: string) => {

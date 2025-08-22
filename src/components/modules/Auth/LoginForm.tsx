@@ -12,9 +12,18 @@ import { Input } from "@/components/ui/input";
 import config from "@/config";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
-import { type FieldValues, type SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate, useLocation } from "react-router";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const loginSchema = z.object({
+  email: z.email("Invalid email address"),
+  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+});
+
+type LoginSchema = z.infer<typeof loginSchema>;
 
 export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   const navigate = useNavigate();
@@ -25,7 +34,8 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
   const fromState = (location.state as any)?.from?.pathname;
   const from = fromQuery || fromState || "/";
 
-  const form = useForm({
+  const form = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -34,21 +44,16 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
 
   const [login] = useLoginMutation();
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const onSubmit = async (data: LoginSchema) => {
     try {
       const res = await login(data).unwrap();
-
       if (res.success) {
         toast.success("Logged in successfully");
         navigate(from, { replace: true });
       }
     } catch (err: any) {
       console.error(err);
-      if (err.data?.message === "Password does not match") toast.error("Invalid credentials");
-      if (err.data?.message === "User is not verified") {
-        toast.error("Your account is not verified");
-        navigate("/verify", { state: data.email });
-      }
+      toast.error(err?.data?.message || "Invalid credentials");
     }
   };
 
@@ -76,8 +81,8 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
                     <Input
                       className="rounded-none text-white placeholder:text-gray-300"
                       placeholder="john@example.com"
+                      type="email"
                       {...field}
-                      value={field.value || ""}
                     />
                   </FormControl>
                   <FormMessage className="text-white" />
@@ -96,7 +101,6 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
                       type="password"
                       placeholder="********"
                       {...field}
-                      value={field.value || ""}
                     />
                   </FormControl>
                   <FormMessage className="text-white" />

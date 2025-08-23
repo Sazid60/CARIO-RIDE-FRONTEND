@@ -1,15 +1,16 @@
 import Logo from "@/assets/icons/Logo";
+import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { Linkedin, MessageCircle, PhoneCall } from "lucide-react";
 import { NavLink } from "react-router";
 
-const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/features", label: "Features" },
-  { to: "/about", label: "About" },
-  { to: "/faq", label: "FAQ" },
-  { to: "/contact", label: "Contact" },
-  { to: "/be-a-driver", label: "Become a Driver" },
-];
+// const navLinks = [
+//   { to: "/", label: "Home" },
+//   { to: "/features", label: "Features" },
+//   { to: "/about", label: "About" },
+//   { to: "/faq", label: "FAQ" },
+//   { to: "/contact", label: "Contact" },
+//   { to: "/be-a-driver", label: "Become a Driver" },
+// ];
 
 // Social/contact icons
 const contactIcons = [
@@ -31,6 +32,26 @@ const contactIcons = [
 ];
 
 export default function Footer() {
+  const { data } = useUserInfoQuery(undefined);
+  const user = data?.data;
+
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/features", label: "Features" },
+    { to: "/about", label: "About" },
+    { to: "/faq", label: "FAQ" },
+    { to: "/contact", label: "Contact" },
+  ];
+
+  if (user) {
+
+
+    if (user.role === "RIDER") {
+      navLinks.push({ to: "/book-ride", label: "Book a Ride" });
+    } else if (user.role === "DRIVER") {
+      navLinks.push({ to: "/start-driving", label: "Start Driving" });
+    }
+  }
   return (
     <footer className="bg-black text-white px-6 py-12">
       <div className="max-w-6xl mx-auto text-center">
@@ -41,7 +62,7 @@ export default function Footer() {
 
         {/* Description */}
         <p className="text-gray-300 max-w-xl mx-auto mb-6 text-sm md:text-base">
-          RideEasy is your trusted ride-sharing platform. Book rides instantly, track your journey in real-time, 
+          RideEasy is your trusted ride-sharing platform. Book rides instantly, track your journey in real-time,
           and enjoy safe and comfortable travel with our verified drivers across the city.
         </p>
 
@@ -53,8 +74,7 @@ export default function Footer() {
                 to={to}
                 end={to === "/"}
                 className={({ isActive }) =>
-                  `text-sm transition hover:text-primary ${
-                    isActive ? "text-primary font-semibold" : ""
+                  `text-sm transition hover:text-primary ${isActive ? "text-primary font-semibold" : ""
                   }`
                 }
               >
@@ -84,7 +104,7 @@ export default function Footer() {
         {/* Footer Bottom */}
         <div className="text-sm  border-t border-gray-700 pt-4">
           &copy; {new Date().getFullYear()}{" "}
-          <span className="text-orange-600">RideEasy Inc.</span>. All rights reserved.
+          <span className="text-orange-600">Cario-Rides Inc.</span>. All rights reserved.
         </div>
       </div>
     </footer>

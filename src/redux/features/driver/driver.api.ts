@@ -12,6 +12,14 @@ export const driverApi = baseApi.injectEndpoints({
             }),
             providesTags: ["DRIVER"],
         }),
+        goOnline: builder.mutation({
+            query: (location) => ({
+                url: "drivers/go-online",
+                method: "PATCH",
+                data: location,
+            }),
+            invalidatesTags: ["DRIVER"],
+        }),
     }),
 });
 

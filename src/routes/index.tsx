@@ -1,12 +1,11 @@
 import App from "@/App";
-import DashboardLayout from "@/components/layouts/DashboardLayout";
 import Login from "@/pages/PublicRoutes/Auth/Login";
 import Register from "@/pages/PublicRoutes/Auth/Register";
 
-import { generateRoutes } from "@/utils/generateRoutes";
 
-import { createBrowserRouter, Navigate } from "react-router";
-import { adminSidebarItems } from "./adminSidebarItems";
+
+import { createBrowserRouter} from "react-router";
+
 
 import { withAuth } from "@/utils/withAuth";
 import Unauthorized from "@/pages/PublicRoutes/Error/Unauthorized";
@@ -18,6 +17,8 @@ import Contact from "@/pages/PublicRoutes/Contact/Contact";
 import About from "@/pages/PublicRoutes/About/About";
 import Features from "@/pages/PublicRoutes/Feature/Features";
 import FrequentQuestions from "@/pages/PublicRoutes/FAQ/FrequentQuestions";
+import BookRide from "@/pages/RiderRoutes/BookRide";
+import MyRide from "@/pages/RiderRoutes/MyRide";
 
 
 
@@ -51,15 +52,15 @@ export const router = createBrowserRouter(
                     Component:FrequentQuestions ,
                     path: "/faq",
                 },
+                {
+                    Component:withAuth(BookRide, role.rider as TRole) ,
+                    path: "/book-ride",
+                },
+                {
+                    Component:withAuth(MyRide, role.rider as TRole) ,
+                    path: "/my-ride",
+                },
             ]
-        },
-        {
-            Component: withAuth(DashboardLayout, role.admin as TRole),
-            path: "/admin",
-
-            children: [
-                { index: true, element: <Navigate to="/admin/analytics" /> },
-                ...generateRoutes(adminSidebarItems)]
         },
         {
             Component: Login,

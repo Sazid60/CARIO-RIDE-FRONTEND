@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import config from "@/config";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
-import { Link, useNavigate, useLocation } from "react-router";
+import { Link, useNavigate} from "react-router";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -27,12 +27,8 @@ type LoginSchema = z.infer<typeof loginSchema>;
 
 export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const queryParams = new URLSearchParams(location.search);
-  const fromQuery = queryParams.get("redirect");
-  const fromState = (location.state as any)?.from?.pathname;
-  const from = fromQuery || fromState || "/";
+
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -49,7 +45,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
       const res = await login(data).unwrap();
       if (res.success) {
         toast.success("Logged in successfully");
-        navigate(from, { replace: true });
+        navigate("/", { replace: true });
       }
     } catch (err: any) {
       console.error(err);
@@ -59,7 +55,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
 
   // Google login handler
   const handleGoogleLogin = () => {
-    window.location.href = `${config.baseUrl}/auth/google?redirect=${encodeURIComponent(from)}`;
+    window.location.href = `${config.baseUrl}/auth/google`;
   };
 
   return (

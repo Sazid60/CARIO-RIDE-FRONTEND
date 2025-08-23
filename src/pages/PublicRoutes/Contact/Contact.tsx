@@ -77,7 +77,6 @@ export default function Contact() {
         >
           <div className="absolute inset-0 bg-black/50"></div>
 
-          {/* Your existing cards stay untouched */}
           <div className="relative space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {contactCards.slice(0, 2).map(card => (

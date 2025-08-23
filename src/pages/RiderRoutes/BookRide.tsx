@@ -15,6 +15,8 @@ import {
   useRequestRideMutation,
 } from "@/redux/features/rides/rides.api";
 import { toast } from "sonner";
+import { useNavigate } from "react-router";
+import { BounceLoader } from "react-spinners";
 
 const calculateFare = (distanceKm: number, baseFarePerKm = 100) => {
   return parseFloat((distanceKm * baseFarePerKm).toFixed(2));
@@ -26,6 +28,8 @@ export default function BookRide() {
   const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
   const [distanceKm, setDistanceKm] = useState<number>(0);
   const [fare, setFare] = useState<number>(0);
+
+  const navigate = useNavigate();
 
   const [requestRide, { isLoading }] = useRequestRideMutation();
   const { data: ridesData, refetch } = useGetAllRidesForRiderQuery(undefined);
@@ -161,6 +165,14 @@ export default function BookRide() {
     fetchRoute();
   }, [pickup, destination, latestRide]);
 
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <BounceLoader color="#f97316" size={80} />
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto p-6 border mt-20 relative z-10">
       <div className="h-[400px] w-full">
@@ -207,10 +219,12 @@ export default function BookRide() {
         ) : (
           <button
             className="mt-3 w-full bg-green-600 text-white py-2 hover:bg-green-700"
-            onClick={() => console.log("View my requested ride", latestRide)}
+            onClick={() => navigate(`/my-ride/${latestRide?._id}`)}
           >
             View My Requested Ride
           </button>
+
+
         )}
       </div>
     </div>

@@ -4,7 +4,7 @@ import Register from "@/pages/PublicRoutes/Auth/Register";
 
 
 
-import { createBrowserRouter} from "react-router";
+import { createBrowserRouter } from "react-router";
 
 
 import { withAuth } from "@/utils/withAuth";
@@ -19,6 +19,9 @@ import Features from "@/pages/PublicRoutes/Feature/Features";
 import FrequentQuestions from "@/pages/PublicRoutes/FAQ/FrequentQuestions";
 import BookRide from "@/pages/RiderRoutes/BookRide";
 import MyRide from "@/pages/RiderRoutes/MyRide";
+import StartDriving from "@/pages/DriverRoutes/StartDriving";
+import ContactAdmin from "@/pages/PublicRoutes/Contact/ContactAdmin";
+
 
 
 
@@ -49,17 +52,26 @@ export const router = createBrowserRouter(
                     path: "/features",
                 },
                 {
-                    Component:FrequentQuestions ,
+                    Component: FrequentQuestions,
                     path: "/faq",
                 },
                 {
-                    Component:withAuth(BookRide, role.rider as TRole) ,
+                    Component: withAuth(BookRide, role.rider as TRole),
                     path: "/book-ride",
                 },
                 {
-                    Component:withAuth(MyRide, role.rider as TRole) ,
-                    path: "/my-ride",
+                    Component: withAuth(MyRide, role.rider as TRole),
+                    path: "/my-ride/:rideId",
                 },
+                {
+                    Component: withAuth(StartDriving, role.driver as TRole),
+                    path: "/start-driving",
+                },
+                {
+                    Component: ContactAdmin,
+                    path: "/contact-admin",
+                },
+
             ]
         },
         {

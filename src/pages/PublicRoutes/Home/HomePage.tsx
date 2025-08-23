@@ -31,7 +31,7 @@ export function HomePage() {
       <ServiceHighlights totalRides={totalRides} />
       <CustomerFeedbackMarquee feedbacks={feedbacks} />
       <HowItWorks />
-      <CallToAction />
+      <CallToAction userRole={userRole} />
     </div>
   );
 }

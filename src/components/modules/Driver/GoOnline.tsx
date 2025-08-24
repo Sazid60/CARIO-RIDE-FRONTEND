@@ -36,12 +36,12 @@ export default function GoOnline() {
 
   return (
     <section className="flex flex-col items-center justify-center  px-4 text-center gap-6">
-      <h1 className="text-4xl font-bold uppercase">Mark Yourself Online!</h1>
+      <h1 className="text-xl md:text-4xl font-bold uppercase">Mark Yourself Online!</h1>
 
       <Button
         onClick={handleGoOnline}
         disabled={isLoading}
-        className="px-10 py-4 text-lg font-bold bg-primary rounded-none hover:bg-primary/90 transition-all shadow-lg focus:ring-4 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-10 py-4 md:text-lg font-bold rounded-none  shadow-lg  disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? "Going Online..." : "Go Online"}
       </Button>

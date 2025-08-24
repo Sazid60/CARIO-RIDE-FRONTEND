@@ -21,6 +21,7 @@ import BookRide from "@/pages/RiderRoutes/BookRide";
 import MyRide from "@/pages/RiderRoutes/MyRide";
 import StartDriving from "@/pages/DriverRoutes/StartDriving";
 import ContactAdmin from "@/pages/PublicRoutes/Contact/ContactAdmin";
+import RideDetails from "@/pages/DriverRoutes/RideDetails";
 
 
 
@@ -70,6 +71,10 @@ export const router = createBrowserRouter(
                 {
                     Component: ContactAdmin,
                     path: "/contact-admin",
+                },
+                {
+                    Component: withAuth(RideDetails, role.driver as TRole),
+                    path: "/my-accepted-ride/:id",
                 },
 
             ]

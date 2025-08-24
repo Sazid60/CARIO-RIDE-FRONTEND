@@ -11,12 +11,14 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import axios from "axios";
 import {
+  useCancelRideMutation,
   useGetAllRidesForRiderQuery,
   useRequestRideMutation,
 } from "@/redux/features/rides/rides.api";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { BounceLoader } from "react-spinners";
+import { Button } from "@/components/ui/button";
 
 const calculateFare = (distanceKm: number, baseFarePerKm = 100) => {
   return parseFloat((distanceKm * baseFarePerKm).toFixed(2));
@@ -25,6 +27,7 @@ const calculateFare = (distanceKm: number, baseFarePerKm = 100) => {
 export default function BookRide() {
   const [pickup, setPickup] = useState<[number, number] | null>(null);
   const [destination, setDestination] = useState<[number, number] | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<[number, number] | null>(null);
   const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
   const [distanceKm, setDistanceKm] = useState<number>(0);
   const [fare, setFare] = useState<number>(0);
@@ -33,12 +36,15 @@ export default function BookRide() {
 
   const [requestRide, { isLoading }] = useRequestRideMutation();
   const { data: ridesData, refetch } = useGetAllRidesForRiderQuery(undefined);
+  const [cancelRide, { isLoading: isCanceling }] = useCancelRideMutation();
 
   const [latestRide, setLatestRide] = useState<any>(null);
   useEffect(() => {
     if (ridesData?.data?.data?.length) {
-      const requestedRides = ridesData.data.data.filter(
-        (ride: any) => ride.rideStatus === "REQUESTED"
+      const statuses = ["ACCEPTED", "REQUESTED", "PICKED_UP", "IN_TRANSIT", "ARRIVED"];
+
+      const requestedRides = ridesData.data.data.filter((ride: any) =>
+        statuses.includes(ride.rideStatus)
       );
 
       if (requestedRides.length) {
@@ -100,7 +106,7 @@ export default function BookRide() {
   }
 
   const bookRide = async () => {
-    if (!pickup || !destination) return;
+    if (!pickup || !destination || !currentLocation) return;
 
     const rideData = {
       pickupLocation: {
@@ -110,6 +116,10 @@ export default function BookRide() {
       destination: {
         type: "Point",
         coordinates: [destination[1], destination[0]],
+      },
+      currentLocation: {
+        type: "Point",
+        coordinates: [currentLocation[1], currentLocation[0]],
       },
       distanceKm,
       fare,
@@ -126,11 +136,25 @@ export default function BookRide() {
     }
   };
 
+
+  const handleCancelRide = async () => {
+    if (!latestRide?._id) return;
+    try {
+      await cancelRide(latestRide._id).unwrap();
+      toast.success("Ride cancelled successfully!");
+      refetch();
+    } catch (err: any) {
+      console.error("Failed to cancel ride:", err);
+      toast.error(err?.data?.message || "Something went wrong while cancelling");
+    }
+  };
+
   // Get current location if no ride yet
   useEffect(() => {
     if (!latestRide && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
         setPickup([pos.coords.latitude, pos.coords.longitude]);
+        setCurrentLocation([pos.coords.latitude, pos.coords.longitude]);
       });
     }
   }, [latestRide]);
@@ -209,20 +233,29 @@ export default function BookRide() {
         )}
 
         {!latestRide ? (
-          <button
+          <Button
             disabled={!destination || isLoading}
             onClick={bookRide}
-            className="mt-3 w-full bg-primary text-white py-2 hover:bg-primary/90 disabled:opacity-50"
+            className="mt-3 w-full rounded-none"
           >
             {isLoading ? "Requesting..." : "Request a Ride"}
-          </button>
+          </Button>
         ) : (
-          <button
-            className="mt-3 w-full bg-green-600 text-white py-2 hover:bg-green-700"
-            onClick={() => navigate(`/my-ride/${latestRide?._id}`)}
-          >
-            View My Requested Ride
-          </button>
+          <>
+            <Button
+              className="mt-3 w-full bg-green-600 text-white py-2 hover:bg-green-700 rounded-none"
+              onClick={() => navigate(`/my-ride/${latestRide?._id}`)}
+            >
+              View My Requested Ride
+            </Button>
+            <Button
+              className="mt-3 w-full bg-red-600 text-white py-2 hover:bg-red-700 rounded-none"
+              onClick={handleCancelRide}
+              disabled={isCanceling}
+            >
+              {isCanceling ? "Cancelling..." : "Cancel My Ride"}
+            </Button>
+          </>
 
 
         )}

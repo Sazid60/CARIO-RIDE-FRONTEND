@@ -26,7 +26,7 @@ export default function RideTimeline({ ride }: TimelineProps) {
 
   return (
     <div className="w-full overflow-x-auto">
-      <Timeline defaultValue={currentStepIndex + 1} orientation="vertical" className="w-full">
+      <Timeline value={currentStepIndex + 1} orientation="vertical" className="w-full">
         {timelineItems.map((item) => (
           <TimelineItem key={item.id} step={item.id}>
             <TimelineHeader>

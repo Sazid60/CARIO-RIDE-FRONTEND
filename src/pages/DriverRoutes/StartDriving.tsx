@@ -4,9 +4,10 @@ import Breadcrumb from "@/components/layouts/Breadcrumb";
 import drivingImg from "@/assets/images/ride.webp";
 import GoOnline from "@/components/modules/Driver/GoOnline";
 import { useGetDriverProfileQuery } from "@/redux/features/driver/driver.api";
+import RidesNearMe from "@/components/modules/Driver/RidesNearMe";
 
 export default function StartDriving() {
-  const { data, isLoading } = useGetDriverProfileQuery(undefined);
+  const { data, isLoading } = useGetDriverProfileQuery(undefined,);
   const driver = data?.data;
 
   console.log(driver)
@@ -29,9 +30,9 @@ export default function StartDriving() {
       />
 
       {/* Main Content */}
-      <div className="flex items-center justify-center mt-12">
+      <div className="flex items-center justify-center mt-12 w-full">
         <h1 className="text-3xl font-bold">
-          {driver?.onlineStatus === "ONLINE" ? "Rides Near Me" : <GoOnline/>}
+          {driver?.onlineStatus === "ONLINE" ? <RidesNearMe/> : <GoOnline/>}
         </h1>
       </div>
     </section>

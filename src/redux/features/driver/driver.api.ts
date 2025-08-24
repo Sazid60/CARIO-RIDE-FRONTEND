@@ -14,9 +14,24 @@ export const driverApi = baseApi.injectEndpoints({
         }),
         goOnline: builder.mutation({
             query: (location) => ({
-                url: "drivers/go-online",
+                url: "/drivers/go-online",
                 method: "PATCH",
                 data: location,
+            }),
+            invalidatesTags: ["DRIVER"],
+        }),
+        goOffline: builder.mutation({
+            query: () => ({
+                url: "/drivers/go-offline",
+                method: "PATCH",
+            }),
+            invalidatesTags: ["DRIVER"],
+        }),
+        updateDriverLocation: builder.mutation({
+            query: (location) => ({
+                url: "/drivers/driver-location-update",
+                method: "PATCH",
+                data: location
             }),
             invalidatesTags: ["DRIVER"],
         }),
@@ -24,6 +39,9 @@ export const driverApi = baseApi.injectEndpoints({
 });
 
 export const {
-    useGetDriverProfileQuery
+    useGetDriverProfileQuery,
+    useGoOnlineMutation,
+    useGoOfflineMutation,
+    useUpdateDriverLocationMutation
 } = driverApi
 

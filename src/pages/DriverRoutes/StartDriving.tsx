@@ -22,14 +22,12 @@ export default function StartDriving() {
 
   return (
     <section className="min-h-screen">
-      {/* Breadcrumb */}
       <Breadcrumb
         title="Start Driving"
         description="Manage your driving status and nearby rides."
         backgroundImage={drivingImg}
       />
 
-      {/* Main Content */}
       <div className="flex items-center justify-center mt-12 w-full">
         <h1 className="text-3xl font-bold">
           {driver?.onlineStatus === "ONLINE" ? <RidesNearMe/> : <GoOnline/>}

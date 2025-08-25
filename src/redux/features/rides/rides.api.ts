@@ -95,10 +95,62 @@ export const ridesApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["RIDES"],
         }),
+        pickupRide: builder.mutation({
+            query: (rideId) => ({
+                url: `/rides/pickup-rider/${rideId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["RIDES"],
+        }),
+        startRide: builder.mutation({
+            query: (rideId) => ({
+                url: `/rides/start-ride/${rideId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["RIDES"],
+        }),
+        markArrived: builder.mutation({
+            query: (rideId) => ({
+                url: `/rides/arrived-destination/${rideId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["RIDES"],
+        }),
+
+        // rider________________________
+
+        payOnline: builder.mutation({
+            query: (rideId) => ({
+                url: `/rides/pay-online/${rideId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["RIDES"],
+        }),
+        payOffline: builder.mutation({
+            query: (rideId) => ({
+                url: `/rides/pay-offline/${rideId}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["RIDES"],
+        }),
+        giveFeedback: builder.mutation({
+            query: ({ rideId, feedback }) => ({
+                url: `/rides/feedback/${rideId}`,
+                method: "PATCH",
+                data: feedback
+            }),
+            invalidatesTags: ["RIDES"],
+        })
     }),
 });
 
 export const {
+    usePayOfflineMutation,
+    useGiveFeedbackMutation,
+    usePayOnlineMutation,
+    useStartRideMutation,
+    useMarkArrivedMutation,
+    usePickupRideMutation,
     useUpdateRideLocationMutation,
     useRideAcceptedByMeQuery,
     useAcceptRideMutation,

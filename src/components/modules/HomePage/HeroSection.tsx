@@ -4,18 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 
 export default function HeroSection({ userRole }: { userRole: string }) {
-  const showButtons = userRole === "RIDER"; 
-
   return (
     <section className="relative overflow-hidden min-h-screen flex items-center justify-center py-20 md:py-32">
-
       <div className="absolute inset-0 w-full h-full">
         <img
           alt="background"
           src={hero}
           className="w-full h-full object-cover"
         />
-
         <div className="absolute inset-0 bg-black/70"></div>
       </div>
 
@@ -39,7 +35,8 @@ export default function HeroSection({ userRole }: { userRole: string }) {
             </p>
           </div>
 
-          {showButtons && (
+          {/* Conditional Buttons */}
+          {userRole === "RIDER" && (
             <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 w-full justify-center">
               <Link to="/book-ride">
                 <Button className="w-full bg-primary sm:w-auto px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
@@ -52,6 +49,16 @@ export default function HeroSection({ userRole }: { userRole: string }) {
                   className="w-full sm:w-auto px-6 py-3 rounded-none bg-white/10 hover:bg-transparent hover:text-primary backdrop-blur-3xl text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105 text-white"
                 >
                   Become a Driver
+                </Button>
+              </Link>
+            </div>
+          )}
+
+          {userRole === "DRIVER" && (
+            <div className="mt-8">
+              <Link to="/start-driving">
+                <Button className="bg-primary px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
+                  Start Driving
                 </Button>
               </Link>
             </div>

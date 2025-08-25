@@ -19,8 +19,8 @@ export default function CallToAction({ userRole }: CallToActionProps) {
       title: "Join Our Driver Network",
       description:
         "Become a part of our growing platform and start earning with flexible hours, reliable support, and seamless ride requests. Enjoy features like real-time ride assignments, navigation support, and transparent earnings.",
-      buttonText: "Start Riding",
-      buttonLink: "/driver-dashboard",
+      buttonText: "Start Driving",
+      buttonLink: "/start-driving",
     },
     ADMIN: {
       title: "Manage the Platform",

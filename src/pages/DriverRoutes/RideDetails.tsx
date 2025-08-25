@@ -141,11 +141,10 @@ export default function RideDetails() {
   // Fetch route
   useEffect(() => {
     const fetchRoute = async () => {
-      if (driverCoords && ride?.pickupLocation && ride?.destination) {
+      if (ride?.currentLocation && ride?.destination) {
         try {
           const coords = [
-            [driverCoords[1], driverCoords[0]],
-            ride.pickupLocation.coordinates,
+            ride.currentLocation.coordinates, 
             ride.destination.coordinates,
           ]
             .map((c) => `${c[0]},${c[1]}`)
@@ -156,7 +155,7 @@ export default function RideDetails() {
           );
 
           const route = res.data.routes[0].geometry.coordinates.map(
-            (c: [number, number]) => [c[1], c[0]]
+            (c: [number, number]) => [c[1], c[0]] 
           );
           setRouteCoords(route);
         } catch (err) {
@@ -165,7 +164,8 @@ export default function RideDetails() {
       }
     };
     fetchRoute();
-  }, [driverCoords, ride]);
+  }, [ride?.currentLocation, ride?.destination]);
+
 
   // Fetch addresses
   useEffect(() => {
@@ -173,7 +173,7 @@ export default function RideDetails() {
       if (ride?.pickupLocation && ride?.destination) {
         try {
           const pickupRes = await axios.get(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${ride.pickupLocation.coordinates[1]}&lon=${ride.pickupLocation.coordinates[0]}`
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${ride.currentLocation.coordinates[1]}&lon=${ride.currentLocation.coordinates[0]}`
           );
           setPickupAddress(pickupRes.data.display_name);
 
@@ -189,7 +189,6 @@ export default function RideDetails() {
     fetchAddresses();
   }, [ride]);
 
-  // Location watcher that updates only when driver moves ---
   useEffect(() => {
     if (!ride) return;
 

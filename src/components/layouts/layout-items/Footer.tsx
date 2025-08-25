@@ -3,16 +3,8 @@ import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { Linkedin, MessageCircle, PhoneCall } from "lucide-react";
 import { NavLink } from "react-router";
 
-// const navLinks = [
-//   { to: "/", label: "Home" },
-//   { to: "/features", label: "Features" },
-//   { to: "/about", label: "About" },
-//   { to: "/faq", label: "FAQ" },
-//   { to: "/contact", label: "Contact" },
-//   { to: "/be-a-driver", label: "Become a Driver" },
-// ];
 
-// Social/contact icons
+
 const contactIcons = [
   {
     icon: Linkedin,
@@ -48,6 +40,7 @@ export default function Footer() {
 
     if (user.role === "RIDER") {
       navLinks.push({ to: "/book-ride", label: "Book a Ride" });
+      navLinks.push({ to: "/driver-register", label: "Become a Driver" });
     } else if (user.role === "DRIVER") {
       navLinks.push({ to: "/start-driving", label: "Start Driving" });
     }

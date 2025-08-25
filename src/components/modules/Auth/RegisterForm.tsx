@@ -56,8 +56,6 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
       location: { type: "Point", coordinates: [0, 0] },
     },
   });
-
-  // Get geolocation
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -105,7 +103,7 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
       navigate("/");
     } catch (err: any) {
       console.error(err);
-      toast.error("Registration failed");
+      toast.error(err.data.message);
     }
   };
 
@@ -119,7 +117,6 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
             
-            {/* Row 1: Name & Email */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -149,7 +146,6 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
               />
             </div>
 
-            {/* Row 2: Password & Phone */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -179,7 +175,6 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
               />
             </div>
 
-            {/* Profile Image */}
             <FormItem className="mt-4 space-y-4">
               <FormLabel>Profile Image</FormLabel>
               <FormControl>
@@ -187,7 +182,6 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
               </FormControl>
             </FormItem>
 
-            {/* Location Display */}
             {location && (
               <div className="text-sm text-gray-500">
                 Location Captured: {location.lat}, {location.lng}

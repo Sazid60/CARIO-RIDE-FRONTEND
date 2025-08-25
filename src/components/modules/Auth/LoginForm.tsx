@@ -76,7 +76,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
                   <FormControl>
                     <Input
                       className="rounded-none text-white placeholder:text-gray-300"
-                      placeholder="john@example.com"
+                      placeholder="Your Email"
                       type="email"
                       {...field}
                     />

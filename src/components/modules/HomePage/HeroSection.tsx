@@ -3,15 +3,41 @@ import hero from "@/assets/images/hero.webp";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 
-export default function HeroSection({ userRole }: { userRole: string }) {
+interface HeroSectionProps {
+  userRole: string;
+}
+
+export default function HeroSection({ userRole }: HeroSectionProps) {
+  let heading = "";
+  let description = "";
+
+  switch (userRole) {
+    case "RIDER":
+      heading = "Book Rides Effortlessly Across the City";
+      description =
+        "Find trusted drivers, track your ride in real-time, and enjoy a safe, comfortable journey every time.";
+      break;
+    case "DRIVER":
+      heading = "Drive Your Way to Freedom";
+      description =
+        "Accept rides, earn on your schedule, and be your own boss while driving across the city.";
+      break;
+    case "ADMIN":
+      heading = "Manage Rides and Users Efficiently";
+      description =
+        "Oversee drivers, monitor rides, and ensure smooth operations across the platform.";
+      break;
+    default:
+      heading = "Welcome to Our Ride Platform";
+      description =
+        "Book rides, become a driver, and enjoy seamless travel experiences across the city.";
+      break;
+  }
+
   return (
     <section className="relative overflow-hidden min-h-screen flex items-center justify-center py-20 md:py-32">
       <div className="absolute inset-0 w-full h-full">
-        <img
-          alt="background"
-          src={hero}
-          className="w-full h-full object-cover"
-        />
+        <img alt="background" src={hero} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/70"></div>
       </div>
 
@@ -25,13 +51,10 @@ export default function HeroSection({ userRole }: { userRole: string }) {
 
           <div>
             <h1 className="mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-snug uppercase">
-              Drive Your Way to Freedom <br />
-              Earn on Your Schedule <br />
-              Be Your Own Boss
+              {heading}
             </h1>
             <p className="mx-auto max-w-3xl text-white text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
-              Book rides instantly with trusted drivers, track your journey in real-time,
-              and enjoy safe and comfortable travel across the city.
+              {description}
             </p>
           </div>
 
@@ -59,6 +82,16 @@ export default function HeroSection({ userRole }: { userRole: string }) {
               <Link to="/start-driving">
                 <Button className="bg-primary px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
                   Start Driving
+                </Button>
+              </Link>
+            </div>
+          )}
+
+          {userRole === "ADMIN" && (
+            <div className="mt-8">
+              <Link to="/dashboard">
+                <Button className="bg-primary px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
+                  Dashboard
                 </Button>
               </Link>
             </div>

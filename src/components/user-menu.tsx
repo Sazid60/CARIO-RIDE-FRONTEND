@@ -26,7 +26,7 @@ export default function UserMenu({ data }: any) {
   
   const handleLogout = async () => {
     await logout(undefined);
-    navigate("/login")
+    navigate("/")
     dispatch(authApi.util.resetApiState());
   };
 

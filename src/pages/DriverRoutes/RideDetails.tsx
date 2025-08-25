@@ -255,8 +255,8 @@ export default function RideDetails() {
     );
 
   const pickupCoords: [number, number] = [
-    ride.pickupLocation.coordinates[1],
-    ride.pickupLocation.coordinates[0],
+    ride.currentLocation.coordinates[1],
+    ride.currentLocation.coordinates[0],
   ];
   const destinationCoords: [number, number] = [
     ride.destination.coordinates[1],

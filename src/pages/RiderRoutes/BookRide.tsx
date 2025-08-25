@@ -149,7 +149,6 @@ export default function BookRide() {
     }
   };
 
-  // Get current location if no ride yet
   useEffect(() => {
     if (!latestRide && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {

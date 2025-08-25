@@ -10,7 +10,7 @@ import { BounceLoader } from "react-spinners";
 export const withAuth = (Component: ComponentType, requiredRole?: TRole) => {
   return function AuthWrapper() {
     const { data, isLoading } = useUserInfoQuery(undefined);
-    const { data: driverData, isLoading: isDriverLoading } = useGetDriverProfileQuery(undefined)
+    const { data: driverData, isLoading: isDriverLoading } = useGetDriverProfileQuery(undefined, { skip: requiredRole !== "DRIVER" })
 
     const location = useLocation();
 

@@ -109,7 +109,6 @@ export default function Contact() {
         </div>
 
 
-        {/* Right Side - Contact Form */}
         <div className="text-white bg-background border p-6 md:p-10">
           <h2 className="mb-7 text-center lg:text-left text-md sm:text-3xl font-bold uppercase">
             Would You Like to Discuss?

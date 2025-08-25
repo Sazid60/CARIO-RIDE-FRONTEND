@@ -80,7 +80,6 @@ export default function About() {
                             <div className="absolute inset-0 bg-black/30"></div>
                         </div>
 
-                        {/* Right Side - Content */}
                         <div className="flex flex-col justify-center">
                             {/* Header */}
                             <div className="mb-6">
@@ -123,7 +122,6 @@ export default function About() {
                                 </Button>
                             </div>
 
-                            {/* Mission/Vision Content */}
                             <Card className="rounded-none">
                                 <CardContent className="p-4 sm:p-6">
                                     <div>

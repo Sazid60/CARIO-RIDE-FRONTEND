@@ -43,7 +43,7 @@ export default function HeroSection({ userRole }: { userRole: string }) {
                   Book a Ride
                 </Button>
               </Link>
-              <Link to="/be-driver">
+              <Link to="/driver-register">
                 <Button
                   variant="outline"
                   className="w-full sm:w-auto px-6 py-3 rounded-none bg-white/10 hover:bg-transparent hover:text-primary backdrop-blur-3xl text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105 text-white"

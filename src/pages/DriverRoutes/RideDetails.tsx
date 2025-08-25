@@ -97,7 +97,6 @@ export default function RideDetails() {
     }
   };
 
-  // Leaflet markers setup
   delete (L.Icon.Default.prototype as any)._getIconUrl;
   L.Icon.Default.mergeOptions({
     iconRetinaUrl:
@@ -130,7 +129,6 @@ export default function RideDetails() {
     shadowSize: [41, 41],
   });
 
-  // Set driver initial coords
   useEffect(() => {
     if (driver?.currentLocation?.coordinates) {
       const [lon, lat] = driver.currentLocation.coordinates;
@@ -138,7 +136,6 @@ export default function RideDetails() {
     }
   }, [driver]);
 
-  // Fetch route
   useEffect(() => {
     const fetchRoute = async () => {
       if (ride?.currentLocation && ride?.destination) {
@@ -167,7 +164,6 @@ export default function RideDetails() {
   }, [ride?.currentLocation, ride?.destination]);
 
 
-  // Fetch addresses
   useEffect(() => {
     const fetchAddresses = async () => {
       if (ride?.pickupLocation && ride?.destination) {
@@ -308,7 +304,6 @@ export default function RideDetails() {
               </p>
             </div>
 
-            {/* Dynamic Status Buttons */}
             <div className="mt-6">
               {ride.rideStatus === "ACCEPTED" && (
                 <Button

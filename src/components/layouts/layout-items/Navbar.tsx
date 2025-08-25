@@ -26,6 +26,7 @@ export default function Header() {
 
     if (user.role === "RIDER") {
       navigationLinks.push({ to: "/book-ride", label: "Book a Ride" });
+      navigationLinks.push({ to: "/driver-register", label: "Become a Driver" });
     } else if (user.role === "DRIVER") {
       navigationLinks.push({ to: "/start-driving", label: "Start Driving" });
     }
@@ -33,9 +34,7 @@ export default function Header() {
   return (
     <header className="px-4 md:px-6 bg-black/10 backdrop-blur-2xl z-100">
       <div className="flex h-16 items-center justify-between gap-4">
-        {/* Left side */}
         <div className="flex items-center gap-2">
-          {/* Mobile menu */}
           <Popover>
             <PopoverTrigger asChild>
               <Button className="group size-8 md:hidden" variant="ghost" size="icon">
@@ -73,8 +72,6 @@ export default function Header() {
               </div>
             </PopoverContent>
           </Popover>
-
-          {/* Desktop nav */}
           <div className="flex items-center gap-6">
             <NavLink to="/">
               <Logo />
@@ -95,8 +92,6 @@ export default function Header() {
             </div>
           </div>
         </div>
-
-        {/* Right side */}
         <div className="flex items-center gap-4">
           <ModeToggle />
           {data?.data?.email && (

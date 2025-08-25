@@ -118,7 +118,14 @@ export const ridesApi = baseApi.injectEndpoints({
         }),
 
         // rider________________________
-
+        registerAsDriver: builder.mutation({
+            query: (driverInfo) => ({
+                url: "/drivers/register",
+                method: "POST",
+                data: driverInfo,
+            }),
+            invalidatesTags: ["DRIVER"],
+        }),
         payOnline: builder.mutation({
             query: (rideId) => ({
                 url: `/rides/pay-online/${rideId}`,
@@ -145,6 +152,7 @@ export const ridesApi = baseApi.injectEndpoints({
 });
 
 export const {
+    useRegisterAsDriverMutation,
     usePayOfflineMutation,
     useGiveFeedbackMutation,
     usePayOnlineMutation,

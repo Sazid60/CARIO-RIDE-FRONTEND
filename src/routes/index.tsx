@@ -4,7 +4,7 @@ import Register from "@/pages/PublicRoutes/Auth/Register";
 
 
 
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 
 
 import { withAuth } from "@/utils/withAuth";
@@ -23,7 +23,10 @@ import StartDriving from "@/pages/DriverRoutes/StartDriving";
 import ContactAdmin from "@/pages/PublicRoutes/Contact/ContactAdmin";
 import RideDetails from "@/pages/DriverRoutes/RideDetails";
 import RegisterAsDriver from "@/pages/RiderRoutes/RegisterAsDriver";
-
+import { riderSidebarItems } from "./riderSidebarItems";
+import { generateRoutes } from "@/utils/generateRoutes";
+import DashboardLayout from "@/components/layouts/DashboardLayout";
+import MyRideDetails from "@/pages/RiderRoutes/RiderDashboardComponents/MyRideDetails";
 
 
 
@@ -81,7 +84,19 @@ export const router = createBrowserRouter(
                     Component: withAuth(RegisterAsDriver, role.rider as TRole),
                     path: "/driver-register",
                 },
+                {
+                    Component: withAuth(MyRideDetails, role.rider as TRole),
+                    path: `/my-ride-details/:id`,
+                },
 
+            ]
+        },
+        {
+            Component: withAuth(DashboardLayout, role.rider as TRole),
+            path: "/rider",
+            children: [
+                { index: true, element: <Navigate to="/rider/analytics" /> },
+                ...generateRoutes(riderSidebarItems)
             ]
         },
         {

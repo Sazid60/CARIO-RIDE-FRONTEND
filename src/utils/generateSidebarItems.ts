@@ -1,18 +1,19 @@
 
-// import { role } from "@/constants/role";
-// import { adminSidebarItems } from "@/routes/adminSidebarItems";
+import { role } from "@/constants/role";
+import { riderSidebarItems } from "@/routes/riderSidebarItems";
 
-// import type { TRole } from "@/types";
 
-// export const generateSidebarItems = (userRole: TRole) => {
+import type { TRole } from "@/types";
 
-//     switch (userRole) {
-//         case role.admin: {
-//             return [...adminSidebarItems]
-//         }
+export const generateSidebarItems = (userRole: TRole) => {
 
-//         default:
-//             return []
+    switch (userRole) {
+        case role.rider: {
+            return [...riderSidebarItems]
+        }
 
-//     }
-// }
+        default:
+            return []
+
+    }
+}

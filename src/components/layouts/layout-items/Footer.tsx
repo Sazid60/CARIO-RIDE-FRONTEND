@@ -1,4 +1,5 @@
 import Logo from "@/assets/icons/Logo";
+import { role } from "@/constants/role";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { Linkedin, MessageCircle, PhoneCall } from "lucide-react";
 import { NavLink } from "react-router";
@@ -28,21 +29,23 @@ export default function Footer() {
   const user = data?.data;
 
   const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/features", label: "Features" },
-    { to: "/about", label: "About" },
-    { to: "/faq", label: "FAQ" },
-    { to: "/contact", label: "Contact" },
+    { href: "/", label: "Home", role: "PUBLIC" },
+    { href: "/features", label: "Features", role: "PUBLIC" },
+    { href: "/about", label: "About", role: "PUBLIC" },
+    { href: "/faq", label: "FAQ", role: "PUBLIC" },
+    { href: "/contact", label: "Contact", role: "PUBLIC" },
   ];
 
   if (user) {
-
-
     if (user.role === "RIDER") {
-      navLinks.push({ to: "/book-ride", label: "Book a Ride" });
-      navLinks.push({ to: "/driver-register", label: "Become a Driver" });
+      navLinks.push({ href: "/book-ride", label: "Book a Ride", role: role.rider});
+      navLinks.push({ href: "/driver-register", label: "Become a Driver", role: role.rider });
+      navLinks.push({ href: "/rider", label: "Dashboard", role: role.rider });
     } else if (user.role === "DRIVER") {
-      navLinks.push({ to: "/start-driving", label: "Start Driving" });
+      navLinks.push({ href: "/start-driving", label: "Start Driving", role: role.driver });
+      navLinks.push({ href: "/driver", label: "Dashboard", role: role.driver });
+    } else if (user.role === "ADMIN") {
+      navLinks.push({ href: "/admin", label: "Dashboard", role: role.admin });
     }
   }
   return (
@@ -61,11 +64,11 @@ export default function Footer() {
 
         {/* Navigation Links */}
         <ul className="flex flex-wrap justify-center gap-6 mb-8">
-          {navLinks.map(({ to, label }) => (
-            <li key={to}>
+          {navLinks.map(({ href, label }) => (
+            <li key={href}>
               <NavLink
-                to={to}
-                end={to === "/"}
+                to={href}
+                end={href === "/"}
                 className={({ isActive }) =>
                   `text-sm transition hover:text-primary ${isActive ? "text-primary font-semibold" : ""
                   }`

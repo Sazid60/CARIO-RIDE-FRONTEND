@@ -10,3 +10,5 @@ export const generateRoutes = (sidebarItems : ISidebarItems[]) => {
     })))
 
 }
+
+

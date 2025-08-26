@@ -5,6 +5,7 @@ import UserMenu from "@/components/user-menu";
 import { ModeToggle } from "./ModeToggler";
 import { Link, NavLink } from "react-router";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
+import { role } from "@/constants/role";
 
 
 
@@ -14,21 +15,23 @@ export default function Header() {
 
 
   const navigationLinks = [
-    { to: "/", label: "Home" },
-    { to: "/features", label: "Features" },
-    { to: "/about", label: "About" },
-    { to: "/faq", label: "FAQ" },
-    { to: "/contact", label: "Contact" },
+    { href: "/", label: "Home", role: "PUBLIC" },
+    { href: "/features", label: "Features", role: "PUBLIC" },
+    { href: "/about", label: "About", role: "PUBLIC" },
+    { href: "/faq", label: "FAQ", role: "PUBLIC" },
+    { href: "/contact", label: "Contact", role: "PUBLIC" },
   ];
 
   if (user) {
-    navigationLinks.push({ to: "/dashboard", label: "Dashboard" });
-
     if (user.role === "RIDER") {
-      navigationLinks.push({ to: "/book-ride", label: "Book a Ride" });
-      navigationLinks.push({ to: "/driver-register", label: "Become a Driver" });
+      navigationLinks.push({ href: "/book-ride", label: "Book a Ride", role: role.rider});
+      navigationLinks.push({ href: "/driver-register", label: "Become a Driver", role: role.rider });
+      navigationLinks.push({ href: "/rider", label: "Dashboard", role: role.rider });
     } else if (user.role === "DRIVER") {
-      navigationLinks.push({ to: "/start-driving", label: "Start Driving" });
+      navigationLinks.push({ href: "/start-driving", label: "Start Driving", role: role.driver });
+      navigationLinks.push({ href: "/driver", label: "Dashboard", role: role.driver });
+    } else if (user.role === "ADMIN") {
+      navigationLinks.push({ href: "/admin", label: "Dashboard", role: role.admin });
     }
   }
   return (
@@ -59,8 +62,8 @@ export default function Header() {
               <div className="flex flex-col gap-2">
                 {navigationLinks.map((link) => (
                   <NavLink
-                    key={link.to}
-                    to={link.to}
+                    key={link.href}
+                    to={link.href}
                     className={({ isActive }) =>
                       `py-1.5 px-2 rounded-none font-medium transition-colors ${isActive ? "text-primary" : "text-muted-foreground"
                       } hover:text-primary`
@@ -79,8 +82,8 @@ export default function Header() {
             <div className="hidden md:flex gap-4">
               {navigationLinks.map((link) => (
                 <NavLink
-                  key={link.to}
-                  to={link.to}
+                  key={link.href}
+                  to={link.href}
                   className={({ isActive }) =>
                     `py-1.5 px-2 font-medium transition-colors ${isActive ? "text-primary" : "text-white hover:scale-105"
                     } hover:text-primary`
@@ -107,4 +110,5 @@ export default function Header() {
       </div>
     </header>
   );
+
 }

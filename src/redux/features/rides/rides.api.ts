@@ -147,11 +147,21 @@ export const ridesApi = baseApi.injectEndpoints({
                 data: feedback
             }),
             invalidatesTags: ["RIDES"],
-        })
+        }),
+        allRiderRide: builder.query({
+            query: (params) => ({
+                url: `/rides/all-rides-rider`,
+                method: "GET",
+                params
+            }),
+            providesTags: ["RIDES"],
+        }),
+
     }),
 });
 
 export const {
+    useAllRiderRideQuery,
     useRegisterAsDriverMutation,
     usePayOfflineMutation,
     useGiveFeedbackMutation,

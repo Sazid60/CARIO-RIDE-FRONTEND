@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 import Logo from "@/assets/icons/Logo"
 import { Link } from "react-router"
@@ -20,7 +21,7 @@ import { useUserInfoQuery } from "@/redux/features/auth/auth.api"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const {data : userData} = useUserInfoQuery(undefined)
+  const { data: userData } = useUserInfoQuery(undefined)
   const data = {
     navMain: generateSidebarItems(userData?.data?.role)
   }
@@ -29,7 +30,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar className="" {...props}>
       <SidebarHeader className="bg-background pl-4 py-4">
-        <Link to="/"><Logo /></Link>
+        <div className="flex justify-between">
+          <Link to="/"><Logo /></Link>
+          <SidebarTrigger className="-ml-1 md:hidden" />
+        </div>
+
       </SidebarHeader>
       <SidebarContent className="bg-background border-t">
         {data.navMain.map((item) => (

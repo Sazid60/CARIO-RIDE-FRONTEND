@@ -26,6 +26,7 @@ import RegisterAsDriver from "@/pages/RiderRoutes/RegisterAsDriver";
 import { riderSidebarItems } from "./riderSidebarItems";
 import { generateRoutes } from "@/utils/generateRoutes";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
+import MyRideDetails from "@/pages/RiderRoutes/RiderDashboardComponents/MyRideDetails";
 
 
 
@@ -82,6 +83,10 @@ export const router = createBrowserRouter(
                 {
                     Component: withAuth(RegisterAsDriver, role.rider as TRole),
                     path: "/driver-register",
+                },
+                {
+                    Component: withAuth(MyRideDetails, role.rider as TRole),
+                    path: `/my-ride-details/:id`,
                 },
 
             ]

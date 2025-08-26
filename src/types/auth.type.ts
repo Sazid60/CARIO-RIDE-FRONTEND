@@ -17,4 +17,4 @@ export interface ISidebarItems {
   }[]
 }
 
-export type TRole = "DRIVER" | "ADMIN" |"USER"
+export type TRole = "DRIVER" | "ADMIN" |"RIDER"

@@ -1,75 +1,44 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Breadcrumb from "@/components/layouts/Breadcrumb";
 import featureImg from "@/assets/images/features.webp";
 import { BounceLoader } from "react-spinners";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import { useGetAllRidesForRiderQuery } from "@/redux/features/rides/rides.api";
-
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
-import { Calendar } from "@/components/ui/calendar";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function RiderRideHistory() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit] = useState(10);
-
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+  const [dateSearchTerm, setDateSearchTerm] = useState(""); // new date search
   const [rideStatus, setRideStatus] = useState("");
 
-  useEffect(() => {
-    console.log({
-      searchTerm,
-      selectedDate,
-      rideStatus,
-    });
-  }, [searchTerm, selectedDate, rideStatus]);
+  const query: Record<string, string> = {
+    page: currentPage.toString(),
+    limit: limit.toString(),
+  };
+  if (searchTerm) query.searchTerm = searchTerm;
+  if (dateSearchTerm) query.dateSearch = dateSearchTerm; // date search
+  if (rideStatus) query.rideStatus = rideStatus;
 
-  const { data: ridesData, isLoading } = useGetAllRidesForRiderQuery({
-    page: currentPage,
-    limit,
-    searchTerm,
-  });
-
+  const { data: ridesData, isLoading } = useGetAllRidesForRiderQuery(query);
   const rides = ridesData?.data?.data || [];
   const totalPage = ridesData?.data?.meta?.totalPage || 1;
 
-  const formatDate = (date?: string) =>
-    date ? new Date(date).toLocaleString() : "N/A";
+  const formatDate = (date?: string) => (date ? new Date(date).toLocaleString() : "N/A");
+
+  const handleResetFilters = () => {
+    setSearchTerm("");
+    setDateSearchTerm("");
+    setRideStatus("");
+    setCurrentPage(1);
+  };
 
   if (isLoading) {
     return (
@@ -79,12 +48,6 @@ export default function RiderRideHistory() {
     );
   }
 
-  const handleResetFilters = () => {
-    setSearchTerm("");
-    setSelectedDate(undefined);
-    setRideStatus("");
-  };
-
   return (
     <section>
       <Breadcrumb
@@ -93,53 +56,49 @@ export default function RiderRideHistory() {
         backgroundImage={featureImg}
       />
 
-      <div className="flex flex-wrap justify-center items-center gap-3">
-
+      {/* Filters */}
+      <div className="flex flex-wrap justify-center items-center gap-3 mb-4">
+        {/* General Search */}
         <div className="flex-grow min-w-[250px] w-full sm:w-auto">
           <Input
             type="text"
-            placeholder="Search by Ride Status and transaction Id"
+            placeholder="Search by Ride Status or Transaction ID"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full rounded-none border border-gray-400 shadow-sm text-sm"
           />
         </div>
-        <div className="w-full sm:w-[200px]">
-          <Popover>
-            <PopoverTrigger className="" asChild>
-              <Button
-                variant="outline"
-                className="w-full justify-start text-left font-normal rounded-none border border-gray-400 shadow-sm text-xs px-4 "
-              >
-                <CalendarIcon className="mr-1 h-1 w-1" />
-                {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="rounded-none border">
-              <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={setSelectedDate}
-              />
-            </PopoverContent>
-          </Popover>
+
+        {/* Date Search */}
+        <div className="flex-grow min-w-[250px] w-full sm:w-auto">
+          <Input
+            type="text"
+            placeholder="Search by Date (YYYY-MM-DD)"
+            value={dateSearchTerm}
+            onChange={(e) => setDateSearchTerm(e.target.value)}
+            className="w-full rounded-none border border-gray-400 shadow-sm text-sm"
+          />
         </div>
+
+        {/* Ride Status Filter */}
         <div className="w-full sm:w-[200px] bg-background">
           <Select onValueChange={(val) => setRideStatus(val)} value={rideStatus}>
-            <SelectTrigger className="rounded-none border border-gray-400 shadow-sm text-xs w-full ">
+            <SelectTrigger className="rounded-none border border-gray-400 shadow-sm text-xs w-full">
               <SelectValue placeholder="Filter by Status" />
             </SelectTrigger>
             <SelectContent className="rounded-none">
-              <SelectItem className="rounded-none text-sm" value="REQUESTED">Requested</SelectItem>
-              <SelectItem className="rounded-none text-sm" value="ACCEPTED">Accepted</SelectItem>
-              <SelectItem className="rounded-none text-sm" value="PICKED_UP">Picked Up</SelectItem>
-              <SelectItem className="rounded-none text-sm" value="IN_TRANSIT">In Transit</SelectItem>
-              <SelectItem className="rounded-none text-sm" value="ARRIVED">Arrived</SelectItem>
-              <SelectItem className="rounded-none text-sm" value="COMPLETED">Completed</SelectItem>
-              <SelectItem className="rounded-none text-sm" value="CANCELLED">Cancelled</SelectItem>
+              <SelectItem value="REQUESTED">Requested</SelectItem>
+              <SelectItem value="ACCEPTED">Accepted</SelectItem>
+              <SelectItem value="PICKED_UP">Picked Up</SelectItem>
+              <SelectItem value="IN_TRANSIT">In Transit</SelectItem>
+              <SelectItem value="ARRIVED">Arrived</SelectItem>
+              <SelectItem value="COMPLETED">Completed</SelectItem>
+              <SelectItem value="CANCELLED">Cancelled</SelectItem>
             </SelectContent>
           </Select>
         </div>
+
+        {/* Reset Filters */}
         <div className="w-full sm:w-[150px]">
           <Button
             className="w-full bg-primary text-white rounded-none hover:bg-primary/90 text-sm"
@@ -149,6 +108,8 @@ export default function RiderRideHistory() {
           </Button>
         </div>
       </div>
+
+      {/* Table */}
       {rides.length > 0 ? (
         <div className="max-w-7xl mx-auto p-4">
           <Table>
@@ -170,12 +131,13 @@ export default function RiderRideHistory() {
                   <TableCell>{ride.fare ?? "N/A"}</TableCell>
                   <TableCell>
                     <span
-                      className={`px-2 py-1 rounded-none text-xs font-medium ${ride.rideStatus === "COMPLETED"
-                        ? "bg-green-100 text-green-700"
-                        : ride.rideStatus === "IN_TRANSIT"
+                      className={`px-2 py-1 rounded-none text-xs font-medium ${
+                        ride.rideStatus === "COMPLETED"
+                          ? "bg-green-100 text-green-700"
+                          : ride.rideStatus === "IN_TRANSIT"
                           ? "bg-blue-100 text-blue-700"
                           : "bg-gray-100 text-gray-700"
-                        }`}
+                      }`}
                     >
                       {ride.rideStatus ?? "N/A"}
                     </span>
@@ -186,11 +148,7 @@ export default function RiderRideHistory() {
                     {ride.payment?.invoiceUrl ? (
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button
-                            size="sm"
-                            className="rounded-none"
-                            variant="outline"
-                          >
+                          <Button size="sm" className="rounded-none" variant="outline">
                             View Invoice
                           </Button>
                         </DialogTrigger>
@@ -228,38 +186,19 @@ export default function RiderRideHistory() {
                 <PaginationContent>
                   <PaginationItem>
                     <PaginationPrevious
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.max(prev - 1, 1))
-                      }
-                      className={
-                        currentPage === 1
-                          ? "pointer-events-none opacity-50"
-                          : ""
-                      }
+                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                      className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
                     />
                   </PaginationItem>
-                  {Array.from({ length: totalPage }, (_, index) => index + 1).map(
-                    (page) => (
-                      <PaginationItem
-                        key={page}
-                        onClick={() => setCurrentPage(page)}
-                      >
-                        <PaginationLink isActive={currentPage === page}>
-                          {page}
-                        </PaginationLink>
-                      </PaginationItem>
-                    )
-                  )}
+                  {Array.from({ length: totalPage }, (_, index) => index + 1).map((page) => (
+                    <PaginationItem key={page} onClick={() => setCurrentPage(page)}>
+                      <PaginationLink isActive={currentPage === page}>{page}</PaginationLink>
+                    </PaginationItem>
+                  ))}
                   <PaginationItem>
                     <PaginationNext
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.min(prev + 1, totalPage))
-                      }
-                      className={
-                        currentPage === totalPage
-                          ? "pointer-events-none opacity-50"
-                          : ""
-                      }
+                      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPage))}
+                      className={currentPage === totalPage ? "pointer-events-none opacity-50" : ""}
                     />
                   </PaginationItem>
                 </PaginationContent>

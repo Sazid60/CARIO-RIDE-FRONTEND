@@ -6,16 +6,17 @@ import featureImg from "@/assets/images/features.webp";
 import { BounceLoader } from "react-spinners";
 import { MapContainer, TileLayer, Marker, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useGetMyRideQuery } from "@/redux/features/rides/rides.api";
+import { useSingleRideAcceptedByMeQuery } from "@/redux/features/rides/rides.api";
 import axios from "axios";
 import L from "leaflet";
 
-export default function MyRideDetails() {
+export default function DriverRideDetails() {
   const { id } = useParams<{ id: string }>();
-  const { data: rideData, isLoading } = useGetMyRideQuery(id, {pollingInterval :3000});
+  const { data: rideData, isLoading } = useSingleRideAcceptedByMeQuery(id, {pollingInterval :3000});
   const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
 
   const ride = rideData?.data;
+
 
   delete (L.Icon.Default.prototype as any)._getIconUrl;
   L.Icon.Default.mergeOptions({
@@ -27,14 +28,14 @@ export default function MyRideDetails() {
       "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
   });
 
-  // Fetch route from OSRM
+
   useEffect(() => {
     if (!ride) return;
 
     const fetchRoute = async () => {
       try {
         const coords = [
-          ride.pickupLocation.coordinates.join(","), // lng,lat
+          ride.pickupLocation.coordinates.join(","), 
           ride.destination.coordinates.join(","),
         ].join(";");
 
@@ -42,7 +43,6 @@ export default function MyRideDetails() {
           `https://router.project-osrm.org/route/v1/driving/${coords}?overview=full&geometries=geojson`
         );
 
-        // OSRM returns [lng, lat], Leaflet expects [lat, lng]
         const route = res.data.routes[0].geometry.coordinates.map(
           (c: [number, number]) => [c[1], c[0]]
         );
@@ -84,7 +84,7 @@ export default function MyRideDetails() {
     <section className="max-w-7xl mx-auto p-4">
       <Breadcrumb
         title="Ride Details"
-        description="View full details of your ride including map, route, and invoice."
+        description="View full details of your accepted ride including map, route, and invoice."
         backgroundImage={featureImg}
       />
 

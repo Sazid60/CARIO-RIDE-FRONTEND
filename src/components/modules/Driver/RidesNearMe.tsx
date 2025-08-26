@@ -23,15 +23,15 @@ export default function RidesNearMe() {
   const navigate = useNavigate();
 
   const [goOffline, { isLoading }] = useGoOfflineMutation();
-  const [acceptRide] = useAcceptRideMutation();
-  const [rejectRide] = useRejectRideMutation();
+  const [acceptRide, {isLoading : isAccepting}] = useAcceptRideMutation();
+  const [rejectRide, {isLoading :isRejecting }] = useRejectRideMutation();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [rides, setRides] = useState<any[]>([]);
 
   const limit = 10;
   const { data, isLoading: isRideLoading, refetch } = useRidesNearMeQuery(undefined, {
-    pollingInterval: 1000,
+    pollingInterval: 5000,
   });
 
   const { data: acceptedRideData } = useRideAcceptedByMeQuery(undefined);
@@ -130,18 +130,20 @@ export default function RidesNearMe() {
                       <TableCell className="flex justify-center gap-2 flex-wrap">
                         <Button
                           size="sm"
+                          disabled={isAccepting}
                           className="bg-green-600 rounded-none hover:bg-green-700 text-white text-[12px] md:text-xs"
                           onClick={() => handleAccept(ride._id)}
                         >
-                          Accept
+                          {isAccepting ? "Accepting.." : "Accept"}
                         </Button>
                         <Button
                           size="sm"
                           variant="destructive"
+                          disabled={isRejecting}
                           className="rounded-none text-[12px] md:text-xs"
                           onClick={() => handleReject(ride._id)}
                         >
-                          Reject
+                         {isRejecting ? "Rejecting.." : "Reject"}
                         </Button>
                       </TableCell>
                     </TableRow>

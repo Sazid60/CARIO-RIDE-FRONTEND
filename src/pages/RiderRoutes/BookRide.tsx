@@ -35,7 +35,7 @@ export default function BookRide() {
   const navigate = useNavigate();
 
   const [requestRide, { isLoading }] = useRequestRideMutation();
-  const { data: ridesData, refetch } = useGetAllRidesForRiderQuery(undefined);
+  const { data: ridesData, refetch } = useGetAllRidesForRiderQuery(undefined, { pollingInterval: 3000 });
   const [cancelRide, { isLoading: isCanceling }] = useCancelRideMutation();
 
   const [latestRide, setLatestRide] = useState<any>(null);
@@ -247,13 +247,15 @@ export default function BookRide() {
             >
               View My Requested Ride
             </Button>
-            <Button
-              className="mt-3 w-full bg-red-600 text-white py-2 hover:bg-red-700 rounded-none"
-              onClick={handleCancelRide}
-              disabled={isCanceling}
-            >
-              {isCanceling ? "Cancelling..." : "Cancel My Ride"}
-            </Button>
+            {latestRide.rideStatus !== "ARRIVED" && latestRide.rideStatus !== "IN_TRANSIT" && (
+              <Button
+                className="mt-3 w-full bg-red-600 text-white py-2 hover:bg-red-700 rounded-none"
+                onClick={handleCancelRide}
+                disabled={isCanceling}
+              >
+                {isCanceling ? "Cancelling..." : "Cancel My Ride"}
+              </Button>
+            )}
           </>
 
 

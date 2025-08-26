@@ -27,6 +27,10 @@ import { riderSidebarItems } from "./riderSidebarItems";
 import { generateRoutes } from "@/utils/generateRoutes";
 import DashboardLayout from "@/components/layouts/DashboardLayout";
 import MyRideDetails from "@/pages/RiderRoutes/RiderDashboardComponents/MyRideDetails";
+import { driverSidebarItems } from "./driverSidebarItems";
+import DriverRideDetails from "@/pages/DriverRoutes/DriverDashboardComponents/DriverRideDetails";
+import { adminSidebarItems } from "./adminSidebarItems";
+import AdminRideDetails from "@/pages/AdminRoutes/AdminDashboardComponents/AdminRideDetails";
 
 
 
@@ -88,6 +92,14 @@ export const router = createBrowserRouter(
                     Component: withAuth(MyRideDetails, role.rider as TRole),
                     path: `/my-ride-details/:id`,
                 },
+                {
+                    Component: withAuth(DriverRideDetails, role.driver as TRole),
+                    path: `/my-accepted-ride-details/:id`,
+                },
+                {
+                    Component: withAuth(AdminRideDetails, role.admin as TRole),
+                    path: `/single-ride-details/:id`,
+                },
 
             ]
         },
@@ -97,6 +109,22 @@ export const router = createBrowserRouter(
             children: [
                 { index: true, element: <Navigate to="/rider/analytics" /> },
                 ...generateRoutes(riderSidebarItems)
+            ]
+        },
+        {
+            Component: withAuth(DashboardLayout, role.driver as TRole),
+            path: "/driver",
+            children: [
+                { index: true, element: <Navigate to="/driver/analytics" /> },
+                ...generateRoutes(driverSidebarItems)
+            ]
+        },
+        {
+            Component: withAuth(DashboardLayout, role.admin as TRole),
+            path: "/admin",
+            children: [
+                { index: true, element: <Navigate to="/admin/analytics" /> },
+                ...generateRoutes(adminSidebarItems)
             ]
         },
         {

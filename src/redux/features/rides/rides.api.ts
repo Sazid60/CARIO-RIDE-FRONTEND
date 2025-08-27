@@ -28,6 +28,25 @@ export const ridesApi = baseApi.injectEndpoints({
             providesTags: ["RIDES"],
         }),
 
+        getAllRidesForDriver: builder.query({
+            query: (params) => ({
+                url: "/rides/all-rides-driver",
+                method: "GET",
+                params
+            }),
+            providesTags: ["RIDES"],
+        }),
+        getAllRidesForAdmin: builder.query({
+            query: (params) => ({
+                url: "/rides/all-rides-admin",
+                method: "GET",
+                params
+            }),
+            providesTags: ["RIDES"],
+        }),
+
+
+
         driverNearMe: builder.query({
             query: () => ({
                 url: "/rides/drivers-near",
@@ -84,6 +103,13 @@ export const ridesApi = baseApi.injectEndpoints({
         singleRideAcceptedByMe: builder.query({
             query: (id) => ({
                 url: `/rides/my-accepted-ride/${id}`,
+                method: "GET",
+            }),
+            providesTags: ["RIDES"],
+        }),
+        singleRideForAdmin: builder.query({
+            query: (id) => ({
+                url: `/rides/single-ride/${id}`,
                 method: "GET",
             }),
             providesTags: ["RIDES"],
@@ -154,7 +180,10 @@ export const ridesApi = baseApi.injectEndpoints({
 });
 
 export const {
+    useSingleRideForAdminQuery,
+    useGetAllRidesForAdminQuery,
     useRegisterAsDriverMutation,
+    useGetAllRidesForDriverQuery,
     usePayOfflineMutation,
     useGiveFeedbackMutation,
     usePayOnlineMutation,

@@ -8,11 +8,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
-import { useGetAllRidesForRiderQuery } from "@/redux/features/rides/rides.api";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useGetAllRidesForAdminQuery } from "@/redux/features/rides/rides.api";
 
-export default function RiderRideHistory() {
+
+export default function AdminRideHistory() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,7 +28,7 @@ export default function RiderRideHistory() {
   if (dateSearchTerm) query.dateSearch = dateSearchTerm; 
   if (rideStatus) query.rideStatus = rideStatus;
 
-  const { data: ridesData, isLoading } = useGetAllRidesForRiderQuery(query);
+  const { data: ridesData, isLoading } = useGetAllRidesForAdminQuery(query);
   const rides = ridesData?.data?.data || [];
   const totalPage = ridesData?.data?.meta?.totalPage || 1;
 
@@ -52,7 +53,7 @@ export default function RiderRideHistory() {
     <section>
       <Breadcrumb
         title="Ride History"
-        description="Review all your past rides, payments, and trip details in one place."
+        description="View full details of all rides created by all users"
         backgroundImage={featureImg}
       />
       <div className="flex flex-wrap justify-center items-center gap-3 mb-4">
@@ -80,7 +81,6 @@ export default function RiderRideHistory() {
               <SelectValue placeholder="Filter by Status" />
             </SelectTrigger>
             <SelectContent className="rounded-none">
-              <SelectItem value="REQUESTED">Requested</SelectItem>
               <SelectItem value="ACCEPTED">Accepted</SelectItem>
               <SelectItem value="PICKED_UP">Picked Up</SelectItem>
               <SelectItem value="IN_TRANSIT">In Transit</SelectItem>
@@ -161,7 +161,7 @@ export default function RiderRideHistory() {
                     )}
                   </TableCell>
                   <TableCell>
-                    <Link to={`/my-ride-details/${ride._id}`}>
+                    <Link to={`/single-ride-details/${ride._id}`}>
                       <Button size="sm" className="rounded-none">
                         Details
                       </Button>

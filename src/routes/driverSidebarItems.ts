@@ -2,6 +2,7 @@
 
 import DriverAnalytics from "@/pages/DriverRoutes/DriverDashboardComponents/DriverAnalytics";
 import DriverRideHistory from "@/pages/DriverRoutes/DriverDashboardComponents/DriverRideHistory";
+import UpdateProfile from "@/pages/PublicRoutes/Auth/UpdateProfile";
 
 
 import type { ISidebarItems } from "@/types";
@@ -34,19 +35,9 @@ export const driverSidebarItems : ISidebarItems[] = [
         items: [
             {
                 title: "Update Profile",
-                url: "/driver/ride-history",
-                component: DriverRideHistory
+                url: "/driver/update-profile",
+                component: UpdateProfile
             }
         ],
-    },
-    {
-        title: "Manage Driver Profile",
-        items: [
-            {
-                title: "Update Profile",
-                url: "/driver/ride-history",
-                component: DriverRideHistory
-            }
-        ],
-    },
+    }
 ]

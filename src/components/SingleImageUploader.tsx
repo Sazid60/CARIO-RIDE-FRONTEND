@@ -33,14 +33,12 @@ export default function SingleImageUploader({onChange} : any) {
     }
   }, [files])
 
-  console.log("Inside Origin Ui Component" , files)
 
   const previewUrl = files[0]?.preview || null
 
   return (
     <div className="flex flex-col gap-2">
       <div className="relative">
-        {/* Drop area */}
         <div
           role="button"
           onClick={openFileDialog}
@@ -61,7 +59,7 @@ export default function SingleImageUploader({onChange} : any) {
               <img
                 src={previewUrl}
                 alt={files[0]?.file?.name || "Uploaded image"}
-                className="size-full object-cover"
+                className="size-full object-cover h-64"
               />
             </div>
           ) : (

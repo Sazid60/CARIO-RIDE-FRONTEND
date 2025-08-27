@@ -3,6 +3,7 @@
 
 import AdminAnalytics from "@/pages/AdminRoutes/AdminDashboardComponents/AdminAnalytics";
 import AdminRideHistory from "@/pages/AdminRoutes/AdminDashboardComponents/AdminRideHistory";
+import UpdateProfile from "@/pages/PublicRoutes/Auth/UpdateProfile";
 
 import type { ISidebarItems } from "@/types";
 
@@ -34,8 +35,8 @@ export const adminSidebarItems : ISidebarItems[] = [
         items: [
             {
                 title: "Update Profile",
-                url: "/admin/ride-history",
-                component: AdminRideHistory
+                url: "/admin/update-profile",
+                component: UpdateProfile
             }
         ],
     },

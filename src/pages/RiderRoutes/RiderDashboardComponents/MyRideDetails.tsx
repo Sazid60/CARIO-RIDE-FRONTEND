@@ -34,15 +34,13 @@ export default function MyRideDetails() {
     const fetchRoute = async () => {
       try {
         const coords = [
-          ride.pickupLocation.coordinates.join(","), // lng,lat
+          ride.pickupLocation.coordinates.join(","), 
           ride.destination.coordinates.join(","),
         ].join(";");
 
         const res = await axios.get(
           `https://router.project-osrm.org/route/v1/driving/${coords}?overview=full&geometries=geojson`
         );
-
-        // OSRM returns [lng, lat], Leaflet expects [lat, lng]
         const route = res.data.routes[0].geometry.coordinates.map(
           (c: [number, number]) => [c[1], c[0]]
         );

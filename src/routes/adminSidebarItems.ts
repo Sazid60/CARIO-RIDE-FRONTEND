@@ -1,6 +1,7 @@
 
 
 
+import AdminAnalytics from "@/pages/AdminRoutes/AdminDashboardComponents/AdminAnalytics";
 import AdminRideHistory from "@/pages/AdminRoutes/AdminDashboardComponents/AdminRideHistory";
 
 import type { ISidebarItems } from "@/types";
@@ -14,7 +15,7 @@ export const adminSidebarItems : ISidebarItems[] = [
             {
                 title: "Analytics",
                 url: "/admin/analytics",
-                component: AdminRideHistory
+                component: AdminAnalytics
             }
         ],
     },

@@ -39,12 +39,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent className="bg-background border-t">
         {data.navMain.map((item) => (
           <SidebarGroup key={item.title}>
-            <SidebarGroupLabel className="rounded-none" >{item.title}</SidebarGroupLabel>
+            <SidebarGroupLabel className="rounded-none text-primary" >{item.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem className="rounded-none" key={item.title}>
-                    <SidebarMenuButton className="rounded-none" asChild>
+                    <SidebarMenuButton className="rounded-none text-md" asChild>
                       <Link to={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

@@ -58,7 +58,7 @@ export default function Footer() {
 
         {/* Description */}
         <p className="text-gray-300 max-w-xl mx-auto mb-6 text-sm md:text-base">
-          RideEasy is your trusted ride-sharing platform. Book rides instantly, track your journey in real-time,
+          Cario-Rides is your trusted ride-sharing platform. Book rides instantly, track your journey in real-time,
           and enjoy safe and comfortable travel with our verified drivers across the city.
         </p>
 

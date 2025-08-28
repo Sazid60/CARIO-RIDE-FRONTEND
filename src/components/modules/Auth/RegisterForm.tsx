@@ -40,7 +40,7 @@ const registerSchema = z.object({
 });
 
 export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  const [register] = useRegisterMutation();
+  const [register, {isLoading}] = useRegisterMutation();
   const [login] = useLoginMutation();
   const navigate = useNavigate();
   const [image, setImage] = useState<File | null>(null);
@@ -188,8 +188,8 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
               </div>
             )}
 
-            <Button type="submit" className="w-full rounded-none">
-              Submit
+            <Button type="submit" disabled={isLoading} className="w-full rounded-none">
+              {isLoading?  "Submitting..." : "Submit"}
             </Button>
           </form>
         </Form>

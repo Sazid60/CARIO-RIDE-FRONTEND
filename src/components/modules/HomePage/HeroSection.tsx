@@ -41,10 +41,8 @@ export default function HeroSection({ userRole }: HeroSectionProps) {
         <div className="absolute inset-0 bg-black/70"></div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
         <div className="flex flex-col items-center text-center gap-6 max-w-5xl">
-          {/* Logo */}
           <div className="rounded-xl p-4">
             <Logo />
           </div>
@@ -57,8 +55,6 @@ export default function HeroSection({ userRole }: HeroSectionProps) {
               {description}
             </p>
           </div>
-
-          {/* Conditional Buttons */}
           {userRole === "RIDER" && (
             <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 w-full justify-center">
               <Link to="/book-ride">
@@ -89,7 +85,7 @@ export default function HeroSection({ userRole }: HeroSectionProps) {
 
           {userRole === "ADMIN" && (
             <div className="mt-8">
-              <Link to="/dashboard">
+              <Link to="/admin/analytics">
                 <Button className="bg-primary px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
                   Dashboard
                 </Button>

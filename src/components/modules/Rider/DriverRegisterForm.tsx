@@ -129,7 +129,6 @@ export function DriverRegisterForm({
               />
             </div>
 
-            {/* Driving License Upload */}
             <FormItem className="mt-4 space-y-2">
               <FormLabel>Driving License</FormLabel>
               <FormControl>

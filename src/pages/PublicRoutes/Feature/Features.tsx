@@ -20,7 +20,6 @@ export default function Features() {
       />
 
       <div className="max-w-7xl mx-auto  px-6">
-        {/* Tabs */}
         <div className="flex justify-center mb-8">
           <Button
             onClick={() => setTab("driver")}
@@ -61,8 +60,6 @@ export default function Features() {
             )}
           </CardContent>
         </Card>
-
-        {/* Feature Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           {features.map((f, idx) => (
             <FeatureCard

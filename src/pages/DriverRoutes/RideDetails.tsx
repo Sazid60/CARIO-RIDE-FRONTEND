@@ -50,13 +50,11 @@ export default function RideDetails() {
   const [updateDriverLocation] = useUpdateDriverLocationMutation();
   const [updateRideLocation] = useUpdateRideLocationMutation();
 
-  // mutations with loading states
   const [pickupRide, { isLoading: pickupLoading }] = usePickupRideMutation();
   const [startRide, { isLoading: startLoading }] = useStartRideMutation();
   const [markArrived, { isLoading: arrivedLoading }] = useMarkArrivedMutation();
   const [payOffline, { isLoading: paymentLoading }] = usePayOfflineMutation();
 
-  // Action handlers
   const handlePickup = async (rideId: string) => {
     try {
       await pickupRide(rideId).unwrap();

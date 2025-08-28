@@ -22,7 +22,6 @@ export default function ServiceHighlights({totalRides}: {totalRides:number}) {
   return (
     <section className="px-6 mt-10">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold uppercase mb-4">
             Reliable Ride Management
@@ -31,8 +30,6 @@ export default function ServiceHighlights({totalRides}: {totalRides:number}) {
             Seamless and safe transportation solutions. Track, manage, and optimize rides for riders and drivers with our cutting-edge platform.
           </p>
         </div>
-
-        {/* Highlights */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
           {highlights.map((item, idx) => {
             const Icon = item.icon;

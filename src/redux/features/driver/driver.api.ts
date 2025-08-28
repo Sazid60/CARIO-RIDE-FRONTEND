@@ -35,6 +35,14 @@ export const driverApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["DRIVER"],
         }),
+        updateDriverProfile: builder.mutation({
+            query: (driverData) => ({
+                url: "/drivers/update-my-driver-profile",
+                method: "PATCH",
+                data: driverData
+            }),
+            invalidatesTags: ["DRIVER", "USER"],
+        }),
     }),
 });
 
@@ -42,6 +50,7 @@ export const {
     useGetDriverProfileQuery,
     useGoOnlineMutation,
     useGoOfflineMutation,
-    useUpdateDriverLocationMutation
+    useUpdateDriverLocationMutation,
+    useUpdateDriverProfileMutation
 } = driverApi
 

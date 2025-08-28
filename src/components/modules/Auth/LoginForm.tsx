@@ -38,7 +38,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
     },
   });
 
-  const [login] = useLoginMutation();
+  const [login, {isLoading}] = useLoginMutation();
 
   const onSubmit = async (data: LoginSchema) => {
     try {
@@ -53,7 +53,6 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
     }
   };
 
-  // Google login handler
   const handleGoogleLogin = () => {
     window.location.href = `${config.baseUrl}/auth/google`;
   };
@@ -103,8 +102,8 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full rounded-none">
-              Login
+            <Button type="submit" disabled={isLoading} className="w-full rounded-none">
+              {isLoading? "Logging In" : "Login"}
             </Button>
           </form>
         </Form>

@@ -7,7 +7,7 @@ import { useGetDriverProfileQuery } from "@/redux/features/driver/driver.api";
 import RidesNearMe from "@/components/modules/Driver/RidesNearMe";
 
 export default function StartDriving() {
-  const { data, isLoading } = useGetDriverProfileQuery(undefined,);
+  const { data, isLoading } = useGetDriverProfileQuery(undefined,{pollingInterval:3000});
   const driver = data?.data;
 
   console.log(driver)

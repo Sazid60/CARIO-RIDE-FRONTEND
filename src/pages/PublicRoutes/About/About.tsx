@@ -81,7 +81,6 @@ export default function About() {
                         </div>
 
                         <div className="flex flex-col justify-center">
-                            {/* Header */}
                             <div className="mb-6">
                                 <h2 className="text-md sm:text-3xl font-bold uppercase mb-4">
                                     About Our Ride-Sharing App

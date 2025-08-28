@@ -36,7 +36,7 @@
 - *Driver Email* : driver@gmail.com
 - *Driver password* : Driver123@
 
-##### Driver login 
+##### Rider login 
 - *Rider Email* : rider@gmail.com
 - *Rider password* : Rider123@
 

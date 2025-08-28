@@ -19,6 +19,7 @@ import SingleImageUploader from "@/components/SingleImageUploader";
 import { useLoginMutation, useRegisterMutation } from "@/redux/features/auth/auth.api";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
+import config from "@/config";
 
 const registerSchema = z.object({
   name: z.string().min(3, { message: "Name is too short" }).max(50),
@@ -40,7 +41,7 @@ const registerSchema = z.object({
 });
 
 export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  const [register, {isLoading}] = useRegisterMutation();
+  const [register, { isLoading }] = useRegisterMutation();
   const [login] = useLoginMutation();
   const navigate = useNavigate();
   const [image, setImage] = useState<File | null>(null);
@@ -107,16 +108,20 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = `${config.baseUrl}/auth/google`;
+  };
+
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className={cn("flex flex-col gap-3", className)} {...props}>
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-xl font-bold">Register your account</h1>
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid gap-3">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -189,13 +194,26 @@ export function RegisterForm({ className, ...props }: React.HTMLAttributes<HTMLD
             )}
 
             <Button type="submit" disabled={isLoading} className="w-full rounded-none">
-              {isLoading?  "Submitting..." : "Submit"}
+              {isLoading ? "Submitting..." : "Submit"}
             </Button>
           </form>
         </Form>
+
+        <div className="text-center text-sm text-white">
+          <h1>Or continue with</h1>
+        </div>
+
+        <Button
+          onClick={handleGoogleLogin}
+          type="button"
+          variant="outline"
+          className="w-full cursor-pointer rounded-none text-white border-white bg-transparent hover:bg-transparent hover:text-primary"
+        >
+          Login with Google
+        </Button>
       </div>
 
-      <div className="text-center text-sm mt-4">
+      <div className="text-center text-sm mt-1">
         Already have an account?{" "}
         <Link to="/login" className="underline underline-offset-4">
           Login

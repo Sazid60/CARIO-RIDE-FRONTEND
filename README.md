@@ -14,9 +14,10 @@
 
 **CARIO-RIDES** is a full-stack ride booking platform built for Riders, Drivers, and Admins, offering a seamless and secure experience similar to Uber or Pathao. Riders can request rides, track them in real-time, view ride history, and receive PDF invoices via email, ask any query in real time, can see details ride summary report with expenses, can send SOS while driving with real time location. Drivers can manage availability, accept or reject ride requests, update ride statuses, and monitor earnings dashboards, while Admins have full oversight of users and rides, including analytics and user management, driver management, query management. The platform integrates secure payments via SSLCommerz, email notifications via Nodemailer, PDF invoice generation with PDFKit, and real-time updates in map. It is built with a modern tech stack including React, shadcn ui, Redux Toolkit, RTK Query, Tailwind CSS, Node.js, Express, MongoDB, Mongoose, JWT authentication, and Cloudinary for file storage, ensuring a responsive, role-based ui and realtime location tracking and visually showing.
 
-**Don't Forget to turn on map in your device as realtime location is used**
-**Don't forget to allow third party cookie in your browser the token is stored in cookie**
-**If You are willing to register as driver wait for approval and if approved logout and then login again to grab the features ofr driver**
+##### Special Notes
+- Don't Forget to turn on map in your device as realtime location is used
+- Don't forget to allow third party cookie in your browser the token is stored in cookie
+- If You are willing to register as driver wait for approval and if approved logout and then login again to grab the features ofr driver
 
 #### Logical cores
 
@@ -25,19 +26,19 @@
 - Base Fare is taken 100 tk per km
 - 80% of the fare money will taken by rider and 10% money will be added to admin account
 
-### Credentials 
+#### Credentials 
 
-#### Admin login 
-***Admin Email*** : admin@gmail.com
-***Admin password*** : Admin123@
+##### Admin login 
+- *Admin Email* : admin@gmail.com
+- *Admin password* : Admin123@
 
-#### Admin login 
-***Driver Email*** : driver@gmail.com
-***Driver password*** : Driver123@
+##### Driver login 
+- *Driver Email* : driver@gmail.com
+- *Driver password* : Driver123@
 
-#### Admin login 
-***Rider Email*** : rider@gmail.com
-***Rider password*** : Rider123@
+##### Driver login 
+- *Rider Email* : rider@gmail.com
+- *Rider password* : Rider123@
 
 
 ### Technology Stack

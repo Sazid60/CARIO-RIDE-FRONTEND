@@ -82,7 +82,7 @@ export default function RideAnalytics() {
         <Card className="bg-purple-500 text-white shadow-lg rounded-none">
           <CardContent>
             <h2 className="text-sm sm:text-base opacity-80">Avg Fare</h2>
-            <p className="text-xl sm:text-2xl md:text-3xl font-bold">${report.avgFare}</p>
+            <p className="text-xl sm:text-2xl md:text-3xl font-bold">${report.avgFare.toFixed(2)}</p>
           </CardContent>
         </Card>
       </div>

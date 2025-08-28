@@ -253,7 +253,7 @@ export default function ManageDrivers() {
       )}
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-lg w-full">
+        <DialogContent className="max-w-lg w-full rounded-none">
           <DialogHeader>Driver License</DialogHeader>
           <div className="p-4">
             <img src={licenseUrl} alt="Driver License" className="w-full" />

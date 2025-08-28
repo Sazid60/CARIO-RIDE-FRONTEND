@@ -24,7 +24,7 @@ export default function GoOnline() {
   }, []);
 
   const handleGoOnline = async () => {
-    if (!location) return toast.error("Fetching location, please wait...");
+    if (!location) return toast.success("Fetching location, please wait...");
     try {
       await goOnline(location).unwrap();
       toast.success("You are now online!");

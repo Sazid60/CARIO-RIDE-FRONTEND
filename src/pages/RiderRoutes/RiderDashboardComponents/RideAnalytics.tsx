@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Card, CardContent } from "@/components/ui/card"
 import { useGetRiderReportQuery } from "@/redux/features/stats/stats.api"
+import featureImg from "@/assets/images/faq.webp";
 import {
   LineChart,
   Line,
@@ -12,6 +13,7 @@ import {
 } from "recharts"
 import { useState } from "react"
 import { BounceLoader } from "react-spinners"
+import DashBoardBreadcrumb from "@/components/layouts/layout-items/DashBoardBreadCrumb"
 
 export default function RideAnalytics() {
   const { data, isLoading } = useGetRiderReportQuery(undefined, { pollingInterval: 3000 })
@@ -48,7 +50,13 @@ export default function RideAnalytics() {
   }
 
   return (
-    <div className="min-h-screen p-2 sm:p-6 md:p-8 flex flex-col gap-6">
+    <section className="min-h-screen p-2 sm:p-6 md:p-8 flex flex-col gap-6">
+      <DashBoardBreadcrumb
+        title="Rider Analytics"
+        description="Track your rides, view earnings, cancellations, and get insights into your ride patterns."
+        backgroundImage={featureImg}
+      />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="bg-green-500 text-white shadow-lg rounded-none">
           <CardContent>
@@ -115,6 +123,6 @@ export default function RideAnalytics() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </section>
   )
 }

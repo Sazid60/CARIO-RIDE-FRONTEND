@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import Breadcrumb from "@/components/layouts/Breadcrumb";
 import featureImg from "@/assets/images/features.webp";
 import { BounceLoader } from "react-spinners";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -11,6 +10,7 @@ import { Link } from "react-router";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useGetAllRidesForAdminQuery } from "@/redux/features/rides/rides.api";
+import DashBoardBreadcrumb from "@/components/layouts/layout-items/DashBoardBreadCrumb";
 
 
 export default function AdminRideHistory() {
@@ -50,8 +50,8 @@ export default function AdminRideHistory() {
   }
 
   return (
-    <section>
-      <Breadcrumb
+    <section >
+      <DashBoardBreadcrumb
         title="Ride History"
         description="View full details of all rides created by all users"
         backgroundImage={featureImg}

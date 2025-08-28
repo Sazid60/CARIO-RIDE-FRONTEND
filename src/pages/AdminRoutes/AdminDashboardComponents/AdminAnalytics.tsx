@@ -12,6 +12,8 @@ import {
 import { useState } from "react"
 import { useGetAdminReportQuery } from "@/redux/features/stats/stats.api"
 import { BounceLoader } from "react-spinners"
+import DashBoardBreadcrumb from "@/components/layouts/layout-items/DashBoardBreadCrumb"
+import featureImg from "@/assets/images/features.webp";
 
 export default function AdminAnalytics() {
     const { data, isLoading } = useGetAdminReportQuery(undefined, { pollingInterval: 5000 })
@@ -56,7 +58,14 @@ export default function AdminAnalytics() {
     }
 
     return (
-        <div className="min-h-screen p-2 sm:p-6 md:p-8 flex flex-col gap-6">
+        <section className="min-h-screen p-2 sm:p-6 md:p-8 flex flex-col gap-6">
+
+            <DashBoardBreadcrumb
+                title="Admin Analytics"
+                description="Analyze overall platform activity, including rides, earnings, and user engagement."
+                backgroundImage={featureImg}
+            />
+
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <Card className="bg-indigo-500 text-white shadow-lg rounded-none">
@@ -108,8 +117,8 @@ export default function AdminAnalytics() {
                     <button
                         key={p}
                         className={`px-4 py-2 rounded-none font-semibold text-xs ${period === p
-                                ? "bg-primary text-white"
-                                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                            ? "bg-primary text-white"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                             }`}
                         onClick={() => setPeriod(p as "daily" | "weekly" | "monthly")}
                     >
@@ -145,6 +154,6 @@ export default function AdminAnalytics() {
                     </div>
                 </CardContent>
             </Card>
-        </div>
+        </section>
     )
 }

@@ -11,6 +11,8 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
+import featureImg from "@/assets/images/features.webp";
+import DashBoardBreadcrumb from "@/components/layouts/layout-items/DashBoardBreadCrumb";
 
 
 export default function UpdateProfile() {
@@ -84,7 +86,13 @@ export default function UpdateProfile() {
   };
 
   return (
-    <section className="min-h-screen flex flex-col gap-6">
+    <section className="min-h-screen flex flex-col">
+      <DashBoardBreadcrumb
+        title="Manage Profile"
+        description="Update your personal information, vehicle details, and account settings."
+        backgroundImage={featureImg}
+      />
+
       <div className="w-full flex flex-col lg:flex-row gap-6">
         <div className="flex-1 p-6 shadow-lg backdrop-blur-3xl border text-white flex flex-col items-center gap-3">
           <img
@@ -124,7 +132,7 @@ export default function UpdateProfile() {
                   <DialogTitle>
                   </DialogTitle>
                   <DialogDescription>
-    
+
                   </DialogDescription>
 
                   <div className="flex flex-col gap-3 mt-2 p-2">
@@ -172,7 +180,7 @@ export default function UpdateProfile() {
               <span className="font-bold text-primary uppercase">Vehicle Type: </span>{driver.vehicle.vehicleType}
             </p>
             <p className="text-xs md:text-sm text-center">
-              <span className="font-bold text-primary uppercase">Vehicle Number: </span>{driver.vehicle.vehicleNumber}
+              <span className="font-bold text-primary uppercase">Vehicle No: </span>{driver.vehicle.vehicleNumber}
             </p>
             <p className="text-xs md:text-sm text-center">
               <span className="font-bold text-primary uppercase">Driver Status: </span>{driver.driverStatus}

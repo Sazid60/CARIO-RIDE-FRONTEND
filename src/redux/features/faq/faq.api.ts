@@ -13,10 +13,10 @@ export const faqApi = baseApi.injectEndpoints({
             invalidatesTags: ["FAQ"],
         }),
         replyQuestion: builder.mutation({
-            query: (faqInfo) => ({
-                url: "/auth/login",
+            query: ({id,payload}) => ({
+                url: `/faq/reply-question/${id}`,
                 method: "PATCH",
-                data: faqInfo,
+                data: payload,
             }),
             invalidatesTags: ["FAQ"],
         }),

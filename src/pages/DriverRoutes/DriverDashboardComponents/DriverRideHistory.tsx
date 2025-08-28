@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import Breadcrumb from "@/components/layouts/Breadcrumb";
-import featureImg from "@/assets/images/features.webp";
 import { BounceLoader } from "react-spinners";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -11,6 +9,9 @@ import { Link } from "react-router";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useGetAllRidesForDriverQuery } from "@/redux/features/rides/rides.api";
+
+import featureImg from "@/assets/images/features.webp";
+import DashBoardBreadcrumb from "@/components/layouts/layout-items/DashBoardBreadCrumb";
 
 export default function DriverRideHistory() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,7 +51,7 @@ export default function DriverRideHistory() {
 
   return (
     <section>
-      <Breadcrumb
+      <DashBoardBreadcrumb
         title="Ride History"
         description="Review all your past accepted rides, payments, and trip details in one place."
         backgroundImage={featureImg}

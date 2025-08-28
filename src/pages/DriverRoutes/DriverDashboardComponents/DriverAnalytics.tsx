@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Card, CardContent } from "@/components/ui/card"
 import { useGetDriverReportQuery } from "@/redux/features/stats/stats.api"
+import featureImg from "@/assets/images/faq.webp";
 import {
   LineChart,
   Line,
@@ -12,6 +13,7 @@ import {
 } from "recharts"
 import { useState } from "react"
 import { BounceLoader } from "react-spinners"
+import DashBoardBreadcrumb from "@/components/layouts/layout-items/DashBoardBreadCrumb"
 
 export default function DriverAnalytics() {
   const { data, isLoading } = useGetDriverReportQuery(undefined, { pollingInterval: 3000 })
@@ -51,7 +53,13 @@ export default function DriverAnalytics() {
   }
 
   return (
-    <div className="min-h-screen p-2 sm:p-6 md:p-8 flex flex-col gap-6">
+    <section className="min-h-screen p-2 sm:p-6 md:p-8 flex flex-col gap-6">
+      <DashBoardBreadcrumb
+        title="Driver Analytics"
+        description="Monitor your completed rides, earnings, ratings, and performance insights to optimize your driving."
+        backgroundImage={featureImg}
+      />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="bg-green-500 text-white shadow-lg rounded-none">
           <CardContent>
@@ -87,8 +95,8 @@ export default function DriverAnalytics() {
           <button
             key={p}
             className={`px-4 py-2 rounded-none font-semibold text-xs ${period === p
-                ? "bg-primary text-white"
-                : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              ? "bg-primary text-white"
+              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
               }`}
             onClick={() => setPeriod(p as "daily" | "weekly" | "monthly")}
           >
@@ -96,8 +104,6 @@ export default function DriverAnalytics() {
           </button>
         ))}
       </div>
-
-      {/* Line Chart */}
       <Card className="shadow-lg rounded-none p-0 bg-background">
         <CardContent className="px-2">
           <div className="flex justify-center items-center">
@@ -122,6 +128,6 @@ export default function DriverAnalytics() {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </section>
   )
 }

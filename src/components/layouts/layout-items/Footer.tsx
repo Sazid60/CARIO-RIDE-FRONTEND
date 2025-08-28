@@ -51,18 +51,14 @@ export default function Footer() {
   return (
     <footer className="bg-black text-white px-6 py-12">
       <div className="max-w-6xl mx-auto text-center">
-        {/* Logo */}
         <div className="flex justify-center mb-6">
           <Logo />
         </div>
 
-        {/* Description */}
         <p className="text-gray-300 max-w-xl mx-auto mb-6 text-sm md:text-base">
           Cario-Rides is your trusted ride-sharing platform. Book rides instantly, track your journey in real-time,
           and enjoy safe and comfortable travel with our verified drivers across the city.
         </p>
-
-        {/* Navigation Links */}
         <ul className="flex flex-wrap justify-center gap-6 mb-8">
           {navLinks.map(({ href, label }) => (
             <li key={href}>
@@ -79,8 +75,6 @@ export default function Footer() {
             </li>
           ))}
         </ul>
-
-        {/* Contact Icons */}
         <ul className="flex justify-center gap-8 mb-6">
           {contactIcons.map(({ icon: Icon, href, label }) => (
             <li key={label}>
@@ -96,8 +90,6 @@ export default function Footer() {
             </li>
           ))}
         </ul>
-
-        {/* Footer Bottom */}
         <div className="text-sm  border-t border-gray-700 pt-4">
           &copy; {new Date().getFullYear()}{" "}
           <span className="text-orange-600">Cario-Rides Inc.</span>. All rights reserved.

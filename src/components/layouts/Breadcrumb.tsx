@@ -13,6 +13,7 @@ export default function Breadcrumb({ title, description, backgroundImage }: Brea
         <img
           src={backgroundImage}
           alt={title}
+          loading="lazy"
           className="w-full h-full object-cover"
         />
 

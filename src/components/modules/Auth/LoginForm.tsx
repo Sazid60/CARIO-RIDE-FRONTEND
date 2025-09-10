@@ -103,7 +103,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
               )}
             />
             <Button type="submit" disabled={isLoading} className="w-full rounded-none">
-              {isLoading? "Logging In" : "Login"}
+              {isLoading? "Logging In..." : "Login"}
             </Button>
           </form>
         </Form>

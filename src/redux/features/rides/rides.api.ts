@@ -27,6 +27,14 @@ export const ridesApi = baseApi.injectEndpoints({
             }),
             providesTags: ["RIDES"],
         }),
+        getLatestRideForRider: builder.query({
+            query: (params) => ({
+                url: "/rides/rider-latest-ride",
+                method: "GET",
+                params
+            }),
+            providesTags: ["RIDES"],
+        }),
 
         getAllRidesForDriver: builder.query({
             query: (params) => ({
@@ -201,5 +209,6 @@ export const {
     useDriverNearMeQuery,
     useGetMyRideQuery,
     useGetAllRidesForRiderQuery,
-    useSingleRideAcceptedByMeQuery
+    useSingleRideAcceptedByMeQuery,
+    useGetLatestRideForRiderQuery
 } = ridesApi

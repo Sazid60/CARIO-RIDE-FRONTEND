@@ -49,7 +49,7 @@ export default function Footer() {
     }
   }
   return (
-    <footer className="bg-black text-white px-6 py-12">
+    <footer className=" text-white px-6 py-12">
       <div className="max-w-6xl mx-auto text-center">
         <div className="flex justify-center mb-6">
           <Logo />

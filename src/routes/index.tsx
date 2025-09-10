@@ -17,21 +17,26 @@ import Contact from "@/pages/PublicRoutes/Contact/Contact";
 import About from "@/pages/PublicRoutes/About/About";
 import Features from "@/pages/PublicRoutes/Feature/Features";
 import FrequentQuestions from "@/pages/PublicRoutes/FAQ/FrequentQuestions";
-import BookRide from "@/pages/RiderRoutes/BookRide";
-import MyRide from "@/pages/RiderRoutes/MyRide";
-import StartDriving from "@/pages/DriverRoutes/StartDriving";
 import ContactAdmin from "@/pages/PublicRoutes/Contact/ContactAdmin";
-import RideDetails from "@/pages/DriverRoutes/RideDetails";
-import RegisterAsDriver from "@/pages/RiderRoutes/RegisterAsDriver";
+
 import { riderSidebarItems } from "./riderSidebarItems";
 import { generateRoutes } from "@/utils/generateRoutes";
-import DashboardLayout from "@/components/layouts/DashboardLayout";
-import MyRideDetails from "@/pages/RiderRoutes/RiderDashboardComponents/MyRideDetails";
-import { driverSidebarItems } from "./driverSidebarItems";
-import DriverRideDetails from "@/pages/DriverRoutes/DriverDashboardComponents/DriverRideDetails";
-import { adminSidebarItems } from "./adminSidebarItems";
-import AdminRideDetails from "@/pages/AdminRoutes/AdminDashboardComponents/AdminRideDetails";
 
+import { driverSidebarItems } from "./driverSidebarItems";
+
+import { adminSidebarItems } from "./adminSidebarItems";
+import { lazy } from "react";
+
+
+const BookRide = lazy(() => import("@/pages/RiderRoutes/BookRide"));
+const MyRide = lazy(() => import("@/pages/RiderRoutes/MyRide"));
+const StartDriving = lazy(() => import("@/pages/DriverRoutes/StartDriving"));
+const RideDetails = lazy(() => import("@/pages/DriverRoutes/RideDetails"));
+const RegisterAsDriver = lazy(() => import("@/pages/RiderRoutes/RegisterAsDriver"));
+const MyRideDetails = lazy(() => import("@/pages/RiderRoutes/RiderDashboardComponents/MyRideDetails"));
+const DriverRideDetails = lazy(() => import("@/pages/DriverRoutes/DriverDashboardComponents/DriverRideDetails"));
+const AdminRideDetails = lazy(() => import("@/pages/AdminRoutes/AdminDashboardComponents/AdminRideDetails"));
+const DashboardLayout = lazy(() => import("@/components/layouts/DashboardLayout"));
 
 
 

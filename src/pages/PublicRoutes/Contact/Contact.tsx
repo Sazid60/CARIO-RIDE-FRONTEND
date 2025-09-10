@@ -59,14 +59,14 @@ export default function Contact() {
   ];
 
   return (
-    <section>
+    <>
       <Breadcrumb
         title="Contact Us"
         description="Get in touch with our support team for any inquiries."
         backgroundImage={contactImg}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-10">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-10">
         <div
           className="relative py-10 px-6"
           style={{
@@ -190,7 +190,7 @@ export default function Contact() {
             </form>
           </Form>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

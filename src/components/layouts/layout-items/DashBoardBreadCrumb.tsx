@@ -13,6 +13,7 @@ export default function DashBoardBreadcrumb({ title, description, backgroundImag
         <img
           src={backgroundImage}
           alt={title}
+          loading="lazy"
           className="w-full h-full object-cover"
         />
 

@@ -60,14 +60,14 @@ export default function About() {
 
 
     return (
-        <section>
+        <>
             <Breadcrumb
                 title="About Us"
                 description="Learn more about our vision, mission, and the story behind our ride-sharing platform."
                 backgroundImage={aboutImg}
             />
 
-            <div className="py-8 md:py-16 px-4 sm:px-6 lg:px-8">
+            <section className="py-8 md:py-16 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
@@ -75,6 +75,7 @@ export default function About() {
                             <img
                                 src={aboutUs}
                                 alt="Ride sharing app illustration"
+                                loading="lazy"
                                 className="w-full h-full object-cover object-center"
                             />
                             <div className="absolute inset-0 bg-black/30"></div>
@@ -145,7 +146,7 @@ export default function About() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <div className="py-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -177,6 +178,6 @@ export default function About() {
                     </div>
                 </div>
             </div>
-        </section>
+        </>
     )
 }

@@ -8,6 +8,7 @@ export default function HowItWorks() {
         <img
           src={how}
           alt="How it works background"
+          loading="lazy"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50"></div>

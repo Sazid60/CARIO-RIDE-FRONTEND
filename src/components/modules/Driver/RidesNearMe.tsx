@@ -18,16 +18,21 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { BounceLoader } from "react-spinners";
 import { useNavigate } from "react-router";
+import axios from "axios";
 
 export default function RidesNearMe() {
   const navigate = useNavigate();
 
   const [goOffline, { isLoading }] = useGoOfflineMutation();
-  const [acceptRide, {isLoading : isAccepting}] = useAcceptRideMutation();
-  const [rejectRide, {isLoading :isRejecting }] = useRejectRideMutation();
+  const [acceptRide, { isLoading: isAccepting }] = useAcceptRideMutation();
+  const [rejectRide, { isLoading: isRejecting }] = useRejectRideMutation();
 
   const [currentPage, setCurrentPage] = useState(1);
   const [rides, setRides] = useState<any[]>([]);
+
+  const [pickupAddresses, setPickupAddresses] = useState<Record<string, string>>({});
+  const [destinationAddresses, setDestinationAddresses] = useState<Record<string, string>>({});
+
 
   const limit = 10;
   const { data, isLoading: isRideLoading, refetch } = useRidesNearMeQuery(undefined, {
@@ -46,6 +51,39 @@ export default function RidesNearMe() {
       toast.error(err?.data?.message || "Something went wrong");
     }
   };
+
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      if (!rides || rides.length === 0) return;
+
+      const pickupMap: Record<string, string> = {};
+      const destMap: Record<string, string> = {};
+
+      for (const ride of rides) {
+        try {
+          // pickup
+          const pickupRes = await axios.get(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${ride.pickupLocation.coordinates[1]}&lon=${ride.pickupLocation.coordinates[0]}`
+          );
+          pickupMap[ride._id] = pickupRes.data.display_name;
+
+          // destination
+          const destRes = await axios.get(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${ride.destination.coordinates[1]}&lon=${ride.destination.coordinates[0]}`
+          );
+          destMap[ride._id] = destRes.data.display_name;
+        } catch (err) {
+          console.error("Error fetching address:", err);
+        }
+      }
+
+      setPickupAddresses(pickupMap);
+      setDestinationAddresses(destMap);
+    };
+
+    fetchAddresses();
+  }, [rides]);
+
 
   const handleAccept = async (rideId: string) => {
     try {
@@ -106,7 +144,7 @@ export default function RidesNearMe() {
         <p className="mt-8 text-sm md:text-base mb-10">No rides available near you.</p>
       ) : (
         <>
-          <div className="w-full mt-8 border border-muted overflow-x-auto">
+          <div className="w-full mt-8 border border-muted overflow-x-hidden">
             <div className="w-full overflow-x-auto">
               <Table className="w-full table-auto">
                 <TableHeader>
@@ -121,10 +159,14 @@ export default function RidesNearMe() {
                   {paginatedRides.map((ride) => (
                     <TableRow key={ride._id}>
                       <TableCell className="text-left text-[12px] md:text-xs break-words whitespace-normal max-w-full">
-                        {formatCoords(ride.pickupLocation.coordinates)}
+                        {pickupAddresses[ride._id]
+                          ? pickupAddresses[ride._id].split(" ").slice(0, 6).join(" ")
+                          : formatCoords(ride.pickupLocation.coordinates)}
                       </TableCell>
                       <TableCell className="text-left text-[12px] md:text-xs break-words whitespace-normal max-w-full">
-                        {formatCoords(ride.destination.coordinates)}
+                        {destinationAddresses[ride._id]
+                          ? destinationAddresses[ride._id].split(" ").slice(0, 6).join(" ")
+                          : formatCoords(ride.destination.coordinates)}
                       </TableCell>
                       <TableCell className="text-left text-xs">৳{ride.fare}</TableCell>
                       <TableCell className="flex justify-center gap-2 flex-wrap">
@@ -134,7 +176,7 @@ export default function RidesNearMe() {
                           className="bg-green-600 rounded-none hover:bg-green-700 text-white text-[12px] md:text-xs"
                           onClick={() => handleAccept(ride._id)}
                         >
-                          {isAccepting ? "Accepting.." : "Accept"}
+                          {"Accept"}
                         </Button>
                         <Button
                           size="sm"
@@ -143,7 +185,7 @@ export default function RidesNearMe() {
                           className="rounded-none text-[12px] md:text-xs"
                           onClick={() => handleReject(ride._id)}
                         >
-                         {isRejecting ? "Rejecting.." : "Reject"}
+                          {"Reject"}
                         </Button>
                       </TableCell>
                     </TableRow>

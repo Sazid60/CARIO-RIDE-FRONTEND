@@ -12,14 +12,14 @@ export default function Features() {
   const features = tab === "driver" ? driverFeatures : riderFeatures;
 
   return (
-    <section>
+    <>
       <Breadcrumb
         title="Features"
         description="Discover the features that make our platform reliable and user-friendly."
         backgroundImage={featureImg}
       />
 
-      <div className="max-w-7xl mx-auto  px-6">
+      <section className="max-w-7xl mx-auto  px-6">
         <div className="flex justify-center mb-8">
           <Button
             onClick={() => setTab("driver")}
@@ -70,7 +70,7 @@ export default function Features() {
             />
           ))}
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

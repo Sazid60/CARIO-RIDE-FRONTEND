@@ -76,6 +76,7 @@ export default function ServiceHighlights({totalRides}: {totalRides:number}) {
               <img
                 src={service}
                 alt="Ride management"
+                loading="lazy"
                 className="absolute inset-0 w-full h-full object-cover opacity-20 z-0"
               />
               <div className="absolute inset-0 w-full h-full z-10" />

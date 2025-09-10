@@ -25,14 +25,14 @@ export default function FrequentQuestions() {
   }
 
   return (
-    <section>
+    <>
       <Breadcrumb
         title="Frequently Asked Questions"
         description="Find answers to common questions about our services."
         backgroundImage={faqImg}
       />
 
-      <div className="max-w-7xl mx-auto py-5 md:py-10 px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <section className="max-w-7xl mx-auto py-5 md:py-10 px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div className="relative w-full xl:w-[90%] h-full">
           <img
             src={faqIllustration}
@@ -85,7 +85,7 @@ export default function FrequentQuestions() {
             </div>
           )}
         </div>
-      </div>
+      </section>
 
       <div
         className="relative py-12 px-6 text-center overflow-hidden h-full"
@@ -111,6 +111,6 @@ export default function FrequentQuestions() {
           </Link>
         </div>
       </div>
-    </section>
+    </>
   )
 }

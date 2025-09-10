@@ -86,112 +86,116 @@ export default function UpdateProfile() {
   };
 
   return (
-    <section className="min-h-screen flex flex-col">
-      <DashBoardBreadcrumb
-        title="Manage Profile"
-        description="Update your personal information, vehicle details, and account settings."
-        backgroundImage={featureImg}
-      />
+    <>
+      <section className="min-h-screen flex flex-col">
+        <DashBoardBreadcrumb
+          title="Manage Profile"
+          description="Update your personal information, vehicle details, and account settings."
+          backgroundImage={featureImg}
+        />
 
-      <div className="w-full flex flex-col lg:flex-row gap-6">
-        <div className="flex-1 p-6 shadow-lg backdrop-blur-3xl border text-white flex flex-col items-center gap-3">
-          <img
-            src={user.picture}
-            alt={user.name}
-            className="w-28 h-28 rounded-full border border-white/30 object-cover"
-          />
-          <h2 className="text-sm md:text-xl font-bold text-center uppercase">
-            <span className="font-bold text-primary">Name: </span>{user.name}
-          </h2>
-          <p className="text-xs md:text-sm text-center">
-            <span className="font-bold text-primary uppercase">Email: </span>{user.email}
-          </p>
-          <p className="text-xs md:text-sm text-center">
-            <span className="font-bold text-primary uppercase">Phone: </span>{user.phone || "N/A"}
-          </p>
-          <p className="text-xs md:text-sm text-center lowercase">
-            <span className="font-bold text-primary uppercase">Role: </span>{user.role}
-          </p>
-          <div className="mt-4 w-full p-2 text-xs md:text-sm text-center">
-            <span className="font-bold text-primary uppercase">Location:</span>
-            <br />{address || "No Location Found! Please Update"}
-          </div>
-
-          {canChangePassword && (
-            <div className="w-full text-center mt-4">
-              <p className="text-primary mb-2 text-sm">Do you want to change your password?</p>
-
-              <Dialog open={passwordModalOpen} onOpenChange={setPasswordModalOpen}>
-                <DialogTrigger asChild>
-                  <Button className="rounded-none" variant="outline">
-                    Change Password
-                  </Button>
-                </DialogTrigger>
-
-                <DialogContent className="sm:max-w-[400px] rounded-none">
-                  <DialogTitle>
-                  </DialogTitle>
-                  <DialogDescription>
-
-                  </DialogDescription>
-
-                  <div className="flex flex-col gap-3 mt-2 p-2">
-                    <Input
-                      type="password"
-                      placeholder="Old Password"
-                      value={oldPassword}
-                      onChange={(e) => setOldPassword(e.target.value)}
-                      className="rounded-none"
-                    />
-                    <Input
-                      type="password"
-                      placeholder="New Password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      className="rounded-none"
-                    />
-                    <Button
-                      onClick={handlePasswordChange}
-                      className="w-full rounded-none mt-2"
-                      disabled={isChanging}
-                    >
-                      {isChanging ? "Changing..." : "Change Password"}
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
-            </div>
-          )}
-        </div>
-
-        <div className="flex-1 p-6 shadow-lg backdrop-blur-3xl border">
-          <UserUpdateForm />
-        </div>
-      </div>
-      {user.role === "DRIVER" && driver && (
         <div className="w-full flex flex-col lg:flex-row gap-6">
           <div className="flex-1 p-6 shadow-lg backdrop-blur-3xl border text-white flex flex-col items-center gap-3">
             <img
-              src={driver.drivingLicense}
-              alt="Driving License"
-              className="w-full h-70 rounded border border-white/30 object-cover"
+              src={user.picture}
+              alt={user.name}
+              loading="lazy"
+              className="w-28 h-28 rounded-full border border-white/30 object-cover"
             />
+            <h2 className="text-sm md:text-xl font-bold text-center uppercase">
+              <span className="font-bold text-primary">Name: </span>{user.name}
+            </h2>
             <p className="text-xs md:text-sm text-center">
-              <span className="font-bold text-primary uppercase">Vehicle Type: </span>{driver.vehicle.vehicleType}
+              <span className="font-bold text-primary uppercase">Email: </span>{user.email}
             </p>
             <p className="text-xs md:text-sm text-center">
-              <span className="font-bold text-primary uppercase">Vehicle No: </span>{driver.vehicle.vehicleNumber}
+              <span className="font-bold text-primary uppercase">Phone: </span>{user.phone || "N/A"}
             </p>
-            <p className="text-xs md:text-sm text-center">
-              <span className="font-bold text-primary uppercase">Driver Status: </span>{driver.driverStatus}
+            <p className="text-xs md:text-sm text-center lowercase">
+              <span className="font-bold text-primary uppercase">Role: </span>{user.role}
             </p>
+            <div className="mt-4 w-full p-2 text-xs md:text-sm text-center">
+              <span className="font-bold text-primary uppercase">Location:</span>
+              <br />{address || "No Location Found! Please Update"}
+            </div>
+
+            {canChangePassword && (
+              <div className="w-full text-center mt-4">
+                <p className="text-primary mb-2 text-sm">Do you want to change your password?</p>
+
+                <Dialog open={passwordModalOpen} onOpenChange={setPasswordModalOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="rounded-none" variant="outline">
+                      Change Password
+                    </Button>
+                  </DialogTrigger>
+
+                  <DialogContent className="sm:max-w-[400px] rounded-none">
+                    <DialogTitle>
+                    </DialogTitle>
+                    <DialogDescription>
+
+                    </DialogDescription>
+
+                    <div className="flex flex-col gap-3 mt-2 p-2">
+                      <Input
+                        type="password"
+                        placeholder="Old Password"
+                        value={oldPassword}
+                        onChange={(e) => setOldPassword(e.target.value)}
+                        className="rounded-none"
+                      />
+                      <Input
+                        type="password"
+                        placeholder="New Password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        className="rounded-none"
+                      />
+                      <Button
+                        onClick={handlePasswordChange}
+                        className="w-full rounded-none mt-2"
+                        disabled={isChanging}
+                      >
+                        {isChanging ? "Changing..." : "Change Password"}
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )}
           </div>
 
           <div className="flex-1 p-6 shadow-lg backdrop-blur-3xl border">
-            <DriverUpdateForm />
+            <UserUpdateForm />
           </div>
         </div>
-      )}
-    </section>
+        {user.role === "DRIVER" && driver && (
+          <div className="w-full flex flex-col lg:flex-row gap-6">
+            <div className="flex-1 p-6 shadow-lg backdrop-blur-3xl border text-white flex flex-col items-center gap-3">
+              <img
+                src={driver.drivingLicense}
+                loading="lazy"
+                alt="Driving License"
+                className="w-full h-70 rounded border border-white/30 object-cover"
+              />
+              <p className="text-xs md:text-sm text-center">
+                <span className="font-bold text-primary uppercase">Vehicle Type: </span>{driver.vehicle.vehicleType}
+              </p>
+              <p className="text-xs md:text-sm text-center">
+                <span className="font-bold text-primary uppercase">Vehicle No: </span>{driver.vehicle.vehicleNumber}
+              </p>
+              <p className="text-xs md:text-sm text-center">
+                <span className="font-bold text-primary uppercase">Driver Status: </span>{driver.driverStatus}
+              </p>
+            </div>
+
+            <div className="flex-1 p-6 shadow-lg backdrop-blur-3xl border">
+              <DriverUpdateForm />
+            </div>
+          </div>
+        )}
+      </section>
+    </>
   );
 }

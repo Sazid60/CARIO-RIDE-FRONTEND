@@ -83,7 +83,6 @@ export default function DriverRideDetails() {
   return (
 
     <>
-
       <Breadcrumb
         title="Ride Details"
         description="View full details of your accepted ride including map, route, and invoice."

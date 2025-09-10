@@ -12,7 +12,7 @@ import L from "leaflet";
 import axios from "axios";
 import {
   useCancelRideMutation,
-  useGetAllRidesForRiderQuery,
+  useGetLatestRideForRiderQuery,
   useRequestRideMutation,
 } from "@/redux/features/rides/rides.api";
 import { toast } from "sonner";
@@ -35,39 +35,26 @@ export default function BookRide() {
   const navigate = useNavigate();
 
   const [requestRide, { isLoading }] = useRequestRideMutation();
-  const { data: ridesData, refetch } = useGetAllRidesForRiderQuery(undefined, { pollingInterval: 3000 });
+  const { data: ridesData, refetch } = useGetLatestRideForRiderQuery(undefined, { pollingInterval: 3000 });
   const [cancelRide, { isLoading: isCanceling }] = useCancelRideMutation();
 
   const [latestRide, setLatestRide] = useState<any>(null);
+
+  console.log(ridesData)
+
+  console.log(latestRide)
   useEffect(() => {
-    if (ridesData?.data?.data?.length) {
-      const statuses = ["ACCEPTED", "REQUESTED", "PICKED_UP", "IN_TRANSIT", "ARRIVED"];
+    const latest = ridesData?.data?.data ?? null;
 
-      const requestedRides = ridesData.data.data.filter((ride: any) =>
-        statuses.includes(ride.rideStatus)
-      );
-
-      if (requestedRides.length) {
-        const latest = requestedRides.sort(
-          (a: any, b: any) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )[0];
-        setLatestRide(latest);
-        setPickup([
-          latest.pickupLocation.coordinates[1],
-          latest.pickupLocation.coordinates[0],
-        ]);
-        setDestination([
-          latest.destination.coordinates[1],
-          latest.destination.coordinates[0],
-        ]);
-      } else {
-        setLatestRide(null);
-      }
+    if (latest) {
+      setLatestRide(latest);
+      setPickup([latest.pickupLocation.coordinates[1], latest.pickupLocation.coordinates[0]]);
+      setDestination([latest.destination.coordinates[1], latest.destination.coordinates[0]]);
     } else {
       setLatestRide(null);
     }
   }, [ridesData]);
+
 
   delete (L.Icon.Default.prototype as any)._getIconUrl;
   L.Icon.Default.mergeOptions({
@@ -197,70 +184,72 @@ export default function BookRide() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 border mt-20 relative z-10 mb-10">
-      <div className="h-[400px] w-full">
-        {pickup && (
-          <MapContainer center={pickup} zoom={14} className="h-full w-full">
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            />
-            <Marker position={pickup} icon={orangeMarker} />
-            {destination && <Marker position={destination} icon={orangeMarker} />}
-            {routeCoords.length > 0 && (
-              <Polyline positions={routeCoords} color="orange" weight={5} />
-            )}
-            <MapClickHandler setDestination={setDestination} />
-          </MapContainer>
-        )}
-      </div>
+    <>
+      <section className="max-w-4xl mx-auto p-6 border mt-20 relative z-10 mb-10">
+        <div className="h-[400px] w-full">
+          {pickup && (
+            <MapContainer center={pickup} zoom={14} className="h-full w-full">
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+              />
+              <Marker position={pickup} icon={orangeMarker} />
+              {destination && <Marker position={destination} icon={orangeMarker} />}
+              {routeCoords.length > 0 && (
+                <Polyline positions={routeCoords} color="orange" weight={5} />
+              )}
+              <MapClickHandler setDestination={setDestination} />
+            </MapContainer>
+          )}
+        </div>
 
-      {/* Ride Info */}
-      <div className="py-4 text-center">
-        {destination ? (
-          <p className="text-sm md:text-base">
-            Distance: {distanceKm} km | Fare: {fare} BDT
-          </p>
-        ) : !latestRide ? (
-          <p className="text-sm md:text-base">
-            Select a destination by clicking on the map.
-          </p>
-        ) : (
-          <p className="text-sm md:text-base text-green-700 font-medium">
-            Ride Requested  Waiting for driver to accept...
-          </p>
-        )}
+        {/* Ride Info */}
+        <div className="py-4 text-center">
+          {destination ? (
+            <p className="text-sm md:text-base">
+              Distance: {distanceKm} km | Fare: {fare} BDT
+            </p>
+          ) : !latestRide ? (
+            <p className="text-sm md:text-base">
+              Select a destination by clicking on the map.
+            </p>
+          ) : (
+            <p className="text-sm md:text-base text-green-700 font-medium">
+              Ride Requested  Waiting for driver to accept...
+            </p>
+          )}
 
-        {!latestRide ? (
-          <Button
-            disabled={!destination || isLoading}
-            onClick={bookRide}
-            className="mt-3 w-full rounded-none"
-          >
-            {isLoading ? "Requesting..." : "Request a Ride"}
-          </Button>
-        ) : (
-          <>
+          {!latestRide ? (
             <Button
-              className="mt-3 w-full bg-green-600 text-white py-2 hover:bg-green-700 rounded-none"
-              onClick={() => navigate(`/my-ride/${latestRide?._id}`)}
+              disabled={!destination || isLoading}
+              onClick={bookRide}
+              className="mt-3 w-full rounded-none"
             >
-              View My Requested Ride
+              {isLoading ? "Requesting..." : "Request a Ride"}
             </Button>
-            {latestRide.rideStatus !== "ARRIVED" && latestRide.rideStatus !== "IN_TRANSIT" && (
+          ) : (
+            <>
               <Button
-                className="mt-3 w-full bg-red-600 text-white py-2 hover:bg-red-700 rounded-none"
-                onClick={handleCancelRide}
-                disabled={isCanceling}
+                className="mt-3 w-full bg-green-600 text-white py-2 hover:bg-green-700 rounded-none"
+                onClick={() => navigate(`/my-ride/${latestRide?._id}`)}
               >
-                {isCanceling ? "Cancelling..." : "Cancel My Ride"}
+                View My Requested Ride
               </Button>
-            )}
-          </>
+              {latestRide.rideStatus !== "ARRIVED" && latestRide.rideStatus !== "IN_TRANSIT" && (
+                <Button
+                  className="mt-3 w-full bg-red-600 text-white py-2 hover:bg-red-700 rounded-none"
+                  onClick={handleCancelRide}
+                  disabled={isCanceling}
+                >
+                  {isCanceling ? "Cancelling..." : "Cancel My Ride"}
+                </Button>
+              )}
+            </>
 
 
-        )}
-      </div>
-    </div>
+          )}
+        </div>
+      </section>
+    </>
   );
 }

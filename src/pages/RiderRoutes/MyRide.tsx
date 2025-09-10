@@ -20,13 +20,15 @@ export default function MyRide() {
     refetchOnMountOrArgChange: true,
   });
 
+  console.log(rideData)
+
   const { data: driversData } = useDriverNearMeQuery(undefined, {
     pollingInterval: 5000,
     refetchOnMountOrArgChange: true,
   });
 
-  const [payOnline, {isLoading : isPaying}] = usePayOnlineMutation();
-  const [giveFeedback,{isLoading : isSubmitting}] = useGiveFeedbackMutation()
+  const [payOnline, { isLoading: isPaying }] = usePayOnlineMutation();
+  const [giveFeedback, { isLoading: isSubmitting }] = useGiveFeedbackMutation()
 
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
@@ -126,20 +128,20 @@ export default function MyRide() {
     }
   };
 
-const handleSOS = () => {
+  const handleSOS = () => {
     if (!ride) return;
 
     const [lat, lon] = [ride.currentLocation.coordinates[1], ride.currentLocation.coordinates[0]];
 
     const message = encodeURIComponent(
-        `I am in danger! Please help me.\nMy current location: https://www.google.com/maps/search/?api=1&query=${lat},${lon}`
+      `I am in danger! Please help me.\nMy current location: https://www.google.com/maps/search/?api=1&query=${lat},${lon}`
     );
 
     const phone = "8801639768727";
     const whatsappURL = `https://wa.me/${phone}?text=${message}`;
 
     window.open(whatsappURL, "_blank");
-};
+  };
 
 
 
@@ -174,13 +176,33 @@ const handleSOS = () => {
 
         <div className="w-full p-4 shadow-lg border flex flex-col md:flex-row justify-around">
           <RideTimeline ride={ride} />
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <div className="mt-6 space-y-4">
               <h1 className="uppercase font-bold underline mb-6">Ride Details</h1>
               <p className="text-sm"><strong className="text-primary">Distance:</strong> {ride.travelDistance} km</p>
               <p className="text-sm"><strong className="text-primary">Fare:</strong> {ride.fare} BDT</p>
               <p className="text-sm"><strong className="text-primary">Pickup:</strong> {pickupAddress || `${pickupCoords[0]}, ${pickupCoords[1]}`}</p>
               <p className="text-sm"><strong className="text-primary">Destination:</strong> {destinationAddress || `${destinationCoords[0]}, ${destinationCoords[1]}`}</p>
+              {ride.rideStatus === "ACCEPTED" && ride.driverId?.userId && (
+                <div className="mt-4 p-4 border shadow flex items-center gap-4">
+                  <img
+                    src={ride.driverId.userId.picture || "/default-driver.png"}
+                    alt={ride.driverId.userId.name}
+                    className="w-10 h-10 rounded-full object-cover border"
+                  />
+                  <div className="flex flex-col">
+                    <p className="font-bold">{ride.driverId.userId.name}</p>
+                    <p className="text-sm text-gray-600">{ride.driverId.vehicle?.vehicleNumber}</p>
+                  </div>
+                  <a
+                    href={`tel:${ride.driverId.userId.phone}`}
+                    className="ml-auto px-2 py-2 bg-green-600 text-white hover:bg-green-700 text-xs rounded-none"
+                  >
+                    Call Driver
+                  </a>
+                </div>
+              )}
+
             </div>
 
             {ride.rideStatus === "ARRIVED" && (
@@ -191,7 +213,7 @@ const handleSOS = () => {
                   </h1>
                 </div>
                 <Button disabled={rideLoading || isPaying} onClick={() => handlePayment(ride._id)} className="bg-green-500 hover:bg-green-600 text-white rounded-none mb-6">
-                  {isPaying? "Payment In Process" : "Pay Online"}
+                  {isPaying ? "Payment In Process" : "Pay Online"}
                 </Button>
               </div>
             )}
@@ -216,7 +238,7 @@ const handleSOS = () => {
                   className="border p-2 rounded-none mt-2"
                 />
                 <Button disabled={rideLoading} onClick={handleFeedbackSubmit} className="mt-2 rounded-none">
-                  {isSubmitting? "Submitting Feedback..." : "Give Feedback"}
+                  {isSubmitting ? "Submitting Feedback..." : "Give Feedback"}
                 </Button>
                 <Button disabled={rideLoading} onClick={() => navigate("/")} className="mt-2 rounded-none">
                   Go Home

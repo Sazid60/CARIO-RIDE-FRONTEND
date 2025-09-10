@@ -12,7 +12,7 @@ import L from "leaflet";
 import axios from "axios";
 import {
   useCancelRideMutation,
-  useGetAllRidesForRiderQuery,
+  useGetLatestRideForRiderQuery,
   useRequestRideMutation,
 } from "@/redux/features/rides/rides.api";
 import { toast } from "sonner";
@@ -35,39 +35,26 @@ export default function BookRide() {
   const navigate = useNavigate();
 
   const [requestRide, { isLoading }] = useRequestRideMutation();
-  const { data: ridesData, refetch } = useGetAllRidesForRiderQuery(undefined, { pollingInterval: 3000 });
+  const { data: ridesData, refetch } = useGetLatestRideForRiderQuery(undefined, { pollingInterval: 3000 });
   const [cancelRide, { isLoading: isCanceling }] = useCancelRideMutation();
 
   const [latestRide, setLatestRide] = useState<any>(null);
+
+  console.log(ridesData)
+
+  console.log(latestRide)
   useEffect(() => {
-    if (ridesData?.data?.data?.length) {
-      const statuses = ["ACCEPTED", "REQUESTED", "PICKED_UP", "IN_TRANSIT", "ARRIVED"];
+    const latest = ridesData?.data?.data ?? null;
 
-      const requestedRides = ridesData.data.data.filter((ride: any) =>
-        statuses.includes(ride.rideStatus)
-      );
-
-      if (requestedRides.length) {
-        const latest = requestedRides.sort(
-          (a: any, b: any) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )[0];
-        setLatestRide(latest);
-        setPickup([
-          latest.pickupLocation.coordinates[1],
-          latest.pickupLocation.coordinates[0],
-        ]);
-        setDestination([
-          latest.destination.coordinates[1],
-          latest.destination.coordinates[0],
-        ]);
-      } else {
-        setLatestRide(null);
-      }
+    if (latest) {
+      setLatestRide(latest);
+      setPickup([latest.pickupLocation.coordinates[1], latest.pickupLocation.coordinates[0]]);
+      setDestination([latest.destination.coordinates[1], latest.destination.coordinates[0]]);
     } else {
       setLatestRide(null);
     }
   }, [ridesData]);
+
 
   delete (L.Icon.Default.prototype as any)._getIconUrl;
   L.Icon.Default.mergeOptions({

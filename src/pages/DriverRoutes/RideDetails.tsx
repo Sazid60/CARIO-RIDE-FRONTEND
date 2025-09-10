@@ -139,7 +139,7 @@ export default function RideDetails() {
       if (ride?.currentLocation && ride?.destination) {
         try {
           const coords = [
-            ride.currentLocation.coordinates, 
+            ride.currentLocation.coordinates,
             ride.destination.coordinates,
           ]
             .map((c) => `${c[0]},${c[1]}`)
@@ -150,7 +150,7 @@ export default function RideDetails() {
           );
 
           const route = res.data.routes[0].geometry.coordinates.map(
-            (c: [number, number]) => [c[1], c[0]] 
+            (c: [number, number]) => [c[1], c[0]]
           );
           setRouteCoords(route);
         } catch (err) {
@@ -282,7 +282,7 @@ export default function RideDetails() {
 
         <div className="w-full p-4 shadow-lg border flex flex-col md:flex-row justify-around">
           <RideTimeline ride={ride} />
-          <div className="flex flex-col ">
+          <div className="flex flex-col w-full">
             <div className="mt-6 space-y-4">
               <h1 className="uppercase font-bold underline mb-6">Ride Details</h1>
               <p className="text-sm">
@@ -312,6 +312,27 @@ export default function RideDetails() {
                   {pickupLoading ? "Picking up..." : "Pickup Rider"}
                 </Button>
               )}
+
+              {ride.rideStatus === "ACCEPTED" && ride.riderId && (
+                <div className="mt-4 p-4 border shadow flex items-center gap-4">
+                  <img
+                    src={ride.riderId.picture || "/default-driver.png"}
+                    alt={ride.riderId.name}
+                    className="w-10 h-10 rounded-full object-cover border"
+                  />
+                  <div className="flex flex-col">
+                    <p className="font-bold">{ride.riderId.name}</p>
+                    <p className="text-sm text-gray-600">{ride.riderId.phone}</p>
+                  </div>
+                  <a
+                    href={`tel:${ride.riderId.phone}`}
+                    className="ml-auto px-2 py-2 bg-green-600 text-white hover:bg-green-700 text-xs rounded-none"
+                  >
+                    Call Rider
+                  </a>
+                </div>
+              )}
+
 
               {ride.rideStatus === "PICKED_UP" && (
                 <Button

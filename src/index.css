@@ -45,7 +45,7 @@
   --radius: 0.65rem;
 
   /* Light theme adjustments */
-  --background: oklch(0.15 0.01 280);   /* slightly darker for contrast */
+  --background: oklch(25.393% 0.01326 278.976);   /* slightly darker for contrast */
   --foreground: #ffffff;                 /* all text white */
   --card: oklch(0.3 0 0);                /* darker card for readability */
   --card-foreground: #ffffff;

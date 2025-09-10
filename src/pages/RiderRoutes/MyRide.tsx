@@ -158,7 +158,7 @@ const handleSOS = () => {
   const destinationCoords: [number, number] = [ride.destination.coordinates[1], ride.destination.coordinates[0]];
 
   return (
-    <section className="container mx-auto max-w-4xl mt-20 p-4">
+    <section className="container mx-auto max-w-4xl mt-20 p-4 mb-10">
       <div className="shadow-lg overflow-hidden flex flex-col gap-4">
         <div className="z-10 min-w-[400px] h-[350px] relative">
           <MapContainer center={locationCoords} zoom={14} className="h-full w-full">

@@ -58,14 +58,13 @@ export default function HeroSection({ userRole }: HeroSectionProps) {
           {userRole === "RIDER" && (
             <div className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-6 w-full justify-center">
               <Link to="/book-ride">
-                <Button className="w-full bg-primary sm:w-auto px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
+                <Button className="w-full sm:w-auto px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
                   Book a Ride
                 </Button>
               </Link>
               <Link to="/driver-register">
                 <Button
-                  variant="outline"
-                  className="w-full sm:w-auto px-6 py-3 rounded-none bg-white/10 hover:bg-transparent hover:text-primary backdrop-blur-3xl text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105 text-white"
+                  className="w-full sm:w-auto px-6 py-3 rounded-none bg-white/10 hover:bg-white/15 hover:text-primary backdrop-blur-3xl text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105 text-white"
                 >
                   Become a Driver
                 </Button>
@@ -76,7 +75,7 @@ export default function HeroSection({ userRole }: HeroSectionProps) {
           {userRole === "DRIVER" && (
             <div className="mt-8">
               <Link to="/start-driving">
-                <Button className="bg-primary px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
+                <Button className="px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
                   Start Driving
                 </Button>
               </Link>
@@ -86,7 +85,7 @@ export default function HeroSection({ userRole }: HeroSectionProps) {
           {userRole === "ADMIN" && (
             <div className="mt-8">
               <Link to="/admin/analytics">
-                <Button className="bg-primary px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
+                <Button className="px-6 py-3 rounded-none text-sm sm:text-base transition-transform duration-300 ease-in-out hover:scale-105">
                   Dashboard
                 </Button>
               </Link>

@@ -66,7 +66,7 @@ export default function Contact() {
         backgroundImage={contactImg}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mb-10">
         <div
           className="relative py-10 px-6"
           style={{

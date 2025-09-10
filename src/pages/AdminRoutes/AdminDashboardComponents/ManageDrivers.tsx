@@ -186,7 +186,7 @@ export default function ManageDrivers() {
                       <Button
                         size="sm"
                         variant="outline"
-                        className="rounded-none text-xs"
+                        className="rounded-none text-xs hover:border"
                         onClick={() => handleViewLicense(driver.drivingLicense)}
                       >
                         View
@@ -211,8 +211,8 @@ export default function ManageDrivers() {
                   <TableCell>
                     <Button
                       size="sm"
-                      className="rounded-none text-xs"
-                      variant={driver.driverStatus === "APPROVED" ? "destructive" : "secondary"}
+                      className="rounded-none text-xs hover:border"
+                      variant={driver.driverStatus === "APPROVED" ? "destructive" : "default"}
                       onClick={() => handleAction(driver)}
                     >
                       {driver.driverStatus === "APPROVED" ? "Suspend" : "Approve"}

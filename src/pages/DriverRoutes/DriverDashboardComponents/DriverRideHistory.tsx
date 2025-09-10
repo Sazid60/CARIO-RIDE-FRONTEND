@@ -93,7 +93,7 @@ export default function DriverRideHistory() {
 
         <div className="w-full sm:w-[150px]">
           <Button
-            className="w-full bg-primary text-white rounded-none hover:bg-primary/90 text-sm"
+            className="w-full bg-primary text-white rounded-none hover:bg-primary/90 text-sm hover:border"
             onClick={handleResetFilters}
           >
             Reset Filters
@@ -160,7 +160,7 @@ export default function DriverRideHistory() {
                   </TableCell>
                   <TableCell>
                     <Link to={`/my-accepted-ride-details/${ride._id}`}>
-                      <Button size="sm" className="rounded-none">
+                      <Button size="sm" className="rounded-none hover:border">
                         Details
                       </Button>
                     </Link>

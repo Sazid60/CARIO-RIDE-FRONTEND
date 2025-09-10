@@ -6,13 +6,13 @@ import featureImg from "@/assets/images/features.webp";
 import { BounceLoader } from "react-spinners";
 import { MapContainer, TileLayer, Marker, Polyline } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import {useSingleRideForAdminQuery } from "@/redux/features/rides/rides.api";
+import { useSingleRideForAdminQuery } from "@/redux/features/rides/rides.api";
 import axios from "axios";
 import L from "leaflet";
 
 export default function AdminRideDetails() {
   const { id } = useParams<{ id: string }>();
-  const { data: rideData, isLoading } = useSingleRideForAdminQuery(id, {pollingInterval :3000});
+  const { data: rideData, isLoading } = useSingleRideForAdminQuery(id, { pollingInterval: 3000 });
   const [routeCoords, setRouteCoords] = useState<[number, number][]>([]);
 
   const ride = rideData?.data;
@@ -35,7 +35,7 @@ export default function AdminRideDetails() {
     const fetchRoute = async () => {
       try {
         const coords = [
-          ride.pickupLocation.coordinates.join(","), 
+          ride.pickupLocation.coordinates.join(","),
           ride.destination.coordinates.join(","),
         ].join(";");
 
@@ -81,71 +81,74 @@ export default function AdminRideDetails() {
     date ? new Date(date).toLocaleString() : "N/A";
 
   return (
-    <section className="max-w-7xl mx-auto p-4">
+    <>
       <Breadcrumb
         title="Ride Details"
         description="View full details of all rides created by all users including map, route, and invoice."
         backgroundImage={featureImg}
       />
 
-      <div className="flex flex-col lg:flex-row gap-6 mt-6 text-center lg:text-left">
-        <div className="flex-1 space-y-4">
-          <h1 className="text-2xl font-bold underline uppercase">Ride Details</h1>
-          <div className="text-sm">
-            <strong className="text-primary">Distance:</strong>{" "}
-            {ride.travelDistance?.toFixed(2) ?? "N/A"} km
-          </div>
-          <div className="text-sm">
-            <strong className="text-primary">Fare:</strong> {ride.fare ?? "N/A"} ৳
-          </div>
-          <div className="text-sm">
-            <strong className="text-primary">Status:</strong>{" "}
-            <span
-              className={`px-2 py-1 rounded-none text-xs font-medium ${ride.rideStatus === "COMPLETED"
+      <section className="max-w-7xl mx-auto p-4">
+        <div className="flex flex-col lg:flex-row gap-6 mt-6 text-center lg:text-left">
+          <div className="flex-1 space-y-4">
+            <h1 className="text-2xl font-bold underline uppercase">Ride Details</h1>
+            <div className="text-sm">
+              <strong className="text-primary">Distance:</strong>{" "}
+              {ride.travelDistance?.toFixed(2) ?? "N/A"} km
+            </div>
+            <div className="text-sm">
+              <strong className="text-primary">Fare:</strong> {ride.fare ?? "N/A"} ৳
+            </div>
+            <div className="text-sm">
+              <strong className="text-primary">Status:</strong>{" "}
+              <span
+                className={`px-2 py-1 rounded-none text-xs font-medium ${ride.rideStatus === "COMPLETED"
                   ? "bg-green-100 text-green-700"
                   : ride.rideStatus === "IN_TRANSIT"
                     ? "bg-blue-100 text-blue-700"
                     : "bg-gray-100 text-gray-700"
-                }`}
+                  }`}
+              >
+                {ride.rideStatus ?? "N/A"}
+              </span>
+            </div>
+            <div className="text-sm">
+              <strong className="text-primary">Driver:</strong>{" "}
+              {ride.driverId?.vehicle?.vehicleNumber ?? "N/A"} {" "} || {" "}
+              {ride.driverId?.vehicle?.vehicleType ?? ""}
+            </div>
+            <div>
+              <strong className="underline">Timestamps:</strong>
+              <ul className="mt-3">
+                <li className="text-sm mt-1"><span className="text-primary">Requested:</span> {formatDate(ride.timestamps?.requestedAt)}</li>
+                <li className="text-sm mt-1"><span className="text-primary">Accepted:</span> {formatDate(ride.timestamps?.acceptedAt)}</li>
+                <li className="text-sm mt-1"><span className="text-primary">PickedUp:</span> {formatDate(ride.timestamps?.pickedUpAt)}</li>
+                <li className="text-sm mt-1"><span className="text-primary">Started:</span> {formatDate(ride.timestamps?.startedAt)}</li>
+                <li className="text-sm mt-1"><span className="text-primary">Completed:</span> {formatDate(ride.timestamps?.completedAt)}</li>
+              </ul>
+            </div>
+
+
+          </div>
+          <div className="flex-1 ">
+            <MapContainer
+              center={pickup}
+              zoom={13}
+              scrollWheelZoom={false}
+              className="w-full min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:h-96 z-10"
             >
-              {ride.rideStatus ?? "N/A"}
-            </span>
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <Marker position={pickup} />
+              <Marker position={destination} />
+              {routeCoords.length > 0 && (
+                <Polyline positions={routeCoords} color="blue" weight={5} />
+              )}
+            </MapContainer>
           </div>
-          <div className="text-sm">
-            <strong className="text-primary">Driver:</strong>{" "}
-            {ride.driverId?.vehicle?.vehicleNumber ?? "N/A"} {" "} || {" "}
-            {ride.driverId?.vehicle?.vehicleType ?? ""}
-          </div>
-          <div>
-            <strong className="underline">Timestamps:</strong>
-            <ul className="mt-3">
-              <li className="text-sm mt-1"><span className="text-primary">Requested:</span> {formatDate(ride.timestamps?.requestedAt)}</li>
-              <li className="text-sm mt-1"><span className="text-primary">Accepted:</span> {formatDate(ride.timestamps?.acceptedAt)}</li>
-              <li className="text-sm mt-1"><span className="text-primary">PickedUp:</span> {formatDate(ride.timestamps?.pickedUpAt)}</li>
-              <li className="text-sm mt-1"><span className="text-primary">Started:</span> {formatDate(ride.timestamps?.startedAt)}</li>
-              <li className="text-sm mt-1"><span className="text-primary">Completed:</span> {formatDate(ride.timestamps?.completedAt)}</li>
-            </ul>
-          </div>
-
 
         </div>
-        <div className="flex-1 ">
-          <MapContainer
-            center={pickup}
-            zoom={13}
-            scrollWheelZoom={false}
-            className="w-full min-h-[300px] sm:min-h-[350px] md:min-h-[400px] lg:h-96 z-10"
-          >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={pickup} />
-            <Marker position={destination} />
-            {routeCoords.length > 0 && (
-              <Polyline positions={routeCoords} color="blue" weight={5} />
-            )}
-          </MapContainer>
-        </div>
+      </section>
+    </>
 
-      </div>
-    </section>
   );
 }

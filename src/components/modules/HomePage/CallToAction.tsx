@@ -27,7 +27,7 @@ export default function CallToAction({ userRole }: CallToActionProps) {
       description:
         "Access the powerful admin dashboard to monitor rides, manage users, handle disputes, and keep the system running smoothly. Ensure a safe, efficient, and reliable experience for both drivers and riders.",
       buttonText: "Go to Dashboard",
-      buttonLink: "/admin/dashboard",
+      buttonLink: "/admin/analytics",
     },
   };
 

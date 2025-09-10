@@ -103,7 +103,7 @@ export default function RidesNearMe() {
       </Button>
 
       {rides.length === 0 ? (
-        <p className="mt-8 text-sm md:text-base">No rides available near you.</p>
+        <p className="mt-8 text-sm md:text-base mb-10">No rides available near you.</p>
       ) : (
         <>
           <div className="w-full mt-8 border border-muted overflow-x-auto">

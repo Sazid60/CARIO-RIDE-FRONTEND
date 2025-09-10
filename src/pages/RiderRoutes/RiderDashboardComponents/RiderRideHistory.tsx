@@ -16,7 +16,7 @@ export default function RiderRideHistory() {
   const [currentPage, setCurrentPage] = useState(1);
   const [limit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
-  const [dateSearchTerm, setDateSearchTerm] = useState(""); 
+  const [dateSearchTerm, setDateSearchTerm] = useState("");
   const [rideStatus, setRideStatus] = useState("");
 
   const query: Record<string, string> = {
@@ -24,7 +24,7 @@ export default function RiderRideHistory() {
     limit: limit.toString(),
   };
   if (searchTerm) query.searchTerm = searchTerm;
-  if (dateSearchTerm) query.dateSearch = dateSearchTerm; 
+  if (dateSearchTerm) query.dateSearch = dateSearchTerm;
   if (rideStatus) query.rideStatus = rideStatus;
 
   const { data: ridesData, isLoading } = useGetAllRidesForRiderQuery(query);
@@ -93,7 +93,7 @@ export default function RiderRideHistory() {
 
         <div className="w-full sm:w-[150px]">
           <Button
-            className="w-full bg-primary text-white rounded-none hover:bg-primary/90 text-sm"
+            className="w-full bg-primary text-white rounded-none hover:bg-primary/90 text-sm hover:border"
             onClick={handleResetFilters}
           >
             Reset Filters
@@ -122,13 +122,12 @@ export default function RiderRideHistory() {
                   <TableCell>{ride.fare ?? "N/A"}</TableCell>
                   <TableCell>
                     <span
-                      className={`px-2 py-1 rounded-none text-xs font-medium ${
-                        ride.rideStatus === "COMPLETED"
+                      className={`px-2 py-1 rounded-none text-xs font-medium ${ride.rideStatus === "COMPLETED"
                           ? "bg-green-100 text-green-700"
                           : ride.rideStatus === "IN_TRANSIT"
-                          ? "bg-blue-100 text-blue-700"
-                          : "bg-gray-100 text-gray-700"
-                      }`}
+                            ? "bg-blue-100 text-blue-700"
+                            : "bg-gray-100 text-gray-700"
+                        }`}
                     >
                       {ride.rideStatus ?? "N/A"}
                     </span>
@@ -160,7 +159,7 @@ export default function RiderRideHistory() {
                   </TableCell>
                   <TableCell>
                     <Link to={`/my-ride-details/${ride._id}`}>
-                      <Button size="sm" className="rounded-none">
+                      <Button size="sm" className="rounded-none hover:border">
                         Details
                       </Button>
                     </Link>

@@ -197,7 +197,7 @@ export default function BookRide() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 border mt-20 relative z-10">
+    <div className="max-w-4xl mx-auto p-6 border mt-20 relative z-10 mb-10">
       <div className="h-[400px] w-full">
         {pickup && (
           <MapContainer center={pickup} zoom={14} className="h-full w-full">

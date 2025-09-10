@@ -16,7 +16,7 @@ export default function ContactAdmin() {
     ];
 
     return (
-        <section>
+        <section className="mb-10">
             <Breadcrumb
                 title="Contact Admin"
                 description="Get in touch with our support team for any inquiries."

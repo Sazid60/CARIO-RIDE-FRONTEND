@@ -143,7 +143,7 @@ export default function ManageFeedbacks() {
                     ) : (
                       <Button
                         size="sm"
-                        className="rounded-none text-xs"
+                        className="rounded-none text-xs hover:border"
                         disabled={isReplying && selectedQuestion?._id === q._id}
                         onClick={() => handleReply(q)}
                       >
@@ -226,8 +226,8 @@ export default function ManageFeedbacks() {
           </div>
           <DialogFooter className="flex justify-between">
             <Button
-              className="rounded-none"
-              variant="secondary"
+              className="rounded-none hover:bg-accent hover:border"
+              variant="destructive"
               onClick={() => setDialogOpen(false)}
             >
               Cancel

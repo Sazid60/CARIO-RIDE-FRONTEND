@@ -262,7 +262,7 @@ export default function RideDetails() {
   ];
 
   return (
-    <section className="container mx-auto max-w-4xl mt-20 p-4">
+    <section className="container mx-auto max-w-4xl mt-20 p-4 mb-10">
       <div className="shadow-lg overflow-hidden flex flex-col gap-4">
         {/* Map Section */}
         <div className="z-10 min-w-[400px] h-[350px] relative">

@@ -14,7 +14,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import Logo from "@/assets/icons/Logo"
-import { Link } from "react-router"
+import { Link, useLocation } from "react-router"
 import { generateSidebarItems } from "@/utils/generateSidebarItems"
 import { useUserInfoQuery, useLogoutMutation, authApi } from "@/redux/features/auth/auth.api"
 import { Button } from "@/components/ui/button"
@@ -31,6 +31,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const [logout] = useLogoutMutation()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const handleLogout = async () => {
     await logout(undefined)
@@ -42,7 +43,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar className="" {...props}>
       <SidebarHeader className="bg-background pl-4 py-4">
         <div className="flex justify-between">
-          <Link to="/"><Logo /></Link>
+          <Link to="/"><Logo /></Link> 
           <SidebarTrigger className="-ml-1 md:hidden" />
         </div>
       </SidebarHeader>
@@ -56,7 +57,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenu>
                   {item.items.map((item) => (
                     <SidebarMenuItem className="rounded-none" key={item.title}>
-                      <SidebarMenuButton className="rounded-none text-md" asChild>
+                      <SidebarMenuButton className="rounded-none text-md " asChild  isActive={location.pathname === item.url}>
                         <Link to={item.url}>{item.title}</Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>

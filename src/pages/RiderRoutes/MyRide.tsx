@@ -160,104 +160,107 @@ export default function MyRide() {
   const destinationCoords: [number, number] = [ride.destination.coordinates[1], ride.destination.coordinates[0]];
 
   return (
-    <section className="container mx-auto max-w-4xl mt-20 p-4 mb-10">
-      <div className="shadow-lg overflow-hidden flex flex-col gap-4">
-        <div className="z-10 min-w-[400px] h-[350px] relative">
-          <MapContainer center={locationCoords} zoom={14} className="h-full w-full">
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap" />
-            <Marker position={locationCoords} icon={orangeMarker} />
-            <Marker position={destinationCoords} icon={orangeMarker} />
-            {drivers.map((driver: any, idx: number) => (
-              <Marker key={idx} position={[driver.currentLocation.coordinates[1], driver.currentLocation.coordinates[0]]} icon={blueMarker} />
-            ))}
-            {routeCoords.length > 0 && <Polyline positions={routeCoords} color="orange" weight={5} />}
-          </MapContainer>
-        </div>
+    <>
+      <section className="container mx-auto max-w-4xl mt-20 p-4 mb-10">
+        <div className="shadow-lg overflow-hidden flex flex-col gap-4">
+          <div className="z-10 min-w-[400px] h-[350px] relative">
+            <MapContainer center={locationCoords} zoom={14} className="h-full w-full">
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap" />
+              <Marker position={locationCoords} icon={orangeMarker} />
+              <Marker position={destinationCoords} icon={orangeMarker} />
+              {drivers.map((driver: any, idx: number) => (
+                <Marker key={idx} position={[driver.currentLocation.coordinates[1], driver.currentLocation.coordinates[0]]} icon={blueMarker} />
+              ))}
+              {routeCoords.length > 0 && <Polyline positions={routeCoords} color="orange" weight={5} />}
+            </MapContainer>
+          </div>
 
-        <div className="w-full p-4 shadow-lg border flex flex-col md:flex-row justify-around">
-          <RideTimeline ride={ride} />
-          <div className="flex flex-col w-full">
-            <div className="mt-6 space-y-4">
-              <h1 className="uppercase font-bold underline mb-6">Ride Details</h1>
-              <p className="text-sm"><strong className="text-primary">Distance:</strong> {ride.travelDistance} km</p>
-              <p className="text-sm"><strong className="text-primary">Fare:</strong> {ride.fare} BDT</p>
-              <p className="text-sm"><strong className="text-primary">Pickup:</strong> {pickupAddress || `${pickupCoords[0]}, ${pickupCoords[1]}`}</p>
-              <p className="text-sm"><strong className="text-primary">Destination:</strong> {destinationAddress || `${destinationCoords[0]}, ${destinationCoords[1]}`}</p>
-              {ride.rideStatus === "ACCEPTED" && ride.driverId?.userId && (
-                <div className="mt-4 p-4 border shadow flex items-center gap-4">
-                  <img
-                    src={ride.driverId.userId.picture || "/default-driver.png"}
-                    alt={ride.driverId.userId.name}
-                    className="w-10 h-10 rounded-full object-cover border"
-                  />
-                  <div className="flex flex-col">
-                    <p className="font-bold">{ride.driverId.userId.name}</p>
-                    <p className="text-sm text-gray-600">{ride.driverId.vehicle?.vehicleNumber}</p>
+          <div className="w-full p-4 shadow-lg border flex flex-col md:flex-row justify-around">
+            <RideTimeline ride={ride} />
+            <div className="flex flex-col w-full">
+              <div className="mt-6 space-y-4">
+                <h1 className="uppercase font-bold underline mb-6">Ride Details</h1>
+                <p className="text-sm"><strong className="text-primary">Distance:</strong> {ride.travelDistance} km</p>
+                <p className="text-sm"><strong className="text-primary">Fare:</strong> {ride.fare} BDT</p>
+                <p className="text-sm"><strong className="text-primary">Pickup:</strong> {pickupAddress || `${pickupCoords[0]}, ${pickupCoords[1]}`}</p>
+                <p className="text-sm"><strong className="text-primary">Destination:</strong> {destinationAddress || `${destinationCoords[0]}, ${destinationCoords[1]}`}</p>
+                {ride.rideStatus === "ACCEPTED" && ride.driverId?.userId && (
+                  <div className="mt-4 p-4 border shadow flex items-center gap-4">
+                    <img
+                      src={ride.driverId.userId.picture || "/default-driver.png"}
+                      alt={ride.driverId.userId.name}
+                      loading="lazy"
+                      className="w-10 h-10 rounded-full object-cover border"
+                    />
+                    <div className="flex flex-col">
+                      <p className="font-bold">{ride.driverId.userId.name}</p>
+                      <p className="text-sm text-gray-600">{ride.driverId.vehicle?.vehicleNumber}</p>
+                    </div>
+                    <a
+                      href={`tel:${ride.driverId.userId.phone}`}
+                      className="ml-auto px-2 py-2 bg-green-600 text-white hover:bg-green-700 text-xs rounded-none"
+                    >
+                      Call Driver
+                    </a>
                   </div>
-                  <a
-                    href={`tel:${ride.driverId.userId.phone}`}
-                    className="ml-auto px-2 py-2 bg-green-600 text-white hover:bg-green-700 text-xs rounded-none"
-                  >
-                    Call Driver
-                  </a>
+                )}
+
+              </div>
+
+              {ride.rideStatus === "ARRIVED" && (
+                <div className="mt-6">
+                  <div className="border mb-6 p-2">
+                    <h1 className="text-sm">
+                      If Your Are Willing To <span className="text-primary">Pay In Cash</span> Give The Cash To Driver He Will Mark as Completed and You Will Receive a <span className="text-primary">Invoice</span> !
+                    </h1>
+                  </div>
+                  <Button disabled={rideLoading || isPaying} onClick={() => handlePayment(ride._id)} className="bg-green-500 hover:bg-green-600 text-white rounded-none mb-6">
+                    {isPaying ? "Payment In Process" : "Pay Online"}
+                  </Button>
                 </div>
               )}
 
+              {ride.rideStatus === "COMPLETED" && (
+                <div className="mt-6 flex flex-col gap-2">
+                  <h2 className="font-bold text-sm uppercase underline text-primary">Rate & Feedback</h2>
+                  <div className="flex space-x-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        size={24}
+                        className={`cursor-pointer ${star <= rating ? "text-yellow-400" : "text-gray-400"}`}
+                        onClick={() => setRating(star)}
+                      />
+                    ))}
+                  </div>
+                  <textarea
+                    value={feedback}
+                    onChange={(e) => setFeedback(e.target.value)}
+                    placeholder="Write your feedback"
+                    className="border p-2 rounded-none mt-2"
+                  />
+                  <Button disabled={rideLoading} onClick={handleFeedbackSubmit} className="mt-2 rounded-none">
+                    {isSubmitting ? "Submitting Feedback..." : "Give Feedback"}
+                  </Button>
+                  <Button disabled={rideLoading} onClick={() => navigate("/")} className="mt-2 rounded-none">
+                    Go Home
+                  </Button>
+                </div>
+              )}
             </div>
-
-            {ride.rideStatus === "ARRIVED" && (
-              <div className="mt-6">
-                <div className="border mb-6 p-2">
-                  <h1 className="text-sm">
-                    If Your Are Willing To <span className="text-primary">Pay In Cash</span> Give The Cash To Driver He Will Mark as Completed and You Will Receive a <span className="text-primary">Invoice</span> !
-                  </h1>
-                </div>
-                <Button disabled={rideLoading || isPaying} onClick={() => handlePayment(ride._id)} className="bg-green-500 hover:bg-green-600 text-white rounded-none mb-6">
-                  {isPaying ? "Payment In Process" : "Pay Online"}
-                </Button>
-              </div>
-            )}
-
-            {ride.rideStatus === "COMPLETED" && (
-              <div className="mt-6 flex flex-col gap-2">
-                <h2 className="font-bold text-sm uppercase underline text-primary">Rate & Feedback</h2>
-                <div className="flex space-x-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      size={24}
-                      className={`cursor-pointer ${star <= rating ? "text-yellow-400" : "text-gray-400"}`}
-                      onClick={() => setRating(star)}
-                    />
-                  ))}
-                </div>
-                <textarea
-                  value={feedback}
-                  onChange={(e) => setFeedback(e.target.value)}
-                  placeholder="Write your feedback"
-                  className="border p-2 rounded-none mt-2"
-                />
-                <Button disabled={rideLoading} onClick={handleFeedbackSubmit} className="mt-2 rounded-none">
-                  {isSubmitting ? "Submitting Feedback..." : "Give Feedback"}
-                </Button>
-                <Button disabled={rideLoading} onClick={() => navigate("/")} className="mt-2 rounded-none">
-                  Go Home
-                </Button>
-              </div>
-            )}
           </div>
         </div>
-      </div>
 
-      {ride.rideStatus === "IN_TRANSIT" && (
-        <Button
-          onClick={handleSOS}
-          className="fixed right-6 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white px-6 py-8 shadow-lg z-50 flex flex-col"
-        >
-          <AlertTriangle className="h-5 w-5" />
-          SOS
-        </Button>
-      )}
-    </section>
+        {ride.rideStatus === "IN_TRANSIT" && (
+          <Button
+            onClick={handleSOS}
+            className="fixed right-6 top-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 text-white px-6 py-8 shadow-lg z-50 flex flex-col"
+          >
+            <AlertTriangle className="h-5 w-5" />
+            SOS
+          </Button>
+        )}
+      </section>
+    </>
   );
 }

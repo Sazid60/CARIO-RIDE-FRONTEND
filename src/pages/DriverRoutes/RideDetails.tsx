@@ -262,7 +262,8 @@ export default function RideDetails() {
   ];
 
   return (
-    <section className="container mx-auto max-w-4xl mt-20 p-4 mb-10">
+    <>
+        <section className="container mx-auto max-w-4xl mt-20 p-4 mb-10">
       <div className="shadow-lg overflow-hidden flex flex-col gap-4">
         {/* Map Section */}
         <div className="z-10 min-w-[400px] h-[350px] relative">
@@ -318,6 +319,7 @@ export default function RideDetails() {
                   <img
                     src={ride.riderId.picture || "/default-driver.png"}
                     alt={ride.riderId.name}
+                    loading="lazy"
                     className="w-10 h-10 rounded-full object-cover border"
                   />
                   <div className="flex flex-col">
@@ -387,5 +389,6 @@ export default function RideDetails() {
         </div>
       </div>
     </section>
+    </>
   );
 }

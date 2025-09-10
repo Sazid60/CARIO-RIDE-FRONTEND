@@ -68,14 +68,14 @@ export default function AdminUsers() {
     }
 
     return (
-        <section>
+        <>
             <DashBoardBreadcrumb
                 title="Manage Users"
                 description="View and manage all registered users"
                 backgroundImage={featureImg}
             />
 
-            <div className="flex flex-wrap justify-center items-center gap-3 mb-4">
+            <section className="flex flex-wrap justify-center items-center gap-3 mb-4">
                 <div className="flex-grow min-w-[250px] w-full sm:w-auto">
                     <Input
                         type="text"
@@ -116,7 +116,7 @@ export default function AdminUsers() {
                         Reset Filters
                     </Button>
                 </div>
-            </div>
+            </section>
 
             {users.length > 0 ? (
                 <div className="max-w-7xl mx-auto p-4">
@@ -139,6 +139,7 @@ export default function AdminUsers() {
                                         <img
                                             src={user.picture}
                                             alt={user.name}
+                                            loading="lazy"
                                             className="w-10 h-10 rounded-full object-cover"
                                         />
                                     </TableCell>
@@ -200,6 +201,6 @@ export default function AdminUsers() {
             ) : (
                 <p className="text-center text-muted-foreground py-10">No User Data Found</p>
             )}
-        </section>
+        </>
     );
 }

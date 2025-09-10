@@ -1,15 +1,16 @@
 
-
-
-import AdminAnalytics from "@/pages/AdminRoutes/AdminDashboardComponents/AdminAnalytics";
-import AdminRideHistory from "@/pages/AdminRoutes/AdminDashboardComponents/AdminRideHistory";
-import ManageDrivers from "@/pages/AdminRoutes/AdminDashboardComponents/ManageDrivers";
-import ManageFeedBacks from "@/pages/AdminRoutes/AdminDashboardComponents/ManageFeedBacks";
-
-import ManageUsers from "@/pages/AdminRoutes/AdminDashboardComponents/ManageUsers";
-import UpdateProfile from "@/pages/PublicRoutes/Auth/UpdateProfile";
-
 import type { ISidebarItems } from "@/types";
+import { lazy } from "react";
+
+const AdminAnalytics = lazy(() => import("@/pages/AdminRoutes/AdminDashboardComponents/AdminAnalytics"));
+const AdminRideHistory = lazy(() => import("@/pages/AdminRoutes/AdminDashboardComponents/AdminRideHistory"));
+const ManageDrivers = lazy(() => import("@/pages/AdminRoutes/AdminDashboardComponents/ManageDrivers"));
+const ManageFeedBacks = lazy(() => import("@/pages/AdminRoutes/AdminDashboardComponents/ManageFeedBacks"));
+const ManageUsers = lazy(() => import("@/pages/AdminRoutes/AdminDashboardComponents/ManageUsers"));
+const UpdateProfile = lazy(() => import("@/pages/PublicRoutes/Auth/UpdateProfile"));
+
+
+
 
 
 

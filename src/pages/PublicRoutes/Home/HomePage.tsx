@@ -26,13 +26,13 @@ export function HomePage() {
   const userRole = user?.data?.role || "RIDER"
 
   return (
-    <div>
+    <section>
       <HeroSection userRole={userRole}  />
       <ServiceHighlights totalRides={totalRides} />
       <CustomerFeedbackMarquee feedbacks={feedbacks} />
       <HowItWorks />
       <CallToAction userRole={userRole} />
-    </div>
+    </section>
   );
 }
 

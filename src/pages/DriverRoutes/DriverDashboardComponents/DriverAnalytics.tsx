@@ -53,7 +53,8 @@ export default function DriverAnalytics() {
   }
 
   return (
-    <section className="min-h-screen p-2 sm:p-6 md:p-8 flex flex-col gap-6">
+    <>
+        <section className="min-h-screen p-2 sm:p-6 md:p-8 flex flex-col gap-6">
       <DashBoardBreadcrumb
         title="Driver Analytics"
         description="Monitor your completed rides, earnings, ratings, and performance insights to optimize your driving."
@@ -129,5 +130,6 @@ export default function DriverAnalytics() {
         </CardContent>
       </Card>
     </section>
+    </>
   )
 }

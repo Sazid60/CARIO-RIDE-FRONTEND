@@ -16,63 +16,65 @@ export default function ContactAdmin() {
     ];
 
     return (
-        <section className="mb-10">
-            <Breadcrumb
-                title="Contact Admin"
-                description="Get in touch with our support team for any inquiries."
-                backgroundImage={contactImg}
-            />
+        <>
+            <section className="mb-10">
+                <Breadcrumb
+                    title="Contact Admin"
+                    description="Get in touch with our support team for any inquiries."
+                    backgroundImage={contactImg}
+                />
 
-            <div
-                className="relative py-6 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
-                style={{
-                    backgroundImage: `url(${contact})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                }}
-            >
-                <div className="absolute inset-0 bg-black/50"></div>
+                <div
+                    className="relative py-6 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+                    style={{
+                        backgroundImage: `url(${contact})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                    }}
+                >
+                    <div className="absolute inset-0 bg-black/50"></div>
 
-                <div className="relative space-y-8">
-                    <h1 className="text-center text-2xl sm:text-3xl font-extrabold text-white drop-shadow-lg tracking-wide">
-                        {reason}
-                    </h1>
+                    <div className="relative space-y-8">
+                        <h1 className="text-center text-2xl sm:text-3xl font-extrabold text-white drop-shadow-lg tracking-wide">
+                            {reason}
+                        </h1>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        {contactCards.slice(0, 2).map(card => (
-                            <a
-                                key={card.id}
-                                href={card.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex flex-col justify-center items-center text-center space-y-4 border p-6 shadow-md backdrop-blur-3xl  bg-white/10 hover:bg-white/20 transition"
-                            >
-                                <div>{card.icon}</div>
-                                <div>
-                                    <h3 className="text-md sm:text-xl font-bold uppercase hover:text-primary">
-                                        {card.title}
-                                    </h3>
-                                    <p className="text-sm">{card.info}</p>
-                                </div>
-                            </a>
-                        ))}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            {contactCards.slice(0, 2).map(card => (
+                                <a
+                                    key={card.id}
+                                    href={card.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex flex-col justify-center items-center text-center space-y-4 border p-6 shadow-md backdrop-blur-3xl  bg-white/10 hover:bg-white/20 transition"
+                                >
+                                    <div>{card.icon}</div>
+                                    <div>
+                                        <h3 className="text-md sm:text-xl font-bold uppercase hover:text-primary">
+                                            {card.title}
+                                        </h3>
+                                        <p className="text-sm">{card.info}</p>
+                                    </div>
+                                </a>
+                            ))}
+                        </div>
+
+                        <a
+                            href={contactCards[2].link}
+                            className="flex flex-col text-center items-center border justify-center space-y-4 p-6 shadow-md backdrop-blur-3xl  bg-white/10 hover:bg-white/20 transition"
+                        >
+                            <div>{contactCards[2].icon}</div>
+                            <div>
+                                <h3 className="text-md sm:text-xl font-bold uppercase hover:text-primary">
+                                    {contactCards[2].title}
+                                </h3>
+                                <p className="text-sm">{contactCards[2].info}</p>
+                            </div>
+                        </a>
                     </div>
 
-                    <a
-                        href={contactCards[2].link}
-                        className="flex flex-col text-center items-center border justify-center space-y-4 p-6 shadow-md backdrop-blur-3xl  bg-white/10 hover:bg-white/20 transition"
-                    >
-                        <div>{contactCards[2].icon}</div>
-                        <div>
-                            <h3 className="text-md sm:text-xl font-bold uppercase hover:text-primary">
-                                {contactCards[2].title}
-                            </h3>
-                            <p className="text-sm">{contactCards[2].info}</p>
-                        </div>
-                    </a>
                 </div>
-
-            </div>
-        </section>
+            </section>
+        </>
     );
 }

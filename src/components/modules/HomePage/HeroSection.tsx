@@ -36,7 +36,7 @@ export default function HeroSection({ userRole }: HeroSectionProps) {
 
   return (
     <section className="relative overflow-hidden min-h-screen flex items-center justify-center py-20 md:py-32">
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 min-h-screen">
         <img alt="background" src={hero} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/70"></div>
       </div>

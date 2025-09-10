@@ -1,11 +1,13 @@
 
-
-import DriverAnalytics from "@/pages/DriverRoutes/DriverDashboardComponents/DriverAnalytics";
-import DriverRideHistory from "@/pages/DriverRoutes/DriverDashboardComponents/DriverRideHistory";
-import UpdateProfile from "@/pages/PublicRoutes/Auth/UpdateProfile";
-
-
 import type { ISidebarItems } from "@/types";
+import { lazy } from "react";
+
+const DriverAnalytics = lazy(() => import("@/pages/DriverRoutes/DriverDashboardComponents/DriverAnalytics"));
+const DriverRideHistory = lazy(() => import("@/pages/DriverRoutes/DriverDashboardComponents/DriverRideHistory"));
+const UpdateProfile = lazy(() => import("@/pages/PublicRoutes/Auth/UpdateProfile"));
+
+
+
 
 
 

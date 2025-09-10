@@ -1,12 +1,11 @@
 
-
-import UpdateProfile from "@/pages/PublicRoutes/Auth/UpdateProfile";
-import RideAnalytics from "@/pages/RiderRoutes/RiderDashboardComponents/RideAnalytics";
-import RiderRideHistory from "@/pages/RiderRoutes/RiderDashboardComponents/RiderRideHistory";
-
-
-
 import type { ISidebarItems } from "@/types";
+import { lazy } from "react";
+const RideAnalytics = lazy(() => import("@/pages/RiderRoutes/RiderDashboardComponents/RideAnalytics"));
+const RiderRideHistory = lazy(() => import("@/pages/RiderRoutes/RiderDashboardComponents/RiderRideHistory"));
+const UpdateProfile = lazy(() => import("@/pages/PublicRoutes/Auth/UpdateProfile"));
+
+
 
 
 

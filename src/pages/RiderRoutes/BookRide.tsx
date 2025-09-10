@@ -184,70 +184,72 @@ export default function BookRide() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 border mt-20 relative z-10 mb-10">
-      <div className="h-[400px] w-full">
-        {pickup && (
-          <MapContainer center={pickup} zoom={14} className="h-full w-full">
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            />
-            <Marker position={pickup} icon={orangeMarker} />
-            {destination && <Marker position={destination} icon={orangeMarker} />}
-            {routeCoords.length > 0 && (
-              <Polyline positions={routeCoords} color="orange" weight={5} />
-            )}
-            <MapClickHandler setDestination={setDestination} />
-          </MapContainer>
-        )}
-      </div>
+    <>
+      <section className="max-w-4xl mx-auto p-6 border mt-20 relative z-10 mb-10">
+        <div className="h-[400px] w-full">
+          {pickup && (
+            <MapContainer center={pickup} zoom={14} className="h-full w-full">
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+              />
+              <Marker position={pickup} icon={orangeMarker} />
+              {destination && <Marker position={destination} icon={orangeMarker} />}
+              {routeCoords.length > 0 && (
+                <Polyline positions={routeCoords} color="orange" weight={5} />
+              )}
+              <MapClickHandler setDestination={setDestination} />
+            </MapContainer>
+          )}
+        </div>
 
-      {/* Ride Info */}
-      <div className="py-4 text-center">
-        {destination ? (
-          <p className="text-sm md:text-base">
-            Distance: {distanceKm} km | Fare: {fare} BDT
-          </p>
-        ) : !latestRide ? (
-          <p className="text-sm md:text-base">
-            Select a destination by clicking on the map.
-          </p>
-        ) : (
-          <p className="text-sm md:text-base text-green-700 font-medium">
-            Ride Requested  Waiting for driver to accept...
-          </p>
-        )}
+        {/* Ride Info */}
+        <div className="py-4 text-center">
+          {destination ? (
+            <p className="text-sm md:text-base">
+              Distance: {distanceKm} km | Fare: {fare} BDT
+            </p>
+          ) : !latestRide ? (
+            <p className="text-sm md:text-base">
+              Select a destination by clicking on the map.
+            </p>
+          ) : (
+            <p className="text-sm md:text-base text-green-700 font-medium">
+              Ride Requested  Waiting for driver to accept...
+            </p>
+          )}
 
-        {!latestRide ? (
-          <Button
-            disabled={!destination || isLoading}
-            onClick={bookRide}
-            className="mt-3 w-full rounded-none"
-          >
-            {isLoading ? "Requesting..." : "Request a Ride"}
-          </Button>
-        ) : (
-          <>
+          {!latestRide ? (
             <Button
-              className="mt-3 w-full bg-green-600 text-white py-2 hover:bg-green-700 rounded-none"
-              onClick={() => navigate(`/my-ride/${latestRide?._id}`)}
+              disabled={!destination || isLoading}
+              onClick={bookRide}
+              className="mt-3 w-full rounded-none"
             >
-              View My Requested Ride
+              {isLoading ? "Requesting..." : "Request a Ride"}
             </Button>
-            {latestRide.rideStatus !== "ARRIVED" && latestRide.rideStatus !== "IN_TRANSIT" && (
+          ) : (
+            <>
               <Button
-                className="mt-3 w-full bg-red-600 text-white py-2 hover:bg-red-700 rounded-none"
-                onClick={handleCancelRide}
-                disabled={isCanceling}
+                className="mt-3 w-full bg-green-600 text-white py-2 hover:bg-green-700 rounded-none"
+                onClick={() => navigate(`/my-ride/${latestRide?._id}`)}
               >
-                {isCanceling ? "Cancelling..." : "Cancel My Ride"}
+                View My Requested Ride
               </Button>
-            )}
-          </>
+              {latestRide.rideStatus !== "ARRIVED" && latestRide.rideStatus !== "IN_TRANSIT" && (
+                <Button
+                  className="mt-3 w-full bg-red-600 text-white py-2 hover:bg-red-700 rounded-none"
+                  onClick={handleCancelRide}
+                  disabled={isCanceling}
+                >
+                  {isCanceling ? "Cancelling..." : "Cancel My Ride"}
+                </Button>
+              )}
+            </>
 
 
-        )}
-      </div>
-    </div>
+          )}
+        </div>
+      </section>
+    </>
   );
 }

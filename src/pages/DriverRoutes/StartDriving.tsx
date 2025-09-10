@@ -7,7 +7,7 @@ import { useGetDriverProfileQuery } from "@/redux/features/driver/driver.api";
 import RidesNearMe from "@/components/modules/Driver/RidesNearMe";
 
 export default function StartDriving() {
-  const { data, isLoading } = useGetDriverProfileQuery(undefined,{pollingInterval:3000});
+  const { data, isLoading } = useGetDriverProfileQuery(undefined, { pollingInterval: 3000 });
   const driver = data?.data;
 
   console.log(driver)
@@ -21,18 +21,20 @@ export default function StartDriving() {
   }
 
   return (
-    <section className="min-h-screen">
-      <Breadcrumb
-        title="Start Driving"
-        description="Manage your driving status and nearby rides."
-        backgroundImage={drivingImg}
-      />
+    <>
+      <section className="min-h-screen">
+        <Breadcrumb
+          title="Start Driving"
+          description="Manage your driving status and nearby rides."
+          backgroundImage={drivingImg}
+        />
 
-      <div className="flex items-center justify-center mt-12 w-full">
-        <h1 className="text-3xl font-bold">
-          {driver?.onlineStatus === "ONLINE" ? <RidesNearMe/> : <GoOnline/>}
-        </h1>
-      </div>
-    </section>
+        <div className="flex items-center justify-center mt-12 w-full">
+          <h1 className="text-3xl font-bold">
+            {driver?.onlineStatus === "ONLINE" ? <RidesNearMe /> : <GoOnline />}
+          </h1>
+        </div>
+      </section>
+    </>
   );
 }

@@ -4,8 +4,6 @@ import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { Linkedin, MessageCircle, PhoneCall } from "lucide-react";
 import { NavLink } from "react-router";
 
-
-
 const contactIcons = [
   {
     icon: Linkedin,
@@ -38,11 +36,23 @@ export default function Footer() {
 
   if (user) {
     if (user.role === "RIDER") {
-      navLinks.push({ href: "/book-ride", label: "Book a Ride", role: role.rider});
-      navLinks.push({ href: "/driver-register", label: "Become a Driver", role: role.rider });
+      navLinks.push({
+        href: "/book-ride",
+        label: "Book a Ride",
+        role: role.rider,
+      });
+      navLinks.push({
+        href: "/driver-register",
+        label: "Become a Driver",
+        role: role.rider,
+      });
       navLinks.push({ href: "/rider", label: "Dashboard", role: role.rider });
     } else if (user.role === "DRIVER") {
-      navLinks.push({ href: "/start-driving", label: "Start Driving", role: role.driver });
+      navLinks.push({
+        href: "/start-driving",
+        label: "Start Driving",
+        role: role.driver,
+      });
       navLinks.push({ href: "/driver", label: "Dashboard", role: role.driver });
     } else if (user.role === "ADMIN") {
       navLinks.push({ href: "/admin", label: "Dashboard", role: role.admin });
@@ -56,8 +66,9 @@ export default function Footer() {
         </div>
 
         <p className="text-gray-300 max-w-xl mx-auto mb-6 text-sm md:text-base">
-          Cario-Rides is your trusted ride-sharing platform. Book rides instantly, track your journey in real-time,
-          and enjoy safe and comfortable travel with our verified drivers across the city.
+          Cario-Rides is your trusted ride-sharing platform. Book rides
+          instantly, track your journey in real-time, and enjoy safe and
+          comfortable travel with our verified drivers across the city.
         </p>
         <ul className="flex flex-wrap justify-center gap-6 mb-8">
           {navLinks.map(({ href, label }) => (
@@ -66,7 +77,8 @@ export default function Footer() {
                 to={href}
                 end={href === "/"}
                 className={({ isActive }) =>
-                  `text-sm transition hover:text-primary ${isActive ? "text-primary font-semibold" : ""
+                  `text-sm transition hover:text-primary ${
+                    isActive ? "text-primary font-semibold" : ""
                   }`
                 }
               >
@@ -92,7 +104,8 @@ export default function Footer() {
         </ul>
         <div className="text-sm  border-t border-gray-700 pt-4">
           &copy; {new Date().getFullYear()}{" "}
-          <span className="text-orange-600">Cario-Rides Inc.</span>. All rights reserved.
+          <span className="text-orange-600">Cario-Rides Inc.</span>. All rights
+          reserved.
         </div>
       </div>
     </footer>

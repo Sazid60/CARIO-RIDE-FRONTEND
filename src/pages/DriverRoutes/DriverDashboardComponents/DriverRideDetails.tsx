@@ -29,27 +29,68 @@ export default function DriverRideDetails() {
   });
 
 
+  // useEffect(() => {
+  //   if (!ride) return;
+
+  //   const fetchRoute = async () => {
+  //     try {
+  //       const coords = [
+  //         ride.pickupLocation.coordinates.join(","),
+  //         ride.destination.coordinates.join(","),
+  //       ].join(";");
+
+  //       const res = await axios.get(
+  //         `https://router.project-osrm.org/route/v1/driving/${coords}?overview=full&geometries=geojson`
+  //       );
+
+  //       const route = res.data.routes[0].geometry.coordinates.map(
+  //         (c: [number, number]) => [c[1], c[0]]
+  //       );
+
+  //       setRouteCoords(route);
+  //     } catch (err) {
+  //       console.error("Error fetching OSRM route:", err);
+  //     }
+  //   };
+
+  //   fetchRoute();
+  // }, [ride]);
+
   useEffect(() => {
     if (!ride) return;
 
     const fetchRoute = async () => {
       try {
-        const coords = [
-          ride.pickupLocation.coordinates.join(","),
-          ride.destination.coordinates.join(","),
-        ].join(";");
-
-        const res = await axios.get(
-          `https://router.project-osrm.org/route/v1/driving/${coords}?overview=full&geometries=geojson`
+        const res = await axios.post(
+          "https://api.openrouteservice.org/v2/directions/driving-car/geojson",
+          {
+            coordinates: [
+              [
+                ride.pickupLocation.coordinates[0], // lng
+                ride.pickupLocation.coordinates[1], // lat
+              ],
+              [
+                ride.destination.coordinates[0],    // lng
+                ride.destination.coordinates[1],    // lat
+              ],
+            ],
+          },
+          {
+            headers: {
+              Authorization: import.meta.env.VITE_ORS_API_KEY,
+              "Content-Type": "application/json",
+            },
+            timeout: 15000,
+          }
         );
 
-        const route = res.data.routes[0].geometry.coordinates.map(
-          (c: [number, number]) => [c[1], c[0]]
+        const route = res.data.features[0].geometry.coordinates.map(
+          (c: [number, number]) => [c[1], c[0]] // → [lat, lng]
         );
 
         setRouteCoords(route);
       } catch (err) {
-        console.error("Error fetching OSRM route:", err);
+        console.error("Error fetching route:", err);
       }
     };
 

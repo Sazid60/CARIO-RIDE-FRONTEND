@@ -76,21 +76,62 @@ export default function MyRide() {
     shadowSize: [41, 41],
   });
 
+  // useEffect(() => {
+  //   const fetchRoute = async () => {
+  //     if (ride?.pickupLocation && ride?.destination && ride?.currentLocation) {
+  //       try {
+  //         const coords = `${ride.currentLocation.coordinates[0]},${ride.currentLocation.coordinates[1]};${ride.destination.coordinates[0]},${ride.destination.coordinates[1]}`;
+  //         const res = await axios.get(`https://router.project-osrm.org/route/v1/driving/${coords}?geometries=geojson`);
+  //         const route = res.data.routes[0].geometry.coordinates.map((c: [number, number]) => [c[1], c[0]]);
+  //         setRouteCoords(route);
+  //       } catch (err) {
+  //         console.error("Error fetching route:", err);
+  //       }
+  //     }
+  //   };
+  //   fetchRoute();
+  // }, [ride]);
+
   useEffect(() => {
-    const fetchRoute = async () => {
-      if (ride?.pickupLocation && ride?.destination && ride?.currentLocation) {
-        try {
-          const coords = `${ride.currentLocation.coordinates[0]},${ride.currentLocation.coordinates[1]};${ride.destination.coordinates[0]},${ride.destination.coordinates[1]}`;
-          const res = await axios.get(`https://router.project-osrm.org/route/v1/driving/${coords}?geometries=geojson`);
-          const route = res.data.routes[0].geometry.coordinates.map((c: [number, number]) => [c[1], c[0]]);
-          setRouteCoords(route);
-        } catch (err) {
-          console.error("Error fetching route:", err);
+  const fetchRoute = async () => {
+    if (!ride?.pickupLocation || !ride?.destination || !ride?.currentLocation) return;
+
+    try {
+      const res = await axios.post(
+        "https://api.openrouteservice.org/v2/directions/driving-car/geojson",
+        {
+          coordinates: [
+            [
+              ride.currentLocation.coordinates[0], // lng
+              ride.currentLocation.coordinates[1], // lat
+            ],
+            [
+              ride.destination.coordinates[0],     // lng
+              ride.destination.coordinates[1],     // lat
+            ],
+          ],
+        },
+        {
+          headers: {
+            Authorization: import.meta.env.VITE_ORS_API_KEY,
+            "Content-Type": "application/json",
+          },
+          timeout: 15000,
         }
-      }
-    };
-    fetchRoute();
-  }, [ride]);
+      );
+
+      const route = res.data.features[0].geometry.coordinates.map(
+        (c: [number, number]) => [c[1], c[0]] // [lat, lng] for map
+      );
+
+      setRouteCoords(route);
+    } catch (err) {
+      console.error("Error fetching route:", err);
+    }
+  };
+
+  fetchRoute();
+}, [ride]);
 
   useEffect(() => {
     const fetchAddresses = async () => {

@@ -24,8 +24,6 @@ export const withAuth = (Component: ComponentType, requiredRole?: TRole) => {
 
     const user = data?.data;
     const driver = driverData?.data
-
-    console.log(driver)
     if (!user?.email) {
       return <Navigate
         to="/login"

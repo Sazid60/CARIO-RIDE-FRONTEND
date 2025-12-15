@@ -10,7 +10,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
 
   function (config) {
-    console.log("Axios", config);
+    // console.log("Axios", config);
     return config;
   },
   function (error) {
@@ -42,7 +42,7 @@ const processQueue = (error: unknown) => {
 
 axiosInstance.interceptors.response.use(
   (response) => {
-    console.log("Res Success!")
+    // console.log("Res Success!")
     return response
   },
 

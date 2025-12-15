@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "withcredentials"
-    ]
+    ],
+    "postman.settings.dotenv-detection-notification-visibility": false
 }

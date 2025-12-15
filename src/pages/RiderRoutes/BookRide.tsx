@@ -40,9 +40,6 @@ export default function BookRide() {
 
   const [latestRide, setLatestRide] = useState<any>(null);
 
-  console.log(ridesData)
-
-  console.log(latestRide)
   useEffect(() => {
     const latest = ridesData?.data?.data ?? null;
 
@@ -145,35 +142,54 @@ export default function BookRide() {
     }
   }, [latestRide]);
 
-  useEffect(() => {
-    const fetchRoute = async () => {
-      if (pickup && destination) {
-        try {
-          const coords = `${pickup[1]},${pickup[0]};${destination[1]},${destination[0]}`;
-          const res = await axios.get(
-            `https://router.project-osrm.org/route/v1/driving/${coords}?geometries=geojson`
-          );
-          const route = res.data.routes[0].geometry.coordinates.map(
-            (c: [number, number]) => [c[1], c[0]]
-          );
-          setRouteCoords(route);
+useEffect(() => {
+  const fetchRoute = async () => {
+    if (!pickup || !destination) return;
 
-          if (!latestRide) {
-            const distanceMeters = res.data.routes[0].distance;
-            const distanceInKm = parseFloat((distanceMeters / 1000).toFixed(2));
-            setDistanceKm(distanceInKm);
-            setFare(calculateFare(distanceInKm));
-          } else {
-            setDistanceKm(latestRide.travelDistance);
-            setFare(latestRide.fare);
-          }
-        } catch (err) {
-          console.error("Error fetching route:", err);
+    try {
+      const res = await axios.post(
+        "https://api.openrouteservice.org/v2/directions/driving-car/geojson",
+        {
+          coordinates: [
+            [pickup[1], pickup[0]],
+            [destination[1], destination[0]],
+          ],
+        },
+        {
+          headers: {
+            Authorization: import.meta.env.VITE_ORS_API_KEY,
+            "Content-Type": "application/json",
+          },
+          timeout: 15000,
         }
+      );
+
+      // 🗺️ Route polyline
+      const routeCoords = res.data.features[0].geometry.coordinates.map(
+        (c: [number, number]) => [c[1], c[0]] // lat, lng for Leaflet
+      );
+
+      setRouteCoords(routeCoords);
+
+      // 📏 Distance
+      if (!latestRide) {
+        const distanceMeters =
+          res.data.features[0].properties.summary.distance;
+
+        const distanceInKm = Number((distanceMeters / 1000).toFixed(2));
+        setDistanceKm(distanceInKm);
+        setFare(calculateFare(distanceInKm));
+      } else {
+        setDistanceKm(latestRide.travelDistance);
+        setFare(latestRide.fare);
       }
-    };
-    fetchRoute();
-  }, [pickup, destination, latestRide]);
+    } catch (err) {
+      console.error("Error fetching route:", err);
+    }
+  };
+
+  fetchRoute();
+}, [pickup, destination, latestRide]);
 
   if (isLoading) {
     return (

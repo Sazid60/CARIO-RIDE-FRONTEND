@@ -162,3 +162,5 @@ bun install
 ```
 bun run dev
 ```
+
+- use credentials mentioned above to login

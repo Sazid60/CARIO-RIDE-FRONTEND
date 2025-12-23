@@ -6,7 +6,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import UserMenu from "@/components/user-menu";
-import { ModeToggle } from "./ModeToggler";
+// import { ModeToggle } from "./ModeToggler";
 import { Link, NavLink } from "react-router";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { role } from "@/constants/role";
@@ -140,7 +140,7 @@ export default function Header() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <ModeToggle />
+          {/* <ModeToggle /> */}
           {data?.data?.email && <UserMenu data={data} />}
           {!data?.data?.email && (
             <Button asChild className="text-sm rounded-none">

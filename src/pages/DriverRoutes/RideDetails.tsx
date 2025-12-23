@@ -171,12 +171,12 @@ useEffect(() => {
         {
           coordinates: [
             [
-              ride.currentLocation.coordinates[0], // lng
-              ride.currentLocation.coordinates[1], // lat
+              ride.currentLocation.coordinates[0], 
+              ride.currentLocation.coordinates[1], 
             ],
             [
-              ride.destination.coordinates[0],     // lng
-              ride.destination.coordinates[1],     // lat
+              ride.destination.coordinates[0],     
+              ride.destination.coordinates[1],    
             ],
           ],
         },
@@ -190,7 +190,7 @@ useEffect(() => {
       );
 
       const route = res.data.features[0].geometry.coordinates.map(
-        (c: [number, number]) => [c[1], c[0]] // → [lat, lng] for map
+        (c: [number, number]) => [c[1], c[0]] 
       );
 
       setRouteCoords(route);

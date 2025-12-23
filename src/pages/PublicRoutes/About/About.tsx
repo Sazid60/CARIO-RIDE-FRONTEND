@@ -34,28 +34,7 @@ export default function About() {
             role: "Head of Product",
             avatar: "https://i.pravatar.cc/150?img=28",
             description: "Leads product strategy and roadmap, designing features that improve rider and driver experience."
-        },
-        {
-            id: "member-4",
-            name: "Imran Chowdhury",
-            role: "Lead Software Engineer",
-            avatar: "https://i.pravatar.cc/150?img=15",
-            description: "Builds and maintains the core ride-sharing platform, focusing on scalability and reliability."
-        },
-        {
-            id: "member-5",
-            name: "Farhana Akter",
-            role: "Operations Manager",
-            avatar: "https://i.pravatar.cc/150?img=20",
-            description: "Manages day-to-day operations, driver onboarding, and ensures smooth service delivery across cities."
-        },
-        {
-            id: "member-6",
-            name: "Samiul Islam",
-            role: "UX/UI Designer",
-            avatar: "https://i.pravatar.cc/150?img=25",
-            description: "Designs intuitive interfaces and user flows to make the app simple, enjoyable, and efficient for all users."
-        },
+        }
     ]
 
 

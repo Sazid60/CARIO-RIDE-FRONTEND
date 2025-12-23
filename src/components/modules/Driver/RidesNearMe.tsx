@@ -89,6 +89,7 @@ export default function RidesNearMe() {
     try {
       await acceptRide(rideId).unwrap();
       toast.success(`Ride accepted successfully`);
+      navigate(`/my-accepted-ride/${rideId}`);
       refetch();
     } catch (err: any) {
       console.error("Failed to accept ride:", err);

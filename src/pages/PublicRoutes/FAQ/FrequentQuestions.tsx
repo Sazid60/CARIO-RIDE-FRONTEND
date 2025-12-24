@@ -32,7 +32,7 @@ export default function FrequentQuestions() {
         backgroundImage={faqImg}
       />
 
-      <section className="max-w-7xl mx-auto py-5 md:py-10 px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <section className="container mx-auto py-5 md:py-10 px-4 sm:px-6 lg:px-0 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <div className="relative w-full xl:w-[90%] h-full">
           <img
             src={faqIllustration}

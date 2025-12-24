@@ -14,7 +14,7 @@ export default function HowItWorks() {
         <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto text-center mb-12">
+      <div className="relative z-10 container mx-auto text-center mb-12">
         <h2 className="text-2xl sm:text-3xl font-bold uppercase mb-4">
           How It Works
         </h2>
@@ -23,7 +23,7 @@ export default function HowItWorks() {
         </p>
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto flex flex-col lg:flex-row gap-6">
+      <div className="relative z-10 container mx-auto flex flex-col lg:flex-row gap-6">
         <div className="lg:flex-1 flex flex-col items-center justify-center text-center border p-2 md:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 bg-white/10 backdrop-blur-sm ">
           <div className="w-24 h-24 flex items-center justify-center mb-5 rounded-full bg-blue-100">
             <User size={56} className="text-blue-500" />

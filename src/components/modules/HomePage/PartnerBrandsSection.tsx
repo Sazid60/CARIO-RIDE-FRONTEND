@@ -33,6 +33,7 @@ export default function PartnerBrandsSection() {
                     {partners.map((brand) => (
                         <img
                             src={brand.src}
+                            key={brand.alt}
                             alt={brand.alt}
                             className="h-10 max-w-[120px] object-cover  transition duration-300 rounded-xs"
                             loading="lazy"

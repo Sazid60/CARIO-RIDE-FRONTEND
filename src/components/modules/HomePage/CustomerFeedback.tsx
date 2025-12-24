@@ -2,7 +2,6 @@ import Marquee from "react-fast-marquee";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function CustomerFeedback({ feedbacks }: { feedbacks: string[] }) {
-  console.log(feedbacks)
   const truncateText = (text: string, wordLimit: number) => {
     const words = text.split(" ");
     if (words.length <= wordLimit) return text;

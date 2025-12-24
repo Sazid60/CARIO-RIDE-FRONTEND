@@ -1,3 +1,4 @@
+import React from "react";
 import { MapContainer, TileLayer, Circle, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -58,21 +59,19 @@ export default function ServiceAreaMapSection() {
                             attribution="&copy; <a href='https://carto.com/attributions'>CARTO</a>"
                         />
                         {serviceAreas.map((area) => (
-                            <>
+                            <React.Fragment key={area.city + "-fragment"}>
                                 <Circle
-                                    key={area.city}
                                     center={area.coords as [number, number]}
                                     radius={area.radius}
                                     pathOptions={{ color: "#f97316", fillOpacity: 0.2 }}
                                 />
                                 <Marker
-                                    key={area.city + "-marker"}
                                     position={area.coords as [number, number]}
                                     icon={markerIcon}
                                 >
                                     <Popup>{area.city}</Popup>
                                 </Marker>
-                            </>
+                            </React.Fragment>
                         ))}
                     </MapContainer>
                 </div>

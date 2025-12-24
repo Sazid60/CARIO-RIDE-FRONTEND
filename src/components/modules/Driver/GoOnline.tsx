@@ -28,7 +28,6 @@ export default function GoOnline() {
     try {
       await goOnline(location).unwrap();
       toast.success("You are now online!");
-      console.log(location)
     } catch (err: any) {
       toast.error(err?.data?.message || "Failed to go online");
     }

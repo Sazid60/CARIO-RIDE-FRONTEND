@@ -22,6 +22,7 @@ export default function Header() {
     { href: "/about", label: "About", role: "PUBLIC" },
     { href: "/faq", label: "FAQ", role: "PUBLIC" },
     { href: "/contact", label: "Contact", role: "PUBLIC" },
+    { href: "/career", label: "Career", role: "PUBLIC" },
   ];
 
   if (user) {

@@ -26,6 +26,7 @@ import { driverSidebarItems } from "./driverSidebarItems";
 
 import { adminSidebarItems } from "./adminSidebarItems";
 import { lazy } from "react";
+import Career from "@/pages/PublicRoutes/Career/Career";
 
 
 const BookRide = lazy(() => import("@/pages/RiderRoutes/BookRide"));
@@ -68,6 +69,10 @@ export const router = createBrowserRouter(
                 {
                     Component: FrequentQuestions,
                     path: "/faq",
+                },
+                {
+                    Component: Career,
+                    path: "/career",
                 },
                 {
                     Component: withAuth(BookRide, role.rider as TRole),

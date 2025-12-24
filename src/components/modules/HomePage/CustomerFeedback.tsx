@@ -10,7 +10,7 @@ export default function CustomerFeedback({ feedbacks }: { feedbacks: string[] })
   };
 
   return (
-    <section className="mt-10 px-4 sm:px-6 bg-background">
+    <section className="mt-10 md:mt-16 px-4 sm:px-6 bg-background">
       <div className="max-w-7xl mx-auto text-center mb-12">
         <h2 className="text-2xl sm:text-3xl font-bold uppercase mb-4">
           Customer Feedback

@@ -20,7 +20,7 @@ export default function ServiceHighlights({totalRides}: {totalRides:number}) {
   ];
 
   return (
-    <section className="px-6 mt-10 ">
+    <section className="px-6 mt-10 md:mt-16">
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-2xl sm:text-3xl font-bold uppercase mb-4">

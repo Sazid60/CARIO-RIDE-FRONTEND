@@ -3,6 +3,9 @@ import CustomerFeedbackMarquee from "@/components/modules/HomePage/CustomerFeedb
 import HeroSection from "@/components/modules/HomePage/HeroSection";
 import HowItWorks from "@/components/modules/HomePage/HowItWorks";
 import ServiceHighlights from "@/components/modules/HomePage/ServiceHighlights";
+import SafetySecuritySection from "@/components/modules/HomePage/SafetySecuritySection";
+import PartnerBrandsSection from "@/components/modules/HomePage/PartnerBrandsSection";
+import ServiceAreaMapSection from "@/components/modules/HomePage/ServiceAreaMapSection";
 import { useUserInfoQuery } from "@/redux/features/auth/auth.api";
 import { useGetAllFeedbacksQuery } from "@/redux/features/rides/rides.api";
 import { BounceLoader } from "react-spinners";
@@ -28,8 +31,11 @@ export function HomePage() {
     <section>
       <HeroSection userRole={userRole} />
       <ServiceHighlights totalRides={totalRides} />
-      <CustomerFeedbackMarquee feedbacks={feedbacks} />
       <HowItWorks />
+      <SafetySecuritySection />
+      <ServiceAreaMapSection />
+      <CustomerFeedbackMarquee feedbacks={feedbacks} />
+      <PartnerBrandsSection />
       <CallToAction userRole={userRole} />
     </section>
   );

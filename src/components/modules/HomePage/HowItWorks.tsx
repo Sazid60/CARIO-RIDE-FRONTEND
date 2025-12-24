@@ -3,7 +3,7 @@ import how from "@/assets/images/how.webp";
 
 export default function HowItWorks() {
   return (
-    <section className="relative mt-10 py-10 px-6 md:px-10">
+    <section className="relative mt-10 md:mt-16 py-10 px-6 md:px-10">
       <div className="absolute inset-0 w-full h-full">
         <img
           src={how}

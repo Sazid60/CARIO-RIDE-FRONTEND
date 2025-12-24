@@ -35,7 +35,7 @@ export default function CallToAction({ userRole }: CallToActionProps) {
 
   return (
     <section
-      className="relative py-12 px-6 text-center overflow-hidden"
+      className="relative py-12 px-6 text-center overflow-hidden mt-10 md:mt-16"
       style={{
         backgroundImage: `url(${ride})`,
         backgroundSize: "cover",

@@ -62,7 +62,7 @@ export default function Header() {
   }
   return (
     <header className="px-4 md:px-6 bg-black/10 backdrop-blur-2xl z-100">
-      <div className="flex h-16 items-center justify-between gap-4 container mx-auto">
+      <div className="flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <Popover>
             <PopoverTrigger asChild>

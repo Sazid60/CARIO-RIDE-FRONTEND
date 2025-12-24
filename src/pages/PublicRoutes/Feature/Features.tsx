@@ -19,7 +19,7 @@ export default function Features() {
         backgroundImage={featureImg}
       />
 
-      <section className="max-w-7xl mx-auto  px-6">
+      <section className="container mx-auto py-8 md:py-16 px-4 sm:px-6 lg:px-0 ">
         <div className="flex justify-center mb-8">
           <Button
             onClick={() => setTab("driver")}

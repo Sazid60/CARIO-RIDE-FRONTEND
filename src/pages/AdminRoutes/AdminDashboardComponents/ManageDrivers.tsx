@@ -146,7 +146,7 @@ export default function ManageDrivers() {
           </div>
         </section>
         {drivers.length > 0 ? (
-          <div className="max-w-7xl mx-auto p-4">
+          <div className="container mx-auto p-4">
             <Table>
               <TableHeader>
                 <TableRow>

@@ -46,8 +46,8 @@ export default function About() {
                 backgroundImage={aboutImg}
             />
 
-            <section className="py-8 md:py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto">
+            <section className="py-8 md:py-16 px-4 sm:px-6 lg:px-8 ">
+                <div className="container mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
                         <div className="relative w-full h-[280px] sm:h-[350px] lg:h-[560px] overflow-hidden shadow-md">
@@ -128,7 +128,7 @@ export default function About() {
             </section>
 
             <div className="py-10">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-md sm:text-3xl font-bold uppercase mb-4">{heading}</h2>
                     <p className=" text-sm md:text-md mb-8">{description}</p>
 

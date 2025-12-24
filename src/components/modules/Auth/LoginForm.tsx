@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import config from "@/config";
 import { cn } from "@/lib/utils";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
-import { Link, useNavigate} from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -38,7 +38,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
     },
   });
 
-  const [login, {isLoading}] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
   const onSubmit = async (data: LoginSchema) => {
     try {
@@ -57,10 +57,42 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
     window.location.href = `${config.baseUrl}/auth/google`;
   };
 
+  const autofill = (email: string, password: string) => {
+    form.setValue("email", email);
+    form.setValue("password", password);
+  };
+
   return (
     <div className={cn("flex flex-col gap-6 text-white", className)} {...props}>
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-xl font-bold text-white">Login to your account</h1>
+      </div>
+
+      <div className="flex flex-col md:flex-row gap-2 justify-center mb-2">
+        <Button
+          type="button"
+          variant="outline"
+          className="rounded-none text-white border-white bg-transparent hover:bg-white hover:text-primary px-3 py-1"
+          onClick={() => autofill("admin@gmail.com", "Admin123@")}
+        >
+          Admin Login
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="rounded-none text-white border-white bg-transparent hover:bg-white hover:text-primary px-3 py-1"
+          onClick={() => autofill("driver@gmail.com", "Driver123@")}
+        >
+          Driver Login
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          className="rounded-none text-white border-white bg-transparent hover:bg-white hover:text-primary px-3 py-1"
+          onClick={() => autofill("rider@gmail.com", "Rider123@")}
+        >
+          Rider Login
+        </Button>
       </div>
 
       <div className="grid gap-6">
@@ -80,7 +112,7 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage  />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -98,12 +130,12 @@ export function LoginForm({ className, ...props }: React.HTMLAttributes<HTMLDivE
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage  />
+                  <FormMessage />
                 </FormItem>
               )}
             />
             <Button type="submit" disabled={isLoading} className="w-full rounded-none">
-              {isLoading? "Logging In..." : "Login"}
+              {isLoading ? "Logging In..." : "Login"}
             </Button>
           </form>
         </Form>

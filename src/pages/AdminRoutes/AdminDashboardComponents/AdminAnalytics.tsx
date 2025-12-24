@@ -28,7 +28,6 @@ export default function AdminAnalytics() {
         );
     }
 
-    console.log(data)
 
     const report = data.data || {
         totalRiders: 0,

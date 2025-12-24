@@ -41,7 +41,6 @@ export default function Contact() {
   } = form;
 
   const onSubmit = async (data: ContactFormValues) => {
-    console.log(data)
     try {
       await askQuestion(data).unwrap();
       toast.success("Message sent successfully!");

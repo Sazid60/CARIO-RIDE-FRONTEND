@@ -32,7 +32,6 @@ export default function AdminUsers() {
 
     const users = usersData?.data || [];
     const totalPage = usersData?.meta?.totalPage || 1;
-    console.log(totalPage)
 
     const [changeUserStatus] = useChangeUserStatusMutation();
 
@@ -48,7 +47,6 @@ export default function AdminUsers() {
     const handleChangeStatus = async (user: any) => {
         try {
             const newStatus = user.isBlocked === "UNBLOCKED" ? "BLOCKED" : "UNBLOCKED";
-            console.log(user._id, newStatus)
             const status = {
                 isBlocked : newStatus
             }

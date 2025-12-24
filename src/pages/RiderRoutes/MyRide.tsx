@@ -20,7 +20,6 @@ export default function MyRide() {
     refetchOnMountOrArgChange: true,
   });
 
-  console.log(rideData)
 
   const { data: driversData } = useDriverNearMeQuery(undefined, {
     pollingInterval: 5000,

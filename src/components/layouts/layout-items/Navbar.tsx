@@ -68,7 +68,7 @@ export default function Header() {
           <Popover>
             <PopoverTrigger asChild>
               <Button
-                className="group size-8 md:hidden"
+                className="group size-8 lg:hidden"
                 variant="ghost"
                 size="icon"
               >
@@ -100,7 +100,7 @@ export default function Header() {
             </PopoverTrigger>
             <PopoverContent
               align="start"
-              className="w-36 p-1 md:hidden rounded-none"
+              className="w-36 p-1 lg:hidden rounded-none"
             >
               <div className="flex flex-col gap-2">
                 {navigationLinks.map((link) => (
@@ -123,7 +123,7 @@ export default function Header() {
             <NavLink to="/">
               <Logo />
             </NavLink>
-            <div className="hidden md:flex gap-4">
+            <div className="hidden lg:flex gap-4">
               {navigationLinks.map((link) => (
                 <NavLink
                   key={link.href}
